@@ -1,9 +1,6 @@
-#dependacies
-/node_modules
-.venv
-
-#enviroment variables
 .env
-
-#database
-dev.db
+__pycache__/
+*.py[cod]
+.venv
+.DS_Store
+.vscode/
