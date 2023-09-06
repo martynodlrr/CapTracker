@@ -29,6 +29,7 @@ login.login_view = 'auth.unauthorized'
 
 app.config.from_object(Config)
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
+
 # db.init_app(app)
 # Migrate(app, db)
 
