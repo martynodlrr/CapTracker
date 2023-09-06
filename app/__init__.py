@@ -10,9 +10,9 @@ from app.api import review_routes
 from app.config import Config
 
 if os.environ.get('FLASK_ENV') == 'production':
-    app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
+    app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 else:
-    app = Flask(__name__, static_folder='../react-app/public', static_url_path='/')
+    app = Flask(__name__, static_folder='../frontend/public', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)
