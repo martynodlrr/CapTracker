@@ -1,0 +1,9 @@
+#dependacies
+/node_modules
+.venv
+
+#enviroment variables
+.env
+
+#database
+dev.db
