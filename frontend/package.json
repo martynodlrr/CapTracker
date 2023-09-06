@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false && react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -26,8 +26,7 @@
   },
   "browserslist": {
     "production": [
-      ">0.3%",
-      "not ie 11",
+      ">0.2%",
       "not dead",
       "not op_mini all"
     ],
@@ -36,6 +35,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-logger": "^3.0.6",
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0"
   },
   "proxy": "http://localhost:5000"
 }
