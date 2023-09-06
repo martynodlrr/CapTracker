@@ -4,9 +4,9 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
-# from app.models import db, User
+from app.models import db, User
 from app.api import review_routes
-# from app.seeds import seed_commands
+from app.seeds import seed_commands
 from app.config import Config
 
 if os.environ.get('FLASK_ENV') == 'production':
@@ -19,19 +19,19 @@ login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
 
 
-# @login.user_loader
-# def load_user(id):
-#     return User.query.get(int(id))
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 
 # Tell flask about our seed commands
-# app.cli.add_command(seed_commands)
+app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
 
-# db.init_app(app)
-# Migrate(app, db)
+db.init_app(app)
+Migrate(app, db)
 
 # Application Security
 CORS(app)
