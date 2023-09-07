@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     pfp = db.Column(db.String(200))
 
     # relations
+    user_capstone_images = db.relationship("CapstoneImage", back_populates="user")
     user_capstones = db.relationship("Capstone", back_populates="author")
     user_reviews = db.relationship("Review", back_populates="reviewer")
 

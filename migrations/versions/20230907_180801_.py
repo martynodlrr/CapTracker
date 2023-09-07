@@ -51,9 +51,11 @@ def upgrade():
     op.create_table('capstoneimages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('image_url', sa.String(length=200), nullable=False),
-    sa.Column('capstone_id', sa.Integer(), nullable=True),
-    sa.Column('created_at', sa.TIMESTAMP(), nullable=True),
+    sa.Column('capstone_id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.TIMESTAMP(), nullable=False),
     sa.ForeignKeyConstraint(['capstone_id'], ['capstones.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':

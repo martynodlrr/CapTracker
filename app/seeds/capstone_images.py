@@ -1,4 +1,4 @@
-from app.models import Capstone, CapstoneImage, db, environment, SCHEMA
+from app.models import Capstone, CapstoneImage, db, environment, SCHEMA, User
 from sqlalchemy.sql import text
 from datetime import datetime
 
@@ -12,6 +12,7 @@ def seed_capstone_images():
             capstone_image = CapstoneImage(
                 image_url=f"{placeholder_url}?text=Image{i+1}",
                 capstone_id=capstone.id,
+                user_id=capstone.user_id,
                 created_at=datetime.utcnow()
             )
             db.session.add(capstone_image)
