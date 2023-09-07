@@ -24,5 +24,5 @@ class Post(db.Model):
             "title": self.title,
             "url": self.url,
             "description": self.description,
-            "created_at": self.created_at
+            "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
         }

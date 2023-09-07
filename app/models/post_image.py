@@ -19,5 +19,5 @@ class PostImage(db.Model):
             "id": self.id,
             "url": self.url,
             "post_id": self.post_id,
-            "created_at": self.created_at
+            "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
         }

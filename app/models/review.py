@@ -20,7 +20,6 @@ class Review(db.Model):
         return {
             "id": self.id,
             "comment": self.comment,
-            "user_id": self.user_id,
             "post_id": self.post_id,
-            "created_at": self.created_at
+            "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
         }
