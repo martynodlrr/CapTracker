@@ -33,7 +33,7 @@ def upgrade():
     sa.UniqueConstraint('username')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE restaurants SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE users SET SCHEMA {SCHEMA}')
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=50), nullable=False),
@@ -46,7 +46,7 @@ def upgrade():
     sa.UniqueConstraint('title')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE restaurants SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE posts SET SCHEMA {SCHEMA}')
     op.create_table('postImages',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(length=200), nullable=False),
@@ -56,7 +56,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE restaurants SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE postImages SET SCHEMA {SCHEMA}')
     op.create_table('reviews',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
@@ -68,7 +68,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     if environment == 'production':
-        op.execute(f'ALTER TABLE restaurants SET SCHEMA {SCHEMA}')
+        op.execute(f'ALTER TABLE reviews SET SCHEMA {SCHEMA}')
     # ### end Alembic commands ###
 
 
