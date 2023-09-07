@@ -20,10 +20,10 @@ def seed_posts():
 def undo_posts():
     if environment == "production":
         db.session.execute(f"TRUNCATE table {SCHEMA}.posts RESTART IDENTITY CASCADE;")
-        db.session.execute(f"TRUNCATE table {SCHEMA}.postImages RESTART IDENTITY CASCADE;")
+        db.session.execute(f"TRUNCATE table {SCHEMA}.postimages RESTART IDENTITY CASCADE;")
         db.session.execute(f"TRUNCATE table {SCHEMA}.reviews RESTART IDENTITY CASCADE;")
     else:
         db.session.execute(text("DELETE FROM posts"))
-        db.session.execute(text("DELETE FROM postImages"))
+        db.session.execute(text("DELETE FROM postimages"))
         db.session.execute(text("DELETE FROM reviews"))
     db.session.commit()

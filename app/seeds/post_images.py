@@ -1,4 +1,5 @@
-from app.models import Post, PostImage, db
+from app.models import Post, PostImage, db, environment, SCHEMA
+from sqlalchemy.sql import text
 from datetime import datetime
 
 def seed_post_images():
@@ -18,5 +19,10 @@ def seed_post_images():
     db.session.commit()
 
 def undo_post_images():
-    db.session.execute('TRUNCATE post_images RESTART IDENTITY CASCADE;')
+    if environment == "production":
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.postimages RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM postimages"))
+        
     db.session.commit()
