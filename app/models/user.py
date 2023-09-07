@@ -14,9 +14,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(75), nullable=False, unique=True)
     hashed_password = db.Column(db.String(125), nullable=False)
+    pfp = db.Column(db.String(200))
 
     # relations
-    user_posts = db.relationship("Post", back_populates="author")
+    user_capstones = db.relationship("Capstone", back_populates="author")
     user_reviews = db.relationship("Review", back_populates="reviewer")
 
     @property
@@ -36,5 +37,6 @@ class User(db.Model, UserMixin):
             "firstName": self.first_name,
             "lastName": self.last_name,
             "username": self.username,
-            "email": self.email
+            "email": self.email,
+            "pfp": self.pfp
         }

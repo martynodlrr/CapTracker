@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
 from app.models import db, User
-from app.api import review_routes, auth_routes, user_routes
+from app.api import review_routes, auth_routes, user_routes, capstone_routes
 from app.seeds import seed_commands
 from app.config import Config
 
@@ -28,6 +28,7 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+app.register_blueprint(capstone_routes, url_prefix='/api/capstones')
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
