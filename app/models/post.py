@@ -16,6 +16,7 @@ class Post(db.Model):
     # relations
     author = db.relationship("User", back_populates="user_posts")
     post_images = db.relationship("PostImage", back_populates="post")
+    reviews = db.relationship("Review", back_populates="post")
 
     def to_dict(self):
         return {
