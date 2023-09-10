@@ -1,12 +1,25 @@
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import React from 'react';
+
+import SignupFormModal from "../SignupFormModal";
+import OpenModalButton from "../OpenModalButton";
+
 import './index.css';
 
 function LandingPage() {
+  const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
+
+  const handleGetStartedClick = () => {
+    history.push('/capstones');
+  };
+
   return (
     <div>
       <header className="header">
         <div className="container">
-          <h1>CapTracker</h1>
+          <h1>Welcome to CapTracker</h1>
           <p>Where projects swiftly meet quality feedback.</p>
         </div>
       </header>
@@ -22,7 +35,7 @@ function LandingPage() {
         <div className="container">
           <div className="feature">
             <h3>Real-Time Feedback</h3>
-            <p>Don't wait around. Our vibrant community is on standby to provide immediate feedback.</p>
+            <p>Don't wait around. Our vibrant community is on standby to provide timely feedback.</p>
           </div>
           <div className="feature">
             <h3>Optimized User Experience</h3>
@@ -39,7 +52,11 @@ function LandingPage() {
         <div className="container">
           <h2>Join CapTracker Today</h2>
           <p>Step into a space where your projects get the attention and constructive feedback they deserve.</p>
-          <button>Get Started</button>
+          {!sessionUser ? <OpenModalButton
+            buttonText="Get Started"
+            modalComponent={<SignupFormModal />}
+          /> :
+            <button onClick={() => handleGetStartedClick()}>Get started</button>}
         </div>
       </section>
     </div>

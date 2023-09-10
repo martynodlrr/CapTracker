@@ -1,42 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+
+import CapstoneImages from '../CapstoneImages';
+
 import './index.css';
-
-function CapstoneImages({ images }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
-
-  return (
-    <div>
-      {images.length > 0 && (
-        <>
-          <button onClick={prevImage}>Previous</button>
-          <div key={images[currentIndex].id}>
-            <img src={images[currentIndex].imageUrl} alt={`Image ${images[currentIndex].id}`} />
-          </div>
-          <button onClick={nextImage}>Next</button>
-        </>
-      )}
-    </div>
-  );
-}
 
 function RenderCapstone({ capstone }) {
   return (
     <div>
       <h1>{capstone.title}</h1>
       <p>{capstone.created_at}</p>
-      <a href={capstone.url} target="_blank">
+      <a href={capstone.url} target="_blank" rel="noopener noreferrer">
+        {/* rel="noopener" instructs the browser to open the link in a new process or tab without giving the new page access to the window.opener property (protects from phishing ) */}
+        {/* rel="noreferrer" prevents the browser from sending an HTTP referrer header ( prevents websites from tracking user activity ) */}
         Visit project
       </a>
 
-      <CapstoneImages images={capstone.capstone_images} />
+      <CapstoneImages images={capstone.capstoneImages} capstoneId={capstone.id} />
 
       <p>{capstone.description}</p>
     </div>

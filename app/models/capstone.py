@@ -26,5 +26,5 @@ class Capstone(db.Model):
         "url": self.url,
         "description": self.description,
         "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
-        "capstone_images": [image.to_dict() for image in self.capstone_images]
+        "capstoneImages": [image.to_dict() for image in self.capstone_images]
         }

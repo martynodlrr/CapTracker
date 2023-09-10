@@ -2,6 +2,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 
+import CapstoneDetails from './components/Capstone/CapstoneDetails';
 import AllCapstones from './components/Capstone/AllCapstones';
 import LandingPage from "./components/LandingPage";
 import Navigation from "./components/Navigation";
@@ -25,11 +26,16 @@ function App() {
             <LandingPage />
           </Route>
           {sessionUser ? (
-            <Route exact path="/capstones">
-              <AllCapstones />
-            </Route>
+            <>
+              <Route exact path="/capstones">
+                <AllCapstones />
+              </Route>
+              <Route path="/capstones/:capstoneId">
+                <CapstoneDetails />
+              </Route>
+            </>
           ) : (
-            <Route exact path="/capstones">
+            <Route path={["/capstones", "/capstones/:capstoneId"]}>
               <Redirect to="/" />
             </Route>
           )}

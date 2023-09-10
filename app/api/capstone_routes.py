@@ -37,7 +37,7 @@ def capstone_by_id(capstoneId):
     if not capstone:
         return jsonify(message='Capstone could not be found'), 404
 
-    return jsonify(reviews=capstone.to_dict())
+    return jsonify(capstone=capstone.to_dict())
 
 
 @capstone_routes.route('/', methods=['POST'])

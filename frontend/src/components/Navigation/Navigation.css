@@ -19,6 +19,7 @@ li {
 #icon-container {
   display: flex;
   margin-top: -20px;
+  cursor: pointer;
 }
 
 #icon {

@@ -6,7 +6,7 @@ import RenderCapstone from '../RenderCapstone/index';
 
 function AllCapstones() {
   const dispatch = useDispatch();
-  const capstones = useSelector((state) => state.capstones.capstones);
+  const capstones = useSelector((state) => state.capstones);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -18,7 +18,7 @@ function AllCapstones() {
     // window.scrollY is how much has scrolled
     // window.innerHeight is how much of the page is showing
     // document.body.offsetHeight is how much of the page is availible
-    
+
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight;
     if (nearBottom && hasMore) {
       setPageNumber((prevNumber) => {
