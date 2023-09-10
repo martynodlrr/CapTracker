@@ -9,18 +9,21 @@ from app.forms import CapstoneForm
 capstone_routes = Blueprint('capstones', __name__)
 
 
-@capstone_routes.route('/')
+@capstone_routes.route('/', methods=['GET'])
 def capstones():
     """
-    Query for all capstones and returns them in a list of capstone dictionaries
+    Query for 10 capstones at a time and returns them in a list of capstone dictionaries
     """
-    capstones = Capstone.query.all()
-    data = [
-        {
-            **capstone.to_dict(),
-        }
-        for capstone in capstones
-    ]
+    number = int(request.args.get('number', 1))
+    limit = 10
+    offset = (number - 1) * limit
+
+    capstones = Capstone.query.offset(offset).limit(limit).all()
+
+    if not capstones and number != 1:
+        return jsonify(error="No more capstones"), 404
+
+    data = [capstone.to_dict() for capstone in capstones]
     return jsonify(capstones=data), 200
 
 

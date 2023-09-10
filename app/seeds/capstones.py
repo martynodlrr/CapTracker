@@ -7,7 +7,7 @@ def seed_capstones():
 
     for i, user in enumerate(users):
         capstone = Capstone(
-            title=f"Capstone by {user.username}",
+            title=f"{user.username}'s Capstone title",
             url=f"http://capstone_by_{user.username}.com",
             description=f"This is a capstone description by {user.username}",
             user_id=user.id,

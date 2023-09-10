@@ -21,6 +21,11 @@ function LoginFormModal() {
     }
   };
 
+  const signInDemo = async () => {
+    await dispatch(login('demo@aa.io', 'password'));
+    closeModal();
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -50,6 +55,7 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
+      <button onClick={() => signInDemo()}>Demo Login</button>
     </>
   );
 }
