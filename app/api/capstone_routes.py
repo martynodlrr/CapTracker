@@ -57,7 +57,7 @@ def create_capstone():
         db.session.add(new_capstone)
         db.session.commit()
 
-        return jsonify(review=new_capstone.to_dict()), 201
+        return jsonify(capstone=new_capstone.to_dict()), 201
 
     return form.errors
 
@@ -95,7 +95,7 @@ def create_image_for_capstone(capstoneId):
         db.session.add(new_capstone_image)
         db.session.commit()
 
-        return jsonify(review=new_capstone_image.to_dict()), 201
+        return jsonify(capstone_image=new_capstone_image.to_dict()), 201
 
     return form.errors
 
@@ -146,7 +146,6 @@ def update_capstone_image(capstoneId, imageId):
             return upload
 
         image_url = upload['url']
-        capstone_image = CapstoneImage.query.get(imageId)
         capstone_image.image_url = image_url
 
         db.session.commit()

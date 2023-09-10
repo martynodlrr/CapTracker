@@ -13,7 +13,7 @@ def reviews_by_capstone_id(capstoneId):
     """
     Query for all reviews of a capstone and returns them in a list dictionaries
     """
-    reviews = Review.query.options(joinedload(Review.reviewer)).filter_by(post_id=capstoneId).all()
+    reviews = Review.query.options(joinedload(Review.reviewer)).filter_by(capstone_id=capstoneId).all()
 
     if not reviews:
         return jsonify(message='Capstone has no reviews'), 404
@@ -72,6 +72,7 @@ def update_review(reviewId):
     if form.validate():
         review.comment = form.comment.data
         db.session.commit()
+
         return jsonify(review=review.to_dict())
 
     return form.errors
