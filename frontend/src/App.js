@@ -7,6 +7,7 @@ import AllCapstones from './components/Capstone/AllCapstones';
 import LandingPage from "./components/LandingPage";
 import Navigation from "./components/Navigation";
 import { authenticate } from "./store/session";
+import Profile from "./components/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,9 +34,15 @@ function App() {
               <Route path="/capstones/:capstoneId">
                 <CapstoneDetails />
               </Route>
+              <Route exact path="/users/:userId">
+                <Profile />
+              </Route>
+              <Route path="*">
+                <Redirect to="/capstones" />
+              </Route>
             </>
           ) : (
-            <Route path={["/capstones", "/capstones/:capstoneId"]}>
+            <Route path="*">
               <Redirect to="/" />
             </Route>
           )}

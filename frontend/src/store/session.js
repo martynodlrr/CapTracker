@@ -1,9 +1,15 @@
 // constants
 const SET_USER = "session/SET_USER";
+const UPDATE_USER = "session/UPDATE_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
 const setUser = (user) => ({
 	type: SET_USER,
+	payload: user,
+});
+
+const updateUser = (user) => ({
+	type: UPDATE_USER,
 	payload: user,
 });
 
@@ -64,6 +70,33 @@ export const logout = () => async (dispatch) => {
 
 	if (response.ok) {
 		dispatch(removeUser());
+	}
+};
+
+export const update = (user) => async (dispatch) => {
+	const response = await fetch("/api/auth/signup", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			username,
+			email,
+			password,
+		}),
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		dispatch(setUser(data));
+		return null;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data.errors;
+		}
+	} else {
+		return ["An error occurred. Please try again."];
 	}
 };
 

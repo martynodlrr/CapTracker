@@ -1,0 +1,35 @@
+.profile-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* .file-input-container {
+  display: flex;
+  align-items: center;
+} */
+
+.file-select-button {
+  /* padding: 10px; */
+  /* background-color: #007BFF; */
+  /* border: none; */
+  /* border-radius: 5px; */
+  /* color: #fff; */
+  cursor: pointer;
+}
+
+.file-name {
+  margin-left: 10px;
+}
+
+.profile-input-hidden {
+  display: none;
+}
+
+#profile-form {
+  width: fit-content;
+}
+
+#profile-picture{
+  width: 75px;
+  height: 75px;
+}

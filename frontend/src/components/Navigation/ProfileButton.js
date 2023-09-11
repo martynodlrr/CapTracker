@@ -1,12 +1,17 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { logout } from "../../store/session";
+
 import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import LoginFormModal from "../LoginFormModal";
+import { logout } from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
@@ -34,19 +39,24 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
 
+  const handleRedirect = () => {
+    history.push(`/users/${user.id}`);
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
 
   return (
     <>
       <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        <FontAwesomeIcon icon={faBars} />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
             <li><img src={user.pfp} id="pfp" /></li>
             <li>{user.username}</li>
+            <li><button onClick={handleRedirect}>Profile</button></li>
             <nav>
               <button onClick={handleLogout}>Log Out</button>
             </nav>

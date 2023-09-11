@@ -6,7 +6,7 @@ import './index.css';
 
 function RenderCapstone({ capstone }) {
   return (
-    <div>
+    <div className='capstones'>
       <h1>{capstone.title}</h1>
       <p>{capstone.created_at}</p>
       <a href={capstone.url} target="_blank" rel="noopener noreferrer">

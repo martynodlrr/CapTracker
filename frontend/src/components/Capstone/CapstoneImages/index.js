@@ -20,7 +20,7 @@ function CapstoneImages({ images, capstoneId }) {
   };
 
   return (
-    <div>
+    <div className='capstones'>
       {images.length > 0 && (
         <>
           <button onClick={prevImage}>Previous</button>
