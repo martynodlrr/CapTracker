@@ -1,6 +1,6 @@
-from flask_wtf.file import FileRequired, FileField, FileAllowed
-from wtforms import StringField, PasswordField, ValidationError
 from wtforms.validators import DataRequired, Length, Optional
+from wtforms import StringField, PasswordField, ValidationError
+from flask_wtf.file import FileField, FileAllowed
 from flask_wtf import FlaskForm
 
 from app.api.aws import ALLOWED_EXTENSIONS
@@ -30,3 +30,5 @@ class UpdateUserForm(FlaskForm):
     email = StringField('Email Address', validators=[Optional(), Length(max=75), user_exists])
     password = PasswordField('Password', validators=[Optional(), Length(min=6)])
     pfp = FileField('Profile Picture', validators=[FileAllowed(list(ALLOWED_EXTENSIONS)), Optional()])
+    linkedin = StringField('LinkedIn', validators=[Length(max=175)])
+    github = StringField('GitHub', validators=[Length(max=100)])

@@ -107,6 +107,8 @@ export const update = (user) => async (dispatch) => {
 	formData.append('lastName', user.lastName);
 	formData.append('userName', user.userName);
 	formData.append('password', user.password);
+	formData.append('linkedin', user.linkedIn);
+	formData.append('github', user.github);
 	formData.append('email', user.email);
 
 	// Only add the pfp field if it's a File object (not a URL)

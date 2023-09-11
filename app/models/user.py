@@ -16,6 +16,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(75), nullable=False, unique=True)
     hashed_password = db.Column(db.String(125), nullable=False)
     pfp = db.Column(db.String(200))
+    linkedin = db.Column(db.String(175))
+    github = db.Column(db.String(100))
 
     # relations
     user_capstone_images = db.relationship("CapstoneImage", back_populates="user")
@@ -39,6 +41,8 @@ class User(db.Model, UserMixin):
             "firstName": self.first_name,
             "lastName": self.last_name,
             "userName": self.username,
+            "LinkedIn": self.linkedin,
+            "GitHub": self.github,
             "email": self.email,
             "pfp": self.pfp
         }

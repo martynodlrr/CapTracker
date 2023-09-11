@@ -10,6 +10,7 @@ class Capstone(db.Model):
     title = db.Column(db.String(50), nullable=False, unique=True)
     url = db.Column(db.String(150))
     description = db.Column(db.String(200), nullable=False)
+    cloned_from = db.Column(db.String(75), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     created_at = db.Column(db.TIMESTAMP)
 
@@ -25,6 +26,7 @@ class Capstone(db.Model):
         "author": self.author.to_dict(),
         "url": self.url,
         "description": self.description,
+        "clonedFrom": self.cloned_from,
         "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
         "capstoneImages": [image.to_dict() for image in self.capstone_images]
         }

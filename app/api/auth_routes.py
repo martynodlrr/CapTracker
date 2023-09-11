@@ -109,9 +109,10 @@ def update_user(id):
         'lastName': request.form.get('lastName'),
         'userName': request.form.get('userName'),
         'password': request.form.get('password'),
+        'linkedin': request.form.get('linkedIn'),
+        'github': request.form.get('github'),
         'email': request.form.get('email'),
     }
-
     form = UpdateUserForm(data=form_data)
 
     if form_data['email']:
@@ -131,16 +132,18 @@ def update_user(id):
                 return upload
             else:
                 user.pfp = upload['url']
+        print(form.github.data, '----------------------------------')
 
         user.first_name = form.firstName.data if form.firstName.data else user.first_name
         user.last_name = form.lastName.data if form.lastName.data else user.last_name
         user.username = form.userName.data if form.userName.data else user.username
+        user.linkedin = form.linkedin.data if form.linkedin.data else user.linkedin
+        user.github = form.github.data if form.github.data else user.github
         user.email = form.email.data if form.email.data else user.email
-
+        print(user.github, '++++++++++++++++++++++++++++++++++++++++++++')
         if form.password.data:
             user.hashed_password = generate_password_hash(form.password.data)
 
-        db.session.flush()
         db.session.commit()
 
         return jsonify(user=user.to_dict())
