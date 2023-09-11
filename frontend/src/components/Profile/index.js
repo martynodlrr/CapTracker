@@ -2,15 +2,17 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 
+import * as sessionActions from '../../store/session'
 import greetings from './greetings';
 
 import './index.css';
 
 function Profile() {
-  const { userId } = useParams();
-  const history = useHistory();
-  // const dispatch = useDispatch();
   const user = useSelector(state => state.session.user);
+  const { userId } = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [previewSrc, setPreviewSrc] = useState(user?.pfp || null);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -18,7 +20,8 @@ function Profile() {
   const [pfp, setPfp] = useState(user?.pfp || null);
   const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState(user.email);
-  const [greeting, setGreeting] = useState("");
+  const [greeting, setGreeting] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
@@ -31,7 +34,7 @@ function Profile() {
   }, [userId, user.id, history]);
 
   useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // A basic regex to validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setDisabled(
       firstName.length < 2 ||
       firstName.length > 25 ||
@@ -40,11 +43,10 @@ function Profile() {
       userName.length < 4 ||
       userName.length > 40 ||
       email.length > 75 ||
-      !emailRegex.test(email)
-      // Add a password length check if you have a password state variable
-      // || password.length < 6
+      !emailRegex.test(email) ||
+      (password.length > 0 && password.length < 6)
     );
-  }, [firstName, lastName, userName, email /* , password */]);
+  }, [firstName, lastName, userName, email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,17 +54,20 @@ function Profile() {
     const updatedUser = {
       firstName,
       lastName,
-      userName,
-      email,
+      userName: user.userName === userName ? '' : userName,
+      email: user.email === email ? '' : email,
       pfp: pfp === "https://i.pinimg.com/originals/09/f0/84/09f084cd8a8093ea5738a3ab75c210df.png" ? false : pfp,
       userId: user.id
     }
 
+    if (password.length >= 6)
+      updatedUser.password = password;
+
     console.log(updatedUser)
-    // dispatch(sessionActions.update(updatedUser, user.id))
-    // .catch((e) => {
-    //   console.error("Error updating user: ", e);
-    // });
+    dispatch(sessionActions.update(updatedUser, user.id))
+      .catch((e) => {
+        console.error("Error updating user: ", e);
+      });
   };
 
   const handleFileChange = (e) => {
@@ -144,6 +149,18 @@ function Profile() {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
+          />
+        </div>
+
+        <div className="form-field">
+          <label htmlFor="password" className='profile-label'>Password</label>
+          <input
+            id="password"
+            className='profile-input'
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            placeholder="Password"
           />
         </div>
 

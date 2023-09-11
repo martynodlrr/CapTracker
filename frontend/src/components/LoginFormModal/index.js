@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import { useHistory } from 'react-router-dom';
-
-import { login } from "../../store/session";
 import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+
 import { useModal } from "../../context/Modal";
+import { login } from "../../store/session";
 
 import "./LoginForm.css";
 

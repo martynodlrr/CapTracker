@@ -1,12 +1,13 @@
-import os
 from flask import Flask, request, redirect
-from flask_cors import CORS
-from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
-from app.models import db, User
+from flask_migrate import Migrate
+from flask_cors import CORS
+import os
+
 from app.api import review_routes, auth_routes, user_routes, capstone_routes
 from app.seeds import seed_commands
+from app.models import db, User
 from app.config import Config
 
 if os.environ.get('FLASK_ENV') == 'production':

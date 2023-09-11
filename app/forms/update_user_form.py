@@ -1,6 +1,6 @@
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 from wtforms import StringField, PasswordField, ValidationError
-from wtforms.validators import DataRequired, Email, Length
+from wtforms.validators import DataRequired, Length, Optional
 from flask_wtf import FlaskForm
 
 from app.api.aws import ALLOWED_EXTENSIONS
@@ -23,10 +23,10 @@ def username_exists(form, field):
         raise ValidationError('Username is already in use.')
 
 
-class SignUpForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired(), Length(min=2, max=25)])
-    last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=50)])
-    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=40), username_exists])
-    email = StringField('Email Address', validators=[DataRequired(), Email(), Length(max=75), user_exists])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
-    pfp = StringField('Profile Picture', validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
+class UpdateUserForm(FlaskForm):
+    firstName = StringField('First Name', validators=[DataRequired(), Length(min=2, max=25)])
+    lastName = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=50)])
+    userName = StringField('Username', validators=[Optional(), Length(min=4, max=40), username_exists])
+    email = StringField('Email Address', validators=[Optional(), Length(max=75), user_exists])
+    password = PasswordField('Password', validators=[Optional(), Length(min=6)])
+    pfp = FileField('Profile Picture', validators=[FileAllowed(list(ALLOWED_EXTENSIONS)), Optional()])

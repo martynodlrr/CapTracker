@@ -1,6 +1,7 @@
-from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
@@ -37,7 +38,7 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "firstName": self.first_name,
             "lastName": self.last_name,
-            "username": self.username,
+            "userName": self.username,
             "email": self.email,
             "pfp": self.pfp
         }

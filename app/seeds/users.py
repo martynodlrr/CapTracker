@@ -1,6 +1,6 @@
-from app.models import db, User, environment, SCHEMA
 from sqlalchemy.sql import text
 
+from app.models import db, User, environment, SCHEMA
 
 def seed_users():
     demo = User(
