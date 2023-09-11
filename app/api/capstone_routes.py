@@ -2,6 +2,7 @@ from flask_login import current_user, login_required
 from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from datetime import datetime
+
 from app.api.aws import (upload_file_to_s3, get_unique_filename)
 from app.models import Review, Capstone, CapstoneImage, db
 from app.forms import CapstoneForm
@@ -148,8 +149,7 @@ def update_capstone_image(capstoneId, imageId):
         if 'url' not in upload:
             return upload
 
-        image_url = upload['url']
-        capstone_image.image_url = image_url
+        capstone_image.image_url = upload['url']
 
         db.session.commit()
 

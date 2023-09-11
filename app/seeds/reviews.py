@@ -1,6 +1,7 @@
-from app.models import User, Capstone, Review, db, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
+
+from app.models import User, Capstone, Review, db, environment, SCHEMA
 
 def seed_reviews():
     users = User.query.all()

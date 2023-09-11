@@ -1,6 +1,7 @@
-from app.models import User, Capstone, db, environment, SCHEMA
 from sqlalchemy.sql import text
 from datetime import datetime
+
+from app.models import User, Capstone, db, environment, SCHEMA
 
 def seed_capstones():
     users = User.query.all()
@@ -11,6 +12,7 @@ def seed_capstones():
             url=f"http://capstone_by_{user.username}.com",
             description=f"This is a capstone description by {user.username}",
             user_id=user.id,
+            cloned_from='instagram',
             created_at=datetime.utcnow()
         )
 # datetime.utcnow()) -- 2023-09-07 15:55:26.873143

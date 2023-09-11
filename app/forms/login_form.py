@@ -1,6 +1,7 @@
-from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, ValidationError
 from wtforms.validators import DataRequired, Email
+from flask_wtf import FlaskForm
+
 from app.models import User
 
 def credentials_valid(form, field):

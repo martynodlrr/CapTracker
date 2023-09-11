@@ -1,6 +1,7 @@
-from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, Length, URL
+from flask_wtf import FlaskForm
+
 from app.api.aws import ALLOWED_EXTENSIONS
 
 class CapstoneForm(FlaskForm):

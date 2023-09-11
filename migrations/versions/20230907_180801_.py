@@ -29,6 +29,8 @@ def upgrade():
     sa.Column('email', sa.String(length=75), nullable=False),
     sa.Column('hashed_password', sa.String(length=125), nullable=False),
     sa.Column('pfp', sa.String(length=200), nullable=True),
+    sa.Column('linkedin', sa.String(length=175), nullable=True),
+    sa.Column('github', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
@@ -40,6 +42,7 @@ def upgrade():
     sa.Column('title', sa.String(length=50), nullable=False),
     sa.Column('url', sa.String(length=150), nullable=True),
     sa.Column('description', sa.String(length=200), nullable=False),
+    sa.Column('cloned_from', sa.String(length=75), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.TIMESTAMP(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),

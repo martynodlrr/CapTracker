@@ -1,6 +1,7 @@
-from app.models import Capstone, CapstoneImage, db, environment, SCHEMA, User
 from sqlalchemy.sql import text
 from datetime import datetime
+
+from app.models import Capstone, CapstoneImage, db, environment, SCHEMA, User
 
 def seed_capstone_images():
     capstones = Capstone.query.all()
