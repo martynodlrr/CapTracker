@@ -61,18 +61,18 @@ export const fetchUserCapstone = () => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    const id = data.capstone.id;
 
     dispatch(updateUserCapstone({ ...data.capstone }));
 
     return data.capstone;
   }
+  dispatch(updateUserCapstone({}));
 
   return false;
 };
 
 export const createCapstone = (capstone) => async (dispatch) => {
-  const res = await fetch('/api/capstones', {
+  const res = await fetch('/api/capstones/', {
     method: "POST",
 		headers: {
       "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const createCapstone = (capstone) => async (dispatch) => {
 		body: JSON.stringify({
       title: capstone.title,
 			url: capstone.url,
-			clonedFrom: capstone.clonedFrom,
+			cloned_from: capstone.clonedFrom,
 			description: capstone.description,
 		}),
 	});
@@ -97,29 +97,50 @@ export const createCapstone = (capstone) => async (dispatch) => {
   return false
 };
 
+export const createCapstoneImage = (capstoneId, formData) => async (dispatch) => {
+  const res = await fetch(`/api/capstones/${capstoneId}`, {
+    method: 'POST',
+    body: formData,
+  });
+  const data = await res.json();
+
+  return data;
+};
+
 export const updateCapstone = (capstone) => async (dispatch) => {
+  const newCapstone = {
+    description: capstone.description,
+    title: capstone.title,
+    url: capstone.url,
+    cloned_from: capstone.clonedFrom,
+  };
+
   const res = await fetch(`/api/capstones/${capstone.id}`, {
     method: "PUT",
 		headers: {
       "Content-Type": "application/json",
 		},
-		body: JSON.stringify({
-      title: capstone.title,
-			url: capstone.url,
-			clonedFrom: capstone.clonedFrom,
-			description: capstone.description,
-		}),
+		body: JSON.stringify(newCapstone),
 	});
 
   if (res.ok) {
     const data = await res.json();
-
+    console.log(data)
     dispatch(updateUserCapstone( data.capstone ));
 
     return data.capstone;
   }
 
   return false;
+};
+
+export const updateCapstoneImage = (capstoneId, imageId, formData) => async (dispatch) => {
+  const res = await fetch(`/api/capstones/${capstoneId}/images/${imageId}`, {
+    method: 'PUT',
+    body: formData,
+  });
+
+  return res
 };
 
 // Initial state
@@ -129,16 +150,29 @@ const initialState = {};
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_CAPSTONES:
-      return { ...state, ...action.payload };
+      return {
+        allCapstones: { ...action.payload },
+        userCapstone: { ...state.userCapstone } || {},
+      };
 
     case SET_CAPSTONE:
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        allCapstones: { ...state.allCapstones, ...action.payload },
+      };
 
     case CREATE_CAPSTONE:
-      return { ...state, [action.payload.id]: action.payload, userCapstone: { ...action.payload } };
+      return {
+        ...state,
+        allCapstones: { ...state.allCapstones, [action.payload.id]: { ...action.payload } },
+        userCapstone: { ...action.payload },
+      };
 
     case UPDATE_CAPSTONE:
-      return { ...state, userCapstone: action.payload  };
+      return {
+        ...state,
+        userCapstone: { ...state.userCapstone, ...action.payload },
+      };
 
     default:
       return state;

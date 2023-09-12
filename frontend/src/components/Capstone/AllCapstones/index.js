@@ -6,7 +6,7 @@ import RenderCapstone from '../RenderCapstone/index';
 
 function AllCapstones() {
   const dispatch = useDispatch();
-  const capstones = useSelector((state) => state.capstones);
+  const capstones = useSelector((state) => state.capstones.allCapstones);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
 

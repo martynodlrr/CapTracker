@@ -4,8 +4,8 @@ from sqlalchemy.orm import joinedload
 from datetime import datetime
 
 from app.api.aws import (upload_file_to_s3, get_unique_filename)
-from app.models import Review, Capstone, CapstoneImage, db
-from app.forms import CapstoneForm
+from app.forms import CapstoneForm, CapstoneImageForm
+from app.models import Capstone, CapstoneImage, db
 
 capstone_routes = Blueprint('capstones', __name__)
 
@@ -87,27 +87,29 @@ def create_image_for_capstone(capstoneId):
     Create an image for capstone by capstone id
     """
     image_file = request.files.get('image')
-    upload = upload_file_to_s3(image_file)
 
-    if 'url' not in upload:
-        return upload
+    if not image_file:
+        return jsonify(error="No image file provided"), 400
 
-    capstone_id = capstoneId
-    image_url = upload['url']
-    created_at = datetime.utcnow()
     data = {
-        "image_url": image_url,
-        "created_at": created_at,
-        "capstone_id": capstone_id
+        "image_file": image_file,
     }
-    form = CapstoneForm(csrf_token=request.cookies['csrf_token'], data=data)
+
+    form = CapstoneImageForm(csrf_token=request.cookies['csrf_token'], data=data)
 
     if form.validate():
+        upload = upload_file_to_s3(image_file)
+
+        if 'url' not in upload:
+            return jsonify(error="Failed to upload image"), 500
+
+        image_url = upload['url']
+
         new_capstone_image = CapstoneImage(
-            capstone_id=capstone_id,
+            capstone_id=capstoneId,
             image_url=image_url,
             user_id=current_user.id,
-            created_at=created_at
+            created_at=datetime.utcnow()
         )
 
         db.session.add(new_capstone_image)
@@ -115,7 +117,7 @@ def create_image_for_capstone(capstoneId):
 
         return jsonify(capstone_image=new_capstone_image.to_dict()), 201
 
-    return form.errors
+    return jsonify(errors=form.errors), 400
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['PUT'])
@@ -128,7 +130,7 @@ def update_capstone(capstoneId):
 
     if not capstone or current_user.id != capstone.user_id:
         return jsonify(error='Unauthorized' if capstone else 'Capstone not found'), 403 if capstone else 404
-
+    print(request.get_json())
     form = CapstoneForm(csrf_token=request.cookies['csrf_token'], data=request.get_json())
 
     if form.validate():
@@ -156,7 +158,7 @@ def update_capstone_image(capstoneId, imageId):
         return jsonify(error='Unauthorized'), 403
 
     image_file = request.files.get('image')
-    form = CapstoneForm(csrf_token=request.cookies['csrf_token'], data=image_file)
+    form = CapstoneImageForm(csrf_token=request.cookies['csrf_token'], formdata=request.files)
 
     if form.validate():
         upload = upload_file_to_s3(image_file)

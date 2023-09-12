@@ -8,7 +8,7 @@ import CapstoneImages from '../CapstoneImages';
 function CapstoneDetails() {
   const dispatch = useDispatch();
   const { capstoneId } = useParams();
-  const capstone = useSelector(state => state.capstones[capstoneId]);
+  const capstone = useSelector(state => state.capstones && state.capstones.allCapstones && state.capstones.allCapstones[capstoneId]);
 
   useEffect(() => {
     if (!capstone) {

@@ -79,7 +79,7 @@ function Profile() {
     if (file) {
       setPfp(file);
       const src = URL.createObjectURL(file);
-      console.log(URL.revokeObjectURL(previewSrc))
+      
       if (previewSrc) URL.revokeObjectURL(previewSrc);
       setPreviewSrc(src);
     } else {
@@ -95,6 +95,7 @@ function Profile() {
           <span className="pfp-render">
             <img src={previewSrc} alt={`${firstName} ${lastName} Profile Preview`} id='profile-picture' />
           </span>
+
           <button type="button" className="file-select-button" onClick={() => document.getElementById('pfp-input').click()}>Select File</button>
           <input
             id="pfp-input"

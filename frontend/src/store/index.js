@@ -4,11 +4,18 @@ import thunk from 'redux-thunk';
 import capstones from './capstones';
 import session from './session';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   session,
   capstones,
 });
 
+// clears the store once a user logs out to prevent unwanted data being saved
+const rootReducer = (state, action) => {
+  if (action.type === 'session/REMOVE_USER') {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 let enhancer;
 

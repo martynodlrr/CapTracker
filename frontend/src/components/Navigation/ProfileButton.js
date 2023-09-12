@@ -58,7 +58,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li><img src={user.pfp} id="pfp" /></li>
+            <li><img src={user.pfp} alt="User's Profile" id="pfp" /></li>
             <li>{user.username}</li>
             <li><button onClick={handleProfileRedirect}>Profile</button></li>
             <li><button onClick={handleCapstoneRedirect}>Capstone</button></li>

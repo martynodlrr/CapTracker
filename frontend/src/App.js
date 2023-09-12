@@ -24,10 +24,10 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/" >
+          <Route exact path="/">
             <LandingPage />
           </Route>
-          {sessionUser ? (
+          {sessionUser && (
             <>
               <Route exact path="/capstone/edit">
                 <CreateCapstone />
@@ -41,15 +41,11 @@ function App() {
               <Route exact path="/users/:userId">
                 <Profile />
               </Route>
-              <Route exact path="*">
-                <Redirect to="/capstones" />
-              </Route>
             </>
-          ) : (
-            <Route path="*">
-              <Redirect to="/" />
-            </Route>
           )}
+          <Route path="*">
+            <Redirect to={sessionUser ? "/capstones" : "/"} />
+          </Route>
         </Switch>
       )}
     </>
