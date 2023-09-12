@@ -41,6 +41,19 @@ def capstone_by_id(capstoneId):
     return jsonify(capstone=capstone.to_dict())
 
 
+@capstone_routes.route('/current')
+def capstones_by_user_id():
+    """
+    Query for capstones by user ID and return that capstone in a list
+    """
+    capstone = Capstone.query.filter_by(user_id=current_user.id).first()
+
+    if not capstone:
+        return jsonify(message='User has no capstone'), 404
+
+    return jsonify(capstone=capstone.to_dict())
+
+
 @capstone_routes.route('/', methods=['POST'])
 @login_required
 def create_capstone():
@@ -54,6 +67,7 @@ def create_capstone():
         new_capstone = Capstone(
             title=form.title.data,
             url=form.url.data,
+            cloned_from=form.cloned_from.data,
             description=form.description.data,
             user_id=current_user.id,
             created_at=datetime.utcnow()
@@ -120,6 +134,7 @@ def update_capstone(capstoneId):
     if form.validate():
         capstone.title = form.title.data
         capstone.url = form.url.data
+        capstone.cloned_from = form.cloned_from.data
         capstone.description = form.description.data
 
         db.session.commit()

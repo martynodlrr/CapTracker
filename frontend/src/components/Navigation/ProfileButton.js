@@ -39,8 +39,12 @@ function ProfileButton({ user }) {
     dispatch(logout());
   };
 
-  const handleRedirect = () => {
+  const handleProfileRedirect = () => {
     history.push(`/users/${user.id}`);
+  };
+
+  const handleCapstoneRedirect = () => {
+    history.push(`/capstone/edit`);
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -56,7 +60,8 @@ function ProfileButton({ user }) {
           <>
             <li><img src={user.pfp} id="pfp" /></li>
             <li>{user.username}</li>
-            <li><button onClick={handleRedirect}>Profile</button></li>
+            <li><button onClick={handleProfileRedirect}>Profile</button></li>
+            <li><button onClick={handleCapstoneRedirect}>Capstone</button></li>
             <nav>
               <button onClick={handleLogout}>Log Out</button>
             </nav>
