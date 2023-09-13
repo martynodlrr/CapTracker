@@ -6,8 +6,6 @@ from flask_wtf import FlaskForm
 from app.api.aws import ALLOWED_EXTENSIONS
 
 class CapstoneImageForm(FlaskForm):
-    capstone_id = IntegerField('Capstone ID')
-    image_url = FileField('Image Url', validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
-    created_at = DateTimeField('Created At')
+    image = FileField('Image', validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
 
     submit = SubmitField('Submit')

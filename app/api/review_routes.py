@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from datetime import datetime
 
+from app.api.auth_routes import validation_errors_to_error_messages
 from app.models import Review, Capstone, db
 from app.forms import ReviewForm
 
@@ -43,9 +44,9 @@ def create_review(capstoneId):
 
     if form.validate():
         new_review = Review(
-            comment=form.comment.data,
+            comment=data['comment'],
             user_id=current_user.id,
-            post_id=capstoneId,
+            capstone_id=capstoneId,
             created_at=datetime.utcnow()
         )
 
@@ -54,7 +55,7 @@ def create_review(capstoneId):
 
         return jsonify(review=new_review.to_dict()), 201
 
-    return form.errors
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @review_routes.route('/<int:reviewId>', methods=['PUT'])
@@ -76,7 +77,7 @@ def update_review(reviewId):
 
         return jsonify(review=review.to_dict())
 
-    return form.errors
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @review_routes.route('/<int:reviewId>', methods=['DELETE'])

@@ -7,7 +7,7 @@ class Capstone(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False, unique=True)
+    title = db.Column(db.String(50), nullable=False)
     url = db.Column(db.String(150))
     description = db.Column(db.String(200), nullable=False)
     cloned_from = db.Column(db.String(75), nullable=False)
@@ -21,12 +21,13 @@ class Capstone(db.Model):
 
     def to_dict(self):
         return {
-        "id": self.id,
-        "title": self.title,
-        "author": self.author.to_dict(),
-        "url": self.url,
-        "description": self.description,
-        "clonedFrom": self.cloned_from,
-        "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
-        "capstoneImages": [image.to_dict() for image in self.capstone_images]
+            "id": self.id,
+            "title": self.title,
+            "author": self.author.to_dict(),
+            "url": self.url,
+            "description": self.description,
+            "clonedFrom": self.cloned_from,
+            "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
+            "capstoneImages": [image.to_dict() for image in self.capstone_images],
+            "reviews": [review.to_dict() for review in self.reviews],
         }

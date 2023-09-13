@@ -70,13 +70,12 @@ def sign_up():
     """
     Creates a new user and logs them in
     """
-    form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form = SignUpForm(csrf_token=request.cookies['csrf_token'], data=request.get_json())
 
     if form.validate_on_submit():
         user = User(
-            first_name=form.data['firstName'],
-            last_name=form.data['lastName'],
+            first_name=form.data['first_name'],
+            last_name=form.data['last_name'],
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
@@ -132,7 +131,6 @@ def update_user(id):
                 return upload
             else:
                 user.pfp = upload['url']
-        print(form.github.data, '----------------------------------')
 
         user.first_name = form.firstName.data if form.firstName.data else user.first_name
         user.last_name = form.lastName.data if form.lastName.data else user.last_name
@@ -140,7 +138,7 @@ def update_user(id):
         user.linkedin = form.linkedin.data if form.linkedin.data else user.linkedin
         user.github = form.github.data if form.github.data else user.github
         user.email = form.email.data if form.email.data else user.email
-        print(user.github, '++++++++++++++++++++++++++++++++++++++++++++')
+
         if form.password.data:
             user.hashed_password = generate_password_hash(form.password.data)
 

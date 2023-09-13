@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
 	return (
 		<ul id='nav-container'>
 			<li id='icon-container' onClick={handleIconClick}>
-				<img id='icon' src={imageSrc} />
+				<img id='icon' src={imageSrc} alt='Page Icon' />
 				<p id='icon-label'>CapTracker</p>
 			</li>
 			{isLoaded && (

@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import * as capstoneActions from '../../../store/capstones';
+import * as capstoneActions from '../../../store/capstone';
 import RenderCapstone from '../RenderCapstone/index';
 
 function AllCapstones() {
   const dispatch = useDispatch();
-  const capstones = useSelector((state) => state.capstones);
+  const capstones = useSelector((state) => state.capstones.allCapstones);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(1);
 
