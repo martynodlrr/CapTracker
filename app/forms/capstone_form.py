@@ -1,8 +1,9 @@
-from wtforms import StringField, IntegerField, SubmitField, TextAreaField, DateTimeField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Length, URL
 from flask_wtf import FlaskForm
 
 from app.api.aws import ALLOWED_EXTENSIONS
+from app.models import Capstone
 
 class CapstoneForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(max=50)])

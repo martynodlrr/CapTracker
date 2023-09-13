@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from datetime import datetime
 
+from app.api.auth_routes import validation_errors_to_error_messages
 from app.api.aws import (upload_file_to_s3, get_unique_filename)
 from app.forms import CapstoneForm, CapstoneImageForm
 from app.models import Capstone, CapstoneImage, db
@@ -77,7 +78,7 @@ def create_capstone():
 
         return jsonify(capstone=new_capstone.to_dict()), 201
 
-    return form.errors
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['POST'])
@@ -115,9 +116,9 @@ def create_image_for_capstone(capstoneId):
         db.session.add(new_capstone_image)
         db.session.commit()
 
-        return jsonify(capstone_image=new_capstone_image.to_dict()), 201
+        return jsonify(capstoneImage=new_capstone_image.to_dict()), 201
 
-    return jsonify(errors=form.errors), 400
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['PUT'])
@@ -130,7 +131,7 @@ def update_capstone(capstoneId):
 
     if not capstone or current_user.id != capstone.user_id:
         return jsonify(error='Unauthorized' if capstone else 'Capstone not found'), 403 if capstone else 404
-    print(request.get_json())
+
     form = CapstoneForm(csrf_token=request.cookies['csrf_token'], data=request.get_json())
 
     if form.validate():
@@ -143,7 +144,7 @@ def update_capstone(capstoneId):
 
         return jsonify(capstone=capstone.to_dict())
 
-    return form.errors
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @capstone_routes.route('/<int:capstoneId>/images/<int:imageId>', methods=['PUT'])
@@ -172,7 +173,7 @@ def update_capstone_image(capstoneId, imageId):
 
         return jsonify(capstoneImage=capstone_image.to_dict()), 201
 
-    return form.errors
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['DELETE'])

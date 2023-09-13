@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 
@@ -8,6 +9,7 @@ import "./SignupForm.css";
 
 function SignupFormModal() {
 	const dispatch = useDispatch();
+	const history = useHistory();
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
@@ -31,6 +33,7 @@ function SignupFormModal() {
 			if (data) {
 				setErrors(data);
 			} else {
+				history.push('/capstones');
 				closeModal();
 			}
 		} else {

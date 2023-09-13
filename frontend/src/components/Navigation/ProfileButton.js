@@ -7,9 +7,11 @@ import { useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import LoginFormModal from "../LoginFormModal";
+import { useModal } from "../../context/Modal";
 import { logout } from "../../store/session";
 
 function ProfileButton({ user }) {
+  const { closeModal } = useModal();
   const dispatch = useDispatch();
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
@@ -37,6 +39,7 @@ function ProfileButton({ user }) {
   const handleLogout = (e) => {
     e.preventDefault();
     dispatch(logout());
+    closeMenu();
   };
 
   const handleProfileRedirect = () => {

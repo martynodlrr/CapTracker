@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 import * as capstoneActions from '../../../store/capstones';
+import ReviewRender from '../../Review/ReviewRender';
 import CapstoneImages from '../CapstoneImages';
 
 function CapstoneDetails() {
@@ -45,19 +46,14 @@ function CapstoneDetails() {
             <img src={capstone.author.pfp} alt={`${capstone.author.firstName} ${capstone.author.lastName}`} />
             <p>Name: {capstone.author.firstName} {capstone.author.lastName}</p>
             <p>Email: {capstone.author.email}</p>
-            <p>Username: {capstone.author.username}</p>
+            <p>Username: {capstone.author.userName}</p>
           </>
         )}
       </section>
 
       <section>
         <h2>Comments</h2>
-        {/* {capstone.comments && capstone.comments.map((comment, index) => (
-          <div key={index}>
-            <p>{comment.username}: {comment.text}</p>
-            <p>{new Date(comment.createdAt).toLocaleDateString()}</p>
-          </div>
-        ))} */}
+        <ReviewRender reviews={capstone.reviews} ownerId={capstone.author.id} />
       </section>
     </div>
   );

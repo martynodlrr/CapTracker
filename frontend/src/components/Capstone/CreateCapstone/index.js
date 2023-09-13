@@ -1,13 +1,16 @@
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import * as capstoneActions from '../../../store/capstones';
+import ReviewRender from '../../Review/ReviewRender';
 
 import './index.css';
 
 function CreateCapstone() {
   const userCapstone = useSelector((state) => state.capstones.userCapstone);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const placeholderImage = 'https://www.dcm.co.za/wp-content/uploads/2019/11/placeholder-image-icon-21.jpg';
 
@@ -18,6 +21,7 @@ function CreateCapstone() {
   const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage));
   const [images, setImages] = useState(Array(5).fill(null));
   const [create, setCreate] = useState(true);
+  const [errors, setErrors] = useState([]);
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -42,7 +46,7 @@ function CreateCapstone() {
         ]);
       }
 
-      setCreate(Object.keys(userCapstone).length ? false : true);
+      setCreate(Object.keys(userCapstone).length > 0 ? false : true);
       setLoading(false);
     }
   }, [userCapstone]);
@@ -122,6 +126,7 @@ function CreateCapstone() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const hasAtLeastOneImage = images.some(image => image !== null);
     const capstone = {
       title,
       url,
@@ -131,16 +136,33 @@ function CreateCapstone() {
     };
 
     if (create) {
+      if (!hasAtLeastOneImage) {
+        setErrors(["At least one image is required to create a capstone."]);
+        return;
+      }
+
       const createdCapstone = await dispatch(capstoneActions.createCapstone(capstone));
-      if (createdCapstone) {
+
+      if (!createdCapstone.errors) {
         await uploadImages(createdCapstone.id, images);
-        await dispatch(capstoneActions.fetchUserCapstone());
+        history.push(`/capstones/${createdCapstone.id}`);
+
+      } else {
+        setErrors(createdCapstone.errors);
       }
     } else {
       capstone.id = userCapstone.id;
-      await uploadImages(capstone.id, images, userCapstone.capstoneImages);
-      await dispatch(capstoneActions.updateCapstone(capstone));
-      await dispatch(capstoneActions.fetchUserCapstone());
+
+      const updateRes = await dispatch(capstoneActions.updateCapstone(capstone));
+
+      if (!updateRes.errors) {
+        await uploadImages(capstone.id, images, userCapstone.capstoneImages);
+        const res = await dispatch(capstoneActions.fetchUserCapstone());
+        history.push(`/capstones/${res.id}`);
+
+      } else {
+        setErrors(updateRes.errors);
+      }
     }
   };
 
@@ -207,8 +229,11 @@ function CreateCapstone() {
           previewSrc[index] ? <FileInput key={index} index={index} /> : null
         ))}
 
-        <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post` : 'Update'}</button>
+        <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
       </form>
+
+      <h2>See what others are suggesting: </h2>
+      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} /> :
     </>
   );
 }

@@ -63,7 +63,6 @@ export const fetchUserCapstone = () => async (dispatch) => {
     const data = await res.json();
 
     dispatch(updateUserCapstone({ ...data.capstone }));
-
     return data.capstone;
   }
   dispatch(updateUserCapstone({}));
@@ -74,27 +73,26 @@ export const fetchUserCapstone = () => async (dispatch) => {
 export const createCapstone = (capstone) => async (dispatch) => {
   const res = await fetch('/api/capstones/', {
     method: "POST",
-		headers: {
+    headers: {
       "Content-Type": "application/json",
-		},
-		body: JSON.stringify({
+    },
+    body: JSON.stringify({
       title: capstone.title,
-			url: capstone.url,
-			cloned_from: capstone.clonedFrom,
-			description: capstone.description,
-		}),
-	});
+      url: capstone.url,
+      cloned_from: capstone.clonedFrom,
+      description: capstone.description,
+    }),
+  });
+
+  const data = await res.json();
 
   if (res.ok) {
-    const data = await res.json();
     const id = data.capstone.id;
-
     dispatch(createUserCapstone({ [id]: { ...data.capstone } }));
-
     return data.capstone;
   }
 
-  return false
+  return data;
 };
 
 export const createCapstoneImage = (capstoneId, formData) => async (dispatch) => {
@@ -102,7 +100,12 @@ export const createCapstoneImage = (capstoneId, formData) => async (dispatch) =>
     method: 'POST',
     body: formData,
   });
+
   const data = await res.json();
+
+  if (res.ok) {
+    return data.capstoneImage;
+  }
 
   return data;
 };
@@ -122,16 +125,15 @@ export const updateCapstone = (capstone) => async (dispatch) => {
 		},
 		body: JSON.stringify(newCapstone),
 	});
+  const data = await res.json();
 
   if (res.ok) {
-    const data = await res.json();
-    console.log(data)
     dispatch(updateUserCapstone( data.capstone ));
 
     return data.capstone;
   }
 
-  return false;
+  return data;
 };
 
 export const updateCapstoneImage = (capstoneId, imageId, formData) => async (dispatch) => {
@@ -140,7 +142,13 @@ export const updateCapstoneImage = (capstoneId, imageId, formData) => async (dis
     body: formData,
   });
 
-  return res
+  const data = await res.json();
+
+  if (res.ok) {
+    return data.capstoneImage;
+  }
+
+  return data;
 };
 
 // Initial state
@@ -151,8 +159,9 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_CAPSTONES:
       return {
-        allCapstones: { ...action.payload },
-        userCapstone: { ...state.userCapstone } || {},
+        ...state,
+        allCapstones: { ...state.allCapstones, ...action.payload },
+        userCapstone: { ...state.userCapstone },
       };
 
     case SET_CAPSTONE:
@@ -171,7 +180,7 @@ export default function reducer(state = initialState, action) {
     case UPDATE_CAPSTONE:
       return {
         ...state,
-        userCapstone: { ...state.userCapstone, ...action.payload },
+        userCapstone: { ...action.payload },
       };
 
     default:

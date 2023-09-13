@@ -67,7 +67,6 @@ function Profile() {
     if (password.length >= 6)
       updatedUser.password = password;
 
-    console.log(updatedUser)
     dispatch(sessionActions.update(updatedUser, user.id))
       .catch((e) => {
         console.error("Error updating user: ", e);
@@ -79,7 +78,7 @@ function Profile() {
     if (file) {
       setPfp(file);
       const src = URL.createObjectURL(file);
-      
+
       if (previewSrc) URL.revokeObjectURL(previewSrc);
       setPreviewSrc(src);
     } else {
