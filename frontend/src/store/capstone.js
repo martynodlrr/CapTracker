@@ -1,10 +1,10 @@
 import normalizeData from './helperFunc.js';
 
 // Action types
-const SET_CAPSTONES = 'SET_CAPSTONES';
-const SET_CAPSTONE = 'SET_CAPSTONE';
-const CREATE_CAPSTONE = 'CREATE_CAPSTONE';
-const UPDATE_CAPSTONE = 'UPDATE_CAPSTONE';
+const SET_CAPSTONES = 'capstone/SET_CAPSTONES';
+const SET_CAPSTONE = 'capstone/SET_CAPSTONE';
+const CREATE_CAPSTONE = 'capstone/CREATE_CAPSTONE';
+const UPDATE_CAPSTONE = 'capstone/UPDATE_CAPSTONE';
 
 // Action creators
 const setCapstones = (capstones) => ({
@@ -180,6 +180,12 @@ export default function reducer(state = initialState, action) {
     case UPDATE_CAPSTONE:
       return {
         ...state,
+        allCapstones: {
+          ...state.allCapstones,
+          [action.payload.id]: {
+            ...action.payload,
+          },
+        },
         userCapstone: { ...action.payload },
       };
 

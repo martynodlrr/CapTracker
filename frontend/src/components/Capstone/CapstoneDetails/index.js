@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
-import * as capstoneActions from '../../../store/capstones';
+import * as capstoneActions from '../../../store/capstone';
 import ReviewRender from '../../Review/ReviewRender';
 import CapstoneImages from '../CapstoneImages';
 
@@ -53,7 +53,7 @@ function CapstoneDetails() {
 
       <section>
         <h2>Comments</h2>
-        <ReviewRender reviews={capstone.reviews} ownerId={capstone.author.id} />
+        <ReviewRender ownerId={capstone.author.id} capstoneId={capstone.id} />
       </section>
     </div>
   );

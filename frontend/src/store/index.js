@@ -1,12 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
-import capstones from './capstones';
+import capstones from './capstone';
+import reviews from './review';
 import session from './session';
 
 const appReducer = combineReducers({
   session,
   capstones,
+  reviews,
 });
 
 // clears the store once a user logs out to prevent unwanted data being saved

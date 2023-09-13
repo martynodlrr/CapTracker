@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import * as capstoneActions from '../../../store/capstones';
+import * as capstoneActions from '../../../store/capstone';
 import ReviewRender from '../../Review/ReviewRender';
 
 import './index.css';
@@ -225,6 +225,8 @@ function CreateCapstone() {
           />
         </div>
 
+        <h1>{errors.includes('At least one image is required to create a capstone.') ? 'At least one image must be uploaded' : null }</h1>
+
         {[...Array(5)].map((_, index) => (
           previewSrc[index] ? <FileInput key={index} index={index} /> : null
         ))}
@@ -233,7 +235,7 @@ function CreateCapstone() {
       </form>
 
       <h2>See what others are suggesting: </h2>
-      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} /> :
+      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} />
     </>
   );
 }

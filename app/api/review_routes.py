@@ -44,9 +44,9 @@ def create_review(capstoneId):
 
     if form.validate():
         new_review = Review(
-            comment=form.comment.data,
+            comment=data['comment'],
             user_id=current_user.id,
-            post_id=capstoneId,
+            capstone_id=capstoneId,
             created_at=datetime.utcnow()
         )
 

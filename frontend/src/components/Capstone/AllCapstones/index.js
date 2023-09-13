@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import * as capstoneActions from '../../../store/capstones';
+import * as capstoneActions from '../../../store/capstone';
 import RenderCapstone from '../RenderCapstone/index';
 
 function AllCapstones() {
