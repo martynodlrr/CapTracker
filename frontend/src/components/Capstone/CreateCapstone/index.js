@@ -235,7 +235,7 @@ function CreateCapstone() {
       </form>
 
       <h2>See what others are suggesting: </h2>
-      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} />
+      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} capstoneId={userCapstone.id}/>
     </>
   );
 }

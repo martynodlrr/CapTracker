@@ -11,10 +11,10 @@ li {
   display: none;
 }
 
-/* #nav-container {
+#nav-container {
   display: flex;
   justify-content: space-between;
-} */
+}
 
 #icon-container {
   display: flex;
