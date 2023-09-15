@@ -14,13 +14,13 @@ capstone_routes = Blueprint('capstones', __name__)
 @capstone_routes.route('/', methods=['GET'])
 def capstones():
     """
-    Query for 10 capstones at a time and returns them in a list of capstone dictionaries
+    Query for 10 capstones at a time and returns them in a list of capstone dictionaries ordered by newest to oldest
     """
     number = int(request.args.get('number', 1))
     limit = 10
     offset = (number - 1) * limit
 
-    capstones = Capstone.query.offset(offset).limit(limit).all()
+    capstones = Capstone.query.order_by(Capstone.created_at.desc()).offset(offset).limit(limit).all()
 
     if not capstones and number != 1:
         return jsonify(error="No more capstones"), 404
@@ -187,24 +187,12 @@ def delete_capstone(capstoneId):
     if not capstone or current_user.id != capstone.user_id:
         return jsonify(error='Unauthorized' if capstone else 'Capstone not found'), 403 if capstone else 404
 
+    capstone_images = CapstoneImage.query.filter_by(capstone_id=capstoneId).all()
+
+    for capstone_image in capstone_images:
+        db.session.delete(capstone_image)
+
     db.session.delete(capstone)
     db.session.commit()
 
-    return jsonify(message='Capstone deleted successfully'), 200
-
-
-@capstone_routes.route('/<capstoneId>/images/<int:capstoneImageId>', methods=['DELETE'])
-@login_required
-def delete_capstone_image(capstoneImageId):
-    """
-    deletes a capstone image by capston image id
-    """
-    capstone_image = CapstoneImage.query.get(capstoneImageId)
-
-    if not capstone_image or current_user.id != capstone_image.user_id:
-        return jsonify(error='Unauthorized' if capstone_image else 'Capstone image not found'), 403 if capstone_image else 404
-
-    db.session.delete(capstone_image)
-    db.session.commit()
-
-    return jsonify(message='Capstone image deleted successfully'), 200
+    return jsonify(message='Capstone and associated images deleted successfully'), 200

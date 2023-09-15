@@ -166,6 +166,12 @@ function CreateCapstone() {
     }
   };
 
+  const handleDelete = async capstoneId => {
+    await dispatch(capstoneActions.deleteCapstone(capstoneId));
+
+    history.push('/capstones')
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -234,8 +240,11 @@ function CreateCapstone() {
         <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
       </form>
 
+      {!create && <button onClick={() => handleDelete(userCapstone.id)}>Delete</button>}
+
       <h2>See what others are suggesting: </h2>
-      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} capstoneId={userCapstone.id}/>
+
+      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} />
     </>
   );
 }
