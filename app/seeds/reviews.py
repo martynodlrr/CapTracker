@@ -9,7 +9,7 @@ def seed_reviews():
 
     for capstone in capstones:
         reviewers = [user for user in users if user.id != capstone.user_id]
-        for i, reviewer in enumerate(reviewers[:9]):
+        for i, reviewer in enumerate(reviewers[:25]):
             review = Review(
                 user_id=reviewer.id,
                 comment=f"Review {i+1} for capstone {capstone.id}",

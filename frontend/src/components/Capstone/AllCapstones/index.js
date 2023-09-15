@@ -40,7 +40,7 @@ function AllCapstones() {
 
   return (
     <>
-      {capstones && Object.values(capstones).map((capstone, index) => (
+      {capstones && [...Object.values(capstones)].reverse().map((capstone, index) => (
         <RenderCapstone key={index} capstone={capstone} />
       ))}
       {!hasMore && <div>No more capstones available.</div>}

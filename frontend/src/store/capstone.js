@@ -5,6 +5,7 @@ const SET_CAPSTONES = 'capstone/SET_CAPSTONES';
 const SET_CAPSTONE = 'capstone/SET_CAPSTONE';
 const CREATE_CAPSTONE = 'capstone/CREATE_CAPSTONE';
 const UPDATE_CAPSTONE = 'capstone/UPDATE_CAPSTONE';
+const DELETE_CAPSTONE = 'capstone/DELETE_CAPSTONE';
 
 // Action creators
 const setCapstones = (capstones) => ({
@@ -25,6 +26,11 @@ const createUserCapstone = (capstone) => ({
 const updateUserCapstone = (capstone) => ({
   type: UPDATE_CAPSTONE,
   payload: capstone
+});
+
+const deleteUserCapstone = (capstoneId) => ({
+  type: DELETE_CAPSTONE,
+  payload: capstoneId
 });
 
 // Thunk
@@ -151,6 +157,15 @@ export const updateCapstoneImage = (capstoneId, imageId, formData) => async (dis
   return data;
 };
 
+export const deleteCapstone = (capstoneId) => async (dispatch) => {
+  const res = await fetch(`/api/capstones/${capstoneId}`, {
+    method: 'DELETE',
+  });
+  dispatch(deleteUserCapstone(capstoneId));
+
+  return
+};
+
 // Initial state
 const initialState = {};
 
@@ -188,6 +203,16 @@ export default function reducer(state = initialState, action) {
         },
         userCapstone: { ...action.payload },
       };
+
+      case DELETE_CAPSTONE:
+        const updatedAllCapstones = { ...state.allCapstones };
+        delete updatedAllCapstones[action.payload];
+
+        return {
+            ...state,
+            allCapstones: updatedAllCapstones,
+            userCapstone: {}
+        };
 
     default:
       return state;

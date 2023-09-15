@@ -7,6 +7,7 @@ import { useModal } from "../../../context/Modal";
 import CreateReview from '../CreateReview';
 
 function ReviewRender({ ownerId, create, capstoneId }) {
+  const userCapstone = useSelector((state) => state.capstones.userCapstone);
   const user = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.reviews)
   const [showMenu, setShowMenu] = useState(false);
@@ -18,11 +19,17 @@ function ReviewRender({ ownerId, create, capstoneId }) {
   };
 
   useEffect(() => {
-    if (!Object.values(reviews).length) {
-      dispatch(reviewActions.getReviews(capstoneId));
-    }
 
-  }, [dispatch, reviews])
+    if (userCapstone && Object.values(userCapstone).length) {
+      if (!Object.values(reviews).length) {
+        dispatch(reviewActions.getReviews(userCapstone.id));
+      }
+    } else {
+      if (!Object.values(reviews).length) {
+        dispatch(reviewActions.getReviews(capstoneId));
+      }
+    }
+  }, [dispatch, reviews, userCapstone])
 
   useEffect(() => {
     if (!showMenu) return;
@@ -78,7 +85,7 @@ function ReviewRender({ ownerId, create, capstoneId }) {
                 <OpenModalButton
                   buttonText="Edit"
                   onItemClick={closeMenu}
-                  modalComponent={<CreateReview create={false} capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={ review.comment } />}
+                  modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={ review.comment } />}
                 />
                 <button onClick={() => handleDelete(review.id)}>Delete</button>
               </>
