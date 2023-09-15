@@ -176,7 +176,7 @@ function Profile() {
           <input
             id="github"
             className='profile-input'
-            type="text"
+            type="url"
             onChange={(e) => setGithub(e.target.value)}
             value={github}
             placeholder="GitHub"
@@ -188,7 +188,7 @@ function Profile() {
           <input
             id="linkedIn"
             className='profile-input'
-            type="text"
+            type="url"
             onChange={(e) => setLinkedIn(e.target.value)}
             value={linkedIn}
             placeholder="LinkedIn"
