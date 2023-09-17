@@ -1,0 +1,91 @@
+.SignupFormModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.SignupFormModal h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.SignupFormModal label {
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.SignupFormModal label > div,
+.SignupFormModal label > input {
+  width: 100%;
+}
+
+.SignupFormModal input {
+  padding: 8px;
+  margin: 5px 0;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.SignupFormModal button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #008cba;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.SignupFormModal ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.SignupFormModal li {
+  margin: 5px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 400px;
+}
+
+form > button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #61dafb;
+  color: #282c34;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+form > label {
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+#submit-button {
+  align-self: center;
+}
+
+.error-display {
+	color: red;
+	font-size: 14px;
+}

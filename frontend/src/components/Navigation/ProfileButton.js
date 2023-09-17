@@ -10,6 +10,8 @@ import LoginFormModal from "../LoginFormModal";
 import { useModal } from "../../context/Modal";
 import { logout } from "../../store/session";
 
+import './Navigation.css';
+
 function ProfileButton({ user }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -26,9 +28,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
-      }
+      setShowMenu(false);
     };
 
     document.addEventListener("click", closeMenu);
@@ -55,7 +55,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button onClick={openMenu} id='menuBars'>
         <FontAwesomeIcon icon={faBars} />
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -63,8 +63,8 @@ function ProfileButton({ user }) {
           <>
             <li><img src={user.pfp} alt="User's Profile" id="pfp" /></li>
             <li>{user.username}</li>
-            <li><button onClick={handleProfileRedirect}>Profile</button></li>
-            <li><button onClick={handleCapstoneRedirect}>Capstone</button></li>
+            <li><button onClick={handleProfileRedirect} className='Buttons'>Profile</button></li>
+            <li><button onClick={handleCapstoneRedirect} className='Buttons'>Capstone</button></li>
             <nav>
               <button onClick={handleLogout}>Log Out</button>
             </nav>

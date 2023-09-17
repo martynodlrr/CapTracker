@@ -1,0 +1,48 @@
+.capstones {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.capstones button {
+  position: absolute;
+  top: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 2;
+}
+
+.capstones button:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.capstones button:nth-child(1) {
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.capstones button:nth-child(3) {
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.capstone-img-render {
+  width: 800px;
+  border-radius: 8px;
+  transition: transform 0.3s;
+  z-index: 1;
+}
+.capstone-img-render {
+  max-width: 600px;
+  max-height: 600px;
+}
+.capstone-img-render:hover {
+  transform: scale(1.05);
+}
+
+#hidden {
+  display: none;
+}

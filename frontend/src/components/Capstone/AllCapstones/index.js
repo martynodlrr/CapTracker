@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import * as capstoneActions from '../../../store/capstone';
 import RenderCapstone from '../RenderCapstone/index';
 
+import './index.css';
+
 function AllCapstones() {
   const dispatch = useDispatch();
   const capstones = useSelector((state) => state.capstones.allCapstones);
@@ -12,6 +14,7 @@ function AllCapstones() {
 
   useEffect(() => {
     dispatch(capstoneActions.fetchCapstones(1));
+    dispatch(capstoneActions.fetchUserCapstone());
   }, [dispatch]);
 
   const handleScroll = useCallback(async () => {
@@ -40,10 +43,14 @@ function AllCapstones() {
 
   return (
     <>
-      {capstones && [...Object.values(capstones)].reverse().map((capstone, index) => (
-        <RenderCapstone key={index} capstone={capstone} />
-      ))}
-      {!hasMore && <div>No more capstones available.</div>}
+      <div className="all-capstones-container">
+        {capstones && [...Object.values(capstones)].reverse().map((capstone, index) => (
+          <div className="capstone-item" key={index}>
+            <RenderCapstone capstone={capstone} />
+          </div>
+        ))}
+        {!hasMore && <div className="no-more-capstones">No more capstones available.</div>}
+      </div>
     </>
   );
 }

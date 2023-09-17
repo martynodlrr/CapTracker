@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
+import 'font-awesome/css/font-awesome.min.css';
 import { useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 import * as capstoneActions from '../../../store/capstone';
 import ReviewRender from '../../Review/ReviewRender';
 import CapstoneImages from '../CapstoneImages';
+
+import './index.css';
 
 function CapstoneDetails() {
   const dispatch = useDispatch();
@@ -22,40 +25,62 @@ function CapstoneDetails() {
   }
 
   return (
-    <div>
-      <h1>{capstone.title}</h1>
+    <>
+      <div className="CapstoneDetails">
+        <div id='capstone'>
+          <h1>{capstone.title}</h1>
 
-      <section>
-        <h2>Images</h2>
-        <CapstoneImages images={capstone.capstoneImages} capstoneId={capstone.id} />
-      </section>
+          <section>
+            <CapstoneImages images={capstone.capstoneImages} capstoneId={capstone.id} />
+          </section>
 
-      <section>
-        <h2>Project Details</h2>
-        <p>Created At: {capstone.created_at && new Date(capstone.created_at).toLocaleString()}</p>
-        <p>Description: {capstone.description}</p>
-        <a href={capstone.url} target="_blank" rel="noopener noreferrer">
-          Visit project
-        </a>
-      </section>
+          <section>
+            <p>About: {capstone.description}</p>
+            <p>Site Cloned: {capstone.clonedFrom}</p>
+            <a href={capstone.url} target="_blank" rel="noopener noreferrer">
+              Visit project
+            </a>
+          </section>
 
-      <section>
-        <h2>Author Details</h2>
-        {capstone.author && (
-          <>
-            <img src={capstone.author.pfp} alt={`${capstone.author.firstName} ${capstone.author.lastName}`} />
-            <p>Name: {capstone.author.firstName} {capstone.author.lastName}</p>
-            <p>Email: {capstone.author.email}</p>
-            <p>Username: {capstone.author.userName}</p>
-          </>
-        )}
-      </section>
+        </div>
+        <div id='author'>
+          <section>
+            <h2>Author: </h2>
+            {capstone.author && (
+              <>
+                <img src={capstone.author.pfp} alt={`${capstone.author.firstName} ${capstone.author.lastName}`} />
+                <p>Name: {capstone.author.firstName} {capstone.author.lastName}</p>
+                <p>Email: {capstone.author.email}</p>
+                <p>Username: {capstone.author.userName}</p>
+                {capstone.author.GitHub ?
+                  <p>
+                    <a href={capstone.author.GitHub && !capstone.author.GitHub.startsWith('http') ? `http://${capstone.author.GitHub}` : capstone.author.GitHub} target="_blank" rel="noopener noreferrer">
+                      <i className="fa fa-github" aria-hidden="true"></i>
+                    </a>
+                  </p>
+                  : null}
+                {console.log(capstone.author.LinkedIn)}
+                {capstone.author.LinkedIn ?
+                  <p>
 
-      <section>
-        <h2>Comments</h2>
-        <ReviewRender ownerId={capstone.author.id} capstoneId={capstone.id} />
-      </section>
-    </div>
+                    <a href={capstone.author.LinkedIn && !capstone.author.LinkedIn.startsWith('http') ? `http://${capstone.author.LinkedIn}` : capstone.author.LinkedIn} target="_blank" rel="noopener noreferrer">
+                      <i className="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                  </p>
+                  : null}
+              </>
+            )}
+          </section>
+        </div>
+      </div>
+
+      <div>
+        <section>
+          <h2>Comments: </h2>
+          <ReviewRender ownerId={capstone.author.id} capstoneId={capstone.id} />
+        </section>
+      </div>
+    </>
   );
 }
 

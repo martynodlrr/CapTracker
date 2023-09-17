@@ -45,7 +45,7 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
           />
         </div>
 
-        <button type="submit" className="form-submit" >{ create ? 'post' : 'update' }</button>
+        <button type="submit" className="form-submit" id='submit-button'>{ create ? 'post' : 'update' }</button>
       </form>
     </>
   );

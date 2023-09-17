@@ -19,7 +19,12 @@ function LoginFormModal() {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
-      setErrors(data);
+      for (const error of data) {
+        if (error.includes('Invalid')) {
+          setErrors(['Invalid Credentials']);
+          break;
+        }
+      }
     } else {
       history.push('/capstones');
       closeModal()
@@ -36,13 +41,13 @@ function LoginFormModal() {
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        <div id='errors-display' className={!Object.values(errors).length ? 'hidden' : ''}>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
-        </ul>
+        </div>
         <label>
-          Email
+          Email:
           <input
             type="text"
             value={email}
@@ -51,7 +56,7 @@ function LoginFormModal() {
           />
         </label>
         <label>
-          Password
+          Password:
           <input
             type="password"
             value={password}
@@ -59,9 +64,9 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button type="submit">Log In</button>
+        <button type="submit" className='Buttons'>Log In</button>
+        <button onClick={() => signInDemo()} className='Buttons' id='demo'>Demo Login</button>
       </form>
-      <button onClick={() => signInDemo()}>Demo Login</button>
     </>
   );
 }
