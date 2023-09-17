@@ -7,11 +7,11 @@ def seed_capstone_images():
     capstones = Capstone.query.all()
 
     images = [
-        'https://miro.medium.com/v2/resize:fit:700/1*ZvtdfRPAdFpf2av_bvqE6w.png',
-        'https://bpb-us-w2.wpmucdn.com/sites.udel.edu/dist/7/4534/files/2018/05/how-to-create-a-website-feature-image-e1496943224192-1yzdyp6.jpg',
-        'https://thewebsitearchitect.com/wp-content/uploads/2021/02/How-do-you-draw-a-website-wireframe.jpg',
-        'https://techindustan.com/wp-content/uploads/2018/05/10241.jpg',
-        'https://cdn.sanity.io/images/599r6htc/localized/bda2660181ef9f8ba0380a54360479cd0bde3f8e-1108x1108.png?w=514&h=514&q=75&fit=max&auto=format'
+        'https://captracker.s3.amazonaws.com/0a70e0ea18f34d92b3b53ff0ec5b1947.jpg',
+        'https://captracker.s3.amazonaws.com/a2782804b7234f6cacca519e9c0a5b9d.jpg',
+        'https://captracker.s3.amazonaws.com/5967e0a4144b4ced9ce12109a4f61425.jpg',
+        'https://captracker.s3.amazonaws.com/96df691dd2384bf8af5352a3e155d71a.jpg',
+        'https://captracker.s3.amazonaws.com/e62afd0ef92b4d31b6eab71746cb5cca.jpg'
     ]
 
     for capstone in capstones:
