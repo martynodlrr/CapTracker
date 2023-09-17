@@ -166,8 +166,7 @@ function CreateCapstone() {
     }
   };
 
-  const handleDelete = async (e, capstoneId) => {
-    e.preventDefault();
+  const handleDelete = async capstoneId => {
 
     await dispatch(capstoneActions.deleteCapstone(capstoneId));
     history.push('/capstones');
@@ -243,7 +242,7 @@ function CreateCapstone() {
 
         <div className="form-field" id='button-types'>
           <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
-          {!create && <button onClick={(e) => handleDelete(e, userCapstone.id)} id='delete-button'>Delete</button>}
+          {!create && <button onClick={() => handleDelete(userCapstone.id)} id='delete-button'>Delete</button>}
         </div>
       </form>
 
