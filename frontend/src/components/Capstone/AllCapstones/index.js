@@ -44,11 +44,15 @@ function AllCapstones() {
   return (
     <>
       <div className="all-capstones-container">
-        {capstones && [...Object.values(capstones)].reverse().map((capstone, index) => (
-          <div className="capstone-item" key={index}>
-            <RenderCapstone capstone={capstone} />
-          </div>
-        ))}
+        {capstones && Object.values(capstones)
+          .filter(capstone => Object.keys(capstone).length > 0)
+          .reverse()
+          .map((capstone, index) => (
+            <div className="capstone-item" key={index}>
+              <RenderCapstone capstone={capstone} />
+            </div>
+          ))
+        }
         {!hasMore && <div className="no-more-capstones">No more capstones available.</div>}
       </div>
     </>
