@@ -64,8 +64,11 @@ function Profile() {
       github
     }
 
-    if (password.length >= 6)
+    if (password.length > 5) {
       updatedUser.password = password;
+    } else {
+      updatedUser.password = undefined;
+    }
 
     dispatch(sessionActions.update(updatedUser, user.id))
       .catch((e) => {

@@ -107,11 +107,13 @@ def update_user(id):
         'firstName': request.form.get('firstName'),
         'lastName': request.form.get('lastName'),
         'userName': request.form.get('userName'),
-        'password': request.form.get('password'),
         'linkedin': request.form.get('linkedIn'),
         'github': request.form.get('github'),
         'email': request.form.get('email'),
     }
+    if request.form.get('password'):
+        form_data['password'] = request.form.get('password')
+
     form = UpdateUserForm(data=form_data)
 
     if form_data['email']:
