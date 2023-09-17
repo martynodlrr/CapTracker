@@ -22,7 +22,7 @@ function AllCapstones() {
     // window.innerHeight is how much of the page is showing
     // document.body.offsetHeight is how much of the page is availible
 
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 500;
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
     if (nearBottom && hasMore) {
       setPageNumber((prevNumber) => {
         const newNumber = prevNumber + 1;
