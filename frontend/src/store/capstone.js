@@ -71,7 +71,7 @@ export const fetchUserCapstone = () => async (dispatch) => {
     dispatch(updateUserCapstone({ ...data.capstone }));
     return data.capstone;
   }
-  dispatch(updateUserCapstone());
+  dispatch(updateUserCapstone({}));
 
   return false;
 };
@@ -211,7 +211,7 @@ export default function reducer(state = initialState, action) {
         return {
             ...state,
             allCapstones: updatedAllCapstones,
-            userCapstone: undefined
+            userCapstone: {}
         };
 
     default:

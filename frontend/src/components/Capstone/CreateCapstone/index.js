@@ -12,7 +12,7 @@ function CreateCapstone() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const placeholderImage = 'https://captracker.s3.amazonaws.com/a3065699eb9d43e29e7cd2a731007ee9.jpg';
+  const placeholderImage = 'https://www.dcm.co.za/wp-content/uploads/2019/11/placeholder-image-icon-21.jpg';
 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
@@ -166,7 +166,8 @@ function CreateCapstone() {
     }
   };
 
-  const handleDelete = async capstoneId => {
+  const handleDelete = async (e, capstoneId) => {
+    e.preventDefault();
 
     await dispatch(capstoneActions.deleteCapstone(capstoneId));
     history.push('/capstones');
@@ -242,7 +243,7 @@ function CreateCapstone() {
 
         <div className="form-field" id='button-types'>
           <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
-          {!create && <button onClick={() => handleDelete(userCapstone.id)} id='delete-button'>Delete</button>}
+          {!create && <button onClick={(e) => handleDelete(e, userCapstone.id)} id='delete-button'>Delete</button>}
         </div>
       </form>
 
