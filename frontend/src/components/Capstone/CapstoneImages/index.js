@@ -23,11 +23,11 @@ function CapstoneImages({ images, capstoneId }) {
     <div className='capstones'>
       {images && images.length > 0 && (
         <>
-          <button onClick={prevImage}>Previous</button>
+          <button id={currentIndex === 0 ? 'hidden' : ''} onClick={prevImage}>←</button>
           <div key={images[currentIndex].id} onClick={handleImageClick}>
-            <img className='capstone-img-render' src={images[currentIndex].imageUrl} alt={`Capstone Website Preview #${images[currentIndex]}`} />
+            <img className='capstone-img-render' src={images[currentIndex].imageUrl} alt={`Capstone Website Preview #${currentIndex + 1}`} />
           </div>
-          <button onClick={nextImage}>Next</button>
+          <button id={currentIndex === images.length - 1 ? 'hidden' : ''} onClick={nextImage}>→</button>
         </>
       )}
     </div>

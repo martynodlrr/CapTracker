@@ -3,17 +3,17 @@
   margin-top: 10px;
 }
 
-/* .file-input-container {
+.file-input-container {
   display: flex;
   align-items: center;
-} */
+}
 
 .file-select-button {
-  /* padding: 10px; */
-  /* background-color: #007BFF; */
-  /* border: none; */
-  /* border-radius: 5px; */
-  /* color: #fff; */
+  padding: 0px;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
   cursor: pointer;
 }
 
@@ -29,13 +29,22 @@
   width: fit-content;
 }
 
-#profile-picture{
-  width: 75px;
-  height: 75px;
-  margin-top: 20px;
-}
-
 #socials-title {
   margin-top: 10px;
   margin-bottom: -5px;
+}
+
+#profile-group{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  align-items: center;
+}
+
+.file-input-container img {
+  max-width: 300px;
 }

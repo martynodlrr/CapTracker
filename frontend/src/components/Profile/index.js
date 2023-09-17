@@ -87,7 +87,7 @@ function Profile() {
   };
 
   return (
-    <>
+    <div id='profile-group'>
       <h1>{greeting}</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data" id='profile-form'>
         <div className='file-input-container'>
@@ -106,7 +106,7 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="firstName" className='profile-label'>First Name</label>
+          <label htmlFor="firstName" className='profile-label'>First Name: </label>
           <input
             id="firstName"
             className='profile-input'
@@ -119,7 +119,7 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="lastName" className='profile-label'>Last Name</label>
+          <label htmlFor="lastName" className='profile-label'>Last Name: </label>
           <input
             id="lastName"
             className='profile-input'
@@ -132,7 +132,7 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="email" className='profile-label'>Email</label>
+          <label htmlFor="email" className='profile-label'>Email: </label>
           <input
             id="email"
             className='profile-input'
@@ -145,7 +145,7 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="userName" className='profile-label'>Username</label>
+          <label htmlFor="userName" className='profile-label'>Username: </label>
           <input
             id="userName"
             className='profile-input'
@@ -158,7 +158,7 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="password" className='profile-label'>Password</label>
+          <label htmlFor="password" className='profile-label'>Password: </label>
           <input
             id="password"
             className='profile-input'
@@ -172,7 +172,7 @@ function Profile() {
         <h3 id='socials-title'>Socials</h3>
 
         <div className="form-field">
-          <label htmlFor="github" className='profile-label'>GitHub</label>
+          <label htmlFor="github" className='profile-label'>GitHub: </label>
           <input
             id="github"
             className='profile-input'
@@ -184,11 +184,11 @@ function Profile() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="linkedIn" className='profile-label'>LinkedIn</label>
+          <label htmlFor="linkedIn" className='profile-label'>LinkedIn: </label>
           <input
             id="linkedIn"
             className='profile-input'
-            type="url"
+            type="text"
             onChange={(e) => setLinkedIn(e.target.value)}
             value={linkedIn}
             placeholder="LinkedIn"
@@ -197,7 +197,7 @@ function Profile() {
 
         <button type="submit" className="form-submit" disabled={disabled}>Update Profile</button>
       </form>
-    </>
+    </div>
   );
 }
 

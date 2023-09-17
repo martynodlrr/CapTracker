@@ -1,3 +1,28 @@
 .capstones {
   width: fit-content;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.capstones h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.capstones p {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.capstones a {
+  color: #0066cc;
+  text-decoration: none;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.capstones a:hover {
+  text-decoration: underline;
 }

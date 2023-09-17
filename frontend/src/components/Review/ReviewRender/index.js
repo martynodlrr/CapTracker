@@ -6,10 +6,12 @@ import OpenModalButton from '../../OpenModalButton';
 import { useModal } from "../../../context/Modal";
 import CreateReview from '../CreateReview';
 
+import './index.css';
+
 function ReviewRender({ ownerId, create, capstoneId }) {
   const userCapstone = useSelector((state) => state.capstones.userCapstone);
   const user = useSelector(state => state.session.user);
-  const reviews = useSelector(state => state.reviews)
+  const reviews = useSelector(state => state.reviews);
   const [showMenu, setShowMenu] = useState(false);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -57,17 +59,13 @@ function ReviewRender({ ownerId, create, capstoneId }) {
     return Object.values(reviews).some(review => user.id === review.author.id);
   }
 
-  const handleEdit = reviews => {
-    return reviews.some(review => user.id === review.author.id);
-  }
-
   const handleDelete = async reviewId => {
     await dispatch(reviewActions.deleteReview(reviewId))
   }
 
   return (
-    <div>
-      <section>
+    <div className="review-render">
+      <section className="review-section">
         {user.id !== ownerId && !userHasReviewCheck(reviews) && <OpenModalButton
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
@@ -75,9 +73,9 @@ function ReviewRender({ ownerId, create, capstoneId }) {
         />}
       </section>
 
-      <section ref={ulRef}>
+      <section className="review-list" ref={ulRef}>
         {Object.values(reviews).map((review, index) => (
-          <div key={index}>
+          <div key={index} className="review-item">
             <p>{review.author.userName}: {review.comment}</p>
             <p>{new Date(review.createdAt).toLocaleDateString()}</p>
             {review.author.id === user.id ? (
@@ -85,7 +83,7 @@ function ReviewRender({ ownerId, create, capstoneId }) {
                 <OpenModalButton
                   buttonText="Edit"
                   onItemClick={closeMenu}
-                  modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={ review.comment } />}
+                  modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />}
                 />
                 <button onClick={() => handleDelete(review.id)}>Delete</button>
               </>

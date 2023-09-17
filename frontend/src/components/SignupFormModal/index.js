@@ -17,6 +17,12 @@ function SignupFormModal() {
 	const [lastName, setLastName] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errors, setErrors] = useState([]);
+	const [firstNameError, setFirstNameError] = useState("");
+	const [lastNameError, setLastNameError] = useState("");
+	const [usernameError, setUsernameError] = useState("");
+	const [emailError, setEmailError] = useState("");
+	const [passwordError, setPasswordError] = useState("");
+	const [confirmPasswordError, setConfirmPasswordError] = useState("");
 	const { closeModal } = useModal();
 
 	const handleSubmit = async (e) => {
@@ -30,16 +36,22 @@ function SignupFormModal() {
 				lastName
 			}
 			const data = await dispatch(signUp(user));
+
 			if (data) {
 				setErrors(data);
+				data.forEach(error => {
+					if (error.includes("first_name")) setFirstNameError(error.split('Field ')[1]);
+					if (error.includes("last_name")) setLastNameError(error.split('Field ')[1]);
+					if (error.includes("username")) setUsernameError(error.split('Field ')[1]);
+					if (error.includes("email")) setEmailError(error.split(' : ')[1]);
+					if (error.includes("password")) setPasswordError(error.split('Field ')[1]);
+				});
 			} else {
 				history.push('/capstones');
 				closeModal();
 			}
 		} else {
-			setErrors([
-				"Confirm Password field must be the same as the Password field",
-			]);
+			setConfirmPasswordError("Confirm Password field must be the same as the Password field");
 		}
 	};
 
@@ -47,73 +59,73 @@ function SignupFormModal() {
 		<>
 			<h1>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
-				<ul>
-					{errors.map((error, idx) => (
-						<li key={idx}>{error}</li>
-					))}
-				</ul>
-
+				<div className="error-display">{firstNameError}</div>
 				<label>
-					First Name
+					First Name:
 					<input
 						type="text"
 						value={firstName}
-						onChange={(e) => setFirstName(e.target.value)}
+						onChange={(e) => { setFirstName(e.target.value); setFirstNameError(''); }}
 						required
 					/>
 				</label>
 
+				<div className="error-display">{lastNameError}</div>
 				<label>
-					Last Name
+					Last Name:
 					<input
 						type="text"
 						value={lastName}
-						onChange={(e) => setLastName(e.target.value)}
+						onChange={(e) => { setLastName(e.target.value); setLastNameError(''); }}
 						required
 					/>
 				</label>
 
+				<div className="error-display">{emailError}</div>
 				<label>
-					Email
+					Email:
 					<input
 						type="text"
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
 						required
 					/>
 				</label>
 
+				<div className="error-display">{usernameError}</div>
 				<label>
-					Username
+					Username:
 					<input
 						type="text"
 						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						onChange={(e) => { setUsername(e.target.value); setUsernameError(''); }}
 						required
 					/>
 				</label>
 
+				<div className="error-display">{passwordError}</div>
 				<label>
-					Password
+					Password:
 					<input
 						type="password"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
 						required
 					/>
 				</label>
 
+				<div className="error-display">{confirmPasswordError}</div>
 				<label>
-					Confirm Password
+					Confirm Password:
 					<input
 						type="password"
 						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
+						onChange={(e) => { setConfirmPassword(e.target.value); setConfirmPasswordError(''); }}
 						required
 					/>
 				</label>
 
-				<button type="submit">Sign Up</button>
+				<button type="submit" id='submit-button'>Sign Up</button>
 			</form>
 		</>
 	);

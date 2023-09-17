@@ -166,10 +166,11 @@ function CreateCapstone() {
     }
   };
 
-  const handleDelete = async capstoneId => {
-    await dispatch(capstoneActions.deleteCapstone(capstoneId));
+  const handleDelete = async (e, capstoneId) => {
+    e.preventDefault();
 
-    history.push('/capstones')
+    await dispatch(capstoneActions.deleteCapstone(capstoneId));
+    history.push('/capstones');
   };
 
   if (loading) {
@@ -180,7 +181,7 @@ function CreateCapstone() {
     <>
       <form onSubmit={handleSubmit} encType="multipart/form-data" id='capstone-form'>
         <div className="form-field">
-          <label htmlFor="title" className='capstone-label'>Title of project</label>
+          <label htmlFor="title" className='capstone-label'>Title of project: </label>
           <input
             id="title"
             className='capstone-input'
@@ -193,7 +194,7 @@ function CreateCapstone() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="url" className='capstone-label'>Website URL</label>
+          <label htmlFor="url" className='capstone-label'>Website URL: </label>
           <input
             id="url"
             className='capstone-input'
@@ -206,7 +207,7 @@ function CreateCapstone() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="description" className='capstone-label'>Description</label>
+          <label htmlFor="description" className='capstone-label'>Description: </label>
           <input
             id="description"
             className='capstone-input'
@@ -219,7 +220,7 @@ function CreateCapstone() {
         </div>
 
         <div className="form-field">
-          <label htmlFor="clonedFrom" className='capstone-label'>Site Cloned From</label>
+          <label htmlFor="clonedFrom" className='capstone-label'>Site Cloned From: </label>
           <input
             id="clonedFrom"
             className='capstone-input'
@@ -231,19 +232,22 @@ function CreateCapstone() {
           />
         </div>
 
-        <h1>{errors.includes('At least one image is required to create a capstone.') ? 'At least one image must be uploaded' : null }</h1>
+        <h1>{errors.includes('At least one image is required to create a capstone.') ? 'At least one image must be uploaded' : null}</h1>
 
-        {[...Array(5)].map((_, index) => (
-          previewSrc[index] ? <FileInput key={index} index={index} /> : null
-        ))}
+        <div className="form-field">
+          <label htmlFor="images" className='capstone-label'>Upload Images: </label>
+          {[...Array(5)].map((_, index) => (
+            previewSrc[index] ? <FileInput key={index} index={index} /> : null
+          ))}
+        </div>
 
-        <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
+        <div className="form-field" id='button-types'>
+          <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
+          {!create && <button onClick={(e) => handleDelete(e, userCapstone.id)} id='delete-button'>Delete</button>}
+        </div>
       </form>
 
-      {!create && <button onClick={() => handleDelete(userCapstone.id)}>Delete</button>}
-
       <h2>See what others are suggesting: </h2>
-
       <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} />
     </>
   );

@@ -1,4 +1,115 @@
-.capstone-img-render {
+/* Container for all form fields */
+#capstone-form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Styling individual form fields */
+.form-field {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Styling labels */
+.capstone-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+/* Styling input fields */
+.capstone-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* Styling the file input and preview */
+.file-input-container {
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.file-input-container img {
+  width: 100%;
   max-width: 300px;
-  max-height: 300px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.file-input-container span {
+  display: block;
+}
+
+/* Styling buttons */
+.file-select-button, .form-submit, button[onClick^="handleDelete"] {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.file-select-button:hover, .form-submit:hover, button[onClick^="handleDelete"]:hover {
+  background-color: #0056b3;
+}
+
+.profile-input-hidden {
+  display: none;
+}
+
+/* Styling error message */
+h1 {
+  color: red;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Delete button styling */
+button[onClick^="handleDelete"] {
+  background-color: #dc3545;
+}
+
+button[onClick^="handleDelete"]:hover {
+  background-color: #c82333;
+}
+
+/* Loading state styling */
+div[children^="Loading"] {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+#delete-button {
+  background-color: red;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  color: #282c34;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+#button-types{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-around;
 }

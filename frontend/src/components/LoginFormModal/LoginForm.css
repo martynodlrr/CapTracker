@@ -1,0 +1,116 @@
+.LoginFormModal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.LoginFormModal h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.LoginFormModal form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.LoginFormModal form ul {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 10px;
+  color: red;
+  width: 100%;
+}
+
+.LoginFormModal form ul li {
+  margin: 5px 0;
+}
+
+.LoginFormModal form label {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.LoginFormModal form label input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-size: 16px;
+}
+
+.LoginFormModal form button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+}
+
+.LoginFormModal form button:hover {
+  background-color: #0056b3;
+}
+
+.LoginFormModal button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.LoginFormModal button:hover {
+  background-color: #218838;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > input {
+  display: flex;
+  align-items: center;
+}
+
+.Buttons {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #61dafb;
+  color: #282c34;
+  cursor: pointer;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  align-self: center;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+#submit-button {
+  align-self: center;
+}
+
+#errors-display {
+  color: red;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
