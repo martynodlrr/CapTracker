@@ -31,7 +31,8 @@ function LoginFormModal() {
     }
   };
 
-  const signInDemo = async () => {
+  const signInDemo = async (e) => {
+    e.preventDefault();
     await dispatch(login('demo@aa.io', 'password'));
     history.push('/capstones');
     closeModal();
@@ -65,7 +66,7 @@ function LoginFormModal() {
           />
         </label>
         <button type="submit" className='Buttons'>Log In</button>
-        <button onClick={() => signInDemo()} className='Buttons' id='demo'>Demo Login</button>
+        <button onClick={signInDemo} className='Buttons' id='demo'>Demo Login</button>
       </form>
     </>
   );

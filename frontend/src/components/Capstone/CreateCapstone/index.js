@@ -12,7 +12,7 @@ function CreateCapstone() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const placeholderImage = 'https://www.dcm.co.za/wp-content/uploads/2019/11/placeholder-image-icon-21.jpg';
+  const placeholderImage = 'https://captracker.s3.amazonaws.com/a3065699eb9d43e29e7cd2a731007ee9.jpg';
 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');

@@ -211,7 +211,7 @@ export default function reducer(state = initialState, action) {
         return {
             ...state,
             allCapstones: updatedAllCapstones,
-            userCapstone: {}
+            userCapstone: undefined
         };
 
     default:

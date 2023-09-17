@@ -106,13 +106,13 @@ export const signUp = (user) => async (dispatch) => {
 export const update = (user) => async (dispatch) => {
 	const formData = new FormData();
 
-	formData.append('firstName', user.firstName);
-	formData.append('lastName', user.lastName);
-	formData.append('userName', user.userName);
-	formData.append('password', user.password);
-	formData.append('linkedin', user.linkedIn);
-	formData.append('github', user.github);
-	formData.append('email', user.email);
+	if (user.firstName !== undefined && user.firstName !== null) formData.append('firstName', user.firstName);
+	if (user.lastName !== undefined && user.lastName !== null) formData.append('lastName', user.lastName);
+	if (user.userName !== undefined && user.userName !== null) formData.append('userName', user.userName);
+	if (user.password !== undefined && user.password !== null) formData.append('password', user.password);
+	if (user.linkedIn !== undefined && user.linkedIn !== null) formData.append('linkedin', user.linkedIn);
+	if (user.github !== undefined && user.github !== null) formData.append('github', user.github);
+	if (user.email !== undefined && user.email !== null) formData.append('email', user.email);
 
 	// Only add the pfp field if it's a File object (not a URL)
 	if (user.pfp && user.pfp instanceof File) {
