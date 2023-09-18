@@ -169,8 +169,8 @@ function CreateCapstone() {
   const handleDelete = async (e, capstoneId) => {
     e.preventDefault();
 
-    await dispatch(capstoneActions.deleteCapstone(capstoneId));
     history.push('/capstones');
+    await dispatch(capstoneActions.deleteCapstone(capstoneId));
   };
 
   if (loading) {
