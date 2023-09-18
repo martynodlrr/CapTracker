@@ -35,7 +35,7 @@ function CapstoneDetails() {
           </section>
 
           <section>
-            <p>About: {capstone.description}</p>
+            <p id='description'>About: {capstone.description}</p>
             <p>Site Cloned: {capstone.clonedFrom}</p>
             <a href={capstone.url} target="_blank" rel="noopener noreferrer">
               Visit project
