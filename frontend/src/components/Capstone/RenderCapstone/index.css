@@ -26,3 +26,8 @@
 .capstones a:hover {
   text-decoration: underline;
 }
+
+#description {
+  width: 600px;
+  word-wrap: break-word;
+}
