@@ -59,7 +59,6 @@ function CapstoneDetails() {
                     </a>
                   </p>
                   : null}
-                {console.log(capstone.author.LinkedIn)}
                 {capstone.author.LinkedIn ?
                   <p>
 
