@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import * as reviewActions from '../../../store/review';
 import OpenModalButton from '../../OpenModalButton';
@@ -8,11 +9,12 @@ import CreateReview from '../CreateReview';
 
 import './index.css';
 
-function ReviewRender({ ownerId, create, capstoneId }) {
+function ReviewRender({ ownerId, create }) {
   const userCapstone = useSelector((state) => state.capstones.userCapstone);
   const user = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.reviews);
   const [showMenu, setShowMenu] = useState(false);
+  const { capstoneId } = useParams();
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const ulRef = useRef();

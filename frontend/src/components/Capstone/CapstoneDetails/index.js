@@ -76,7 +76,7 @@ function CapstoneDetails() {
       <div>
         <section>
           <h2>Comments: </h2>
-          <ReviewRender ownerId={capstone.author.id} capstoneId={capstoneId} />
+          <ReviewRender ownerId={capstone.author.id} />
         </section>
       </div>
     </>
