@@ -43,7 +43,6 @@ export const getReviews = (capstoneId) => async (dispatch) => {
 };
 
 export const createReview = (comment, capstoneId) => async (dispatch) => {
-  console.log(comment)
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`, {
     method: "POST",
     headers: {

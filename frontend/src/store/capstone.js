@@ -158,7 +158,7 @@ export const updateCapstoneImage = (capstoneId, imageId, formData) => async (dis
 };
 
 export const deleteCapstone = (capstoneId) => async (dispatch) => {
-  const res = await fetch(`/api/capstones/${capstoneId}`, {
+  await fetch(`/api/capstones/${capstoneId}`, {
     method: 'DELETE',
   });
   dispatch(deleteUserCapstone(capstoneId));
