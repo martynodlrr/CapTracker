@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 import * as reviewActions from '../../../store/review';
 import OpenModalButton from '../../OpenModalButton';
@@ -9,31 +11,21 @@ import CreateReview from '../CreateReview';
 
 import './index.css';
 
-function ReviewRender({ ownerId, create }) {
-  const userCapstone = useSelector((state) => state.capstones.userCapstone);
+function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   const user = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.reviews);
   const [showMenu, setShowMenu] = useState(false);
-  const { capstoneId } = useParams();
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const ulRef = useRef();
   const closeMenu = () => {
     setShowMenu(false);
   };
 
   useEffect(() => {
-
-    if (userCapstone && Object.values(userCapstone).length) {
-      if (!Object.values(reviews).length) {
-        dispatch(reviewActions.getReviews(userCapstone.id));
-      }
-    } else {
-      if (!Object.values(reviews).length) {
-        dispatch(reviewActions.getReviews(capstoneId));
-      }
-    }
-  }, [dispatch, reviews, userCapstone])
+    dispatch(reviewActions.getReviews(capstoneId));
+  }, [dispatch])
 
   useEffect(() => {
     if (!showMenu) return;
@@ -66,34 +58,60 @@ function ReviewRender({ ownerId, create }) {
   }
 
   return (
-    <div className="review-render">
+    <>
       <section className="review-section">
         {user.id !== ownerId && !userHasReviewCheck(reviews) && <OpenModalButton
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
-          modalComponent={<CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} />}
-        />}
+          modalComponent={
+            <ThemeProvider theme={theme}>
+              <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} />
+            </ThemeProvider>}
+        />
+        }
+        {user.id === ownerId && !capstoneAlter && <Button
+          variant='contained'
+          href='/capstone/edit'
+        >Update</Button>}
       </section>
+      <div
+        className="review-render"
+        style={capstoneAlter ? { justifyContent: 'center' } : null}
+      >
 
-      <section className="review-list" ref={ulRef}>
-        {Object.values(reviews).map((review, index) => (
-          <div key={index} className="review-item">
-            <p>{review.author.userName}: {review.comment}</p>
-            <p>{new Date(review.createdAt).toLocaleDateString()}</p>
-            {review.author.id === user.id ? (
-              <>
-                <OpenModalButton
-                  buttonText="Edit"
-                  onItemClick={closeMenu}
-                  modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />}
-                />
-                <button onClick={() => handleDelete(review.id)}>Delete</button>
-              </>
-            ) : null}
-          </div>
-        ))}
-      </section>
-    </div>
+        <section
+          className="review-list"
+          ref={ulRef}
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: '20px',
+            flexWrap: 'wrap'
+          }}
+        >
+          {Object.values(reviews).reverse().map((review, index) => (
+            <div key={index} className="review">
+              <p><strong>{review.author.userName}</strong>: {review.comment}</p>
+              <p>{new Date(review.createdAt).toLocaleDateString()}</p>
+              {review.author.id === user.id ? (
+                <>
+                  <OpenModalButton
+                    buttonText="Edit"
+                    onItemClick={closeMenu}
+                    modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />}
+                  />
+                  <Button
+                    onClick={() => handleDelete(review.id)}
+                    className='btn'
+                    variant='contained'
+                  >Delete</Button>
+                </>
+              ) : null}
+            </div>
+          ))}
+        </section>
+      </div>
+    </>
   );
 }
 

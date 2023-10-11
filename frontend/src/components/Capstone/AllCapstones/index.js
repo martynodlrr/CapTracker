@@ -9,8 +9,9 @@ import './index.css';
 function AllCapstones() {
   const dispatch = useDispatch();
   const capstones = useSelector((state) => state.capstones.allCapstones);
-  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     dispatch(capstoneActions.fetchCapstones(1));
@@ -21,20 +22,24 @@ function AllCapstones() {
     // window.scrollY is how much has scrolled
     // window.innerHeight is how much of the page is showing
     // document.body.offsetHeight is how much of the page is availible
-
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
-    if (nearBottom && hasMore) {
+
+    if (nearBottom && hasMore && !isLoading) {
+      setIsLoading(true); // set loading state
       setPageNumber((prevNumber) => {
         const newNumber = prevNumber + 1;
         dispatch(capstoneActions.fetchCapstones(newNumber)).then((newCapstones) => {
+          setIsLoading(false);
           if (!newCapstones || newCapstones.length < 10) {
             setHasMore(false);
           }
+        }).catch(() => {
+          setIsLoading(false);
         });
         return newNumber;
       });
     }
-  }, [hasMore, dispatch]);
+  }, [hasMore, dispatch, isLoading]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -43,14 +48,12 @@ function AllCapstones() {
 
   return (
     <>
-      <div className="all-capstones-container">
+      <div className="capstones-container">
         {capstones && Object.values(capstones)
           .filter(capstone => Object.keys(capstone).length > 0)
           .reverse()
           .map((capstone, index) => (
-            <div className="capstone-item" key={index}>
-              <RenderCapstone capstone={capstone} />
-            </div>
+            <RenderCapstone capstone={capstone} />
           ))
         }
         {!hasMore && <div className="no-more-capstones">No more capstones available.</div>}

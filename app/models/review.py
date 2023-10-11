@@ -9,7 +9,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     capstone_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("capstones.id")))
-    comment = db.Column(db.String(200), nullable=False)
+    comment = db.Column(db.String(1000), nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
     # relations

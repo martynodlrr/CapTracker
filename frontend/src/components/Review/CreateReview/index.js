@@ -1,19 +1,27 @@
-import { useHistory } from 'react-router-dom';
+import { Button, Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import React, { useState } from 'react';
+import { useTheme } from '@mui/material';
+import { useState } from 'react';
+import ReactGA from 'react-ga';
 
+import StyledTextareaAutosize from '../../TextareaInput/index.tsx';
 import * as reviewActions from '../../../store/review';
 
 import './index.css';
 
 function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const theme = useTheme();
 
   const [review, setReview] = useState(!create ? text : '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    ReactGA.event({
+      category: 'Review',
+      action: 'Submitted a review',
+    });
 
     const comment = {
       review,
@@ -30,24 +38,35 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
   };
 
   return (
-    <>
+    <Container
+      style={{
+        backgroundColor: theme.palette.secondary.main,
+        borderRadius: '10px',
+        padding: '20px 10px',
+      }}>
       <form onSubmit={handleSubmit} encType="multipart/form-data" id='capstone-form'>
         <div className="form-field">
-          <label htmlFor="review" className='review-label'>Constructive Criticism: </label>
-          <input
-            id="review"
-            className='review-input'
-            type="textbox"
+          <StyledTextareaAutosize
+            label="Review"
+            variant="filled"
             onChange={(e) => setReview(e.target.value)}
             value={review}
-            placeholder="Review"
             required
+            maxLength={1000}
+            style={{
+              maxWidth: '1100px'
+            }}
+            placeholder='Write your review here'
           />
         </div>
 
-        <button type="submit" className="form-submit" id='submit-button'>{ create ? 'post' : 'update' }</button>
+        <Button
+          type="submit"
+          variant='outlined'
+          className='btn'
+        >{create ? 'post' : 'update'}</Button>
       </form>
-    </>
+    </Container>
   );
 }
 

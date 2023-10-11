@@ -107,7 +107,6 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_REVIEWS:
       return {
-        ...state,
         ...action.payload,
       };
 

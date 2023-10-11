@@ -1,8 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import React, { useState, useEffect, useRef } from "react";
+import { ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+import Button from '@mui/material/Button';
 
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
@@ -13,10 +15,11 @@ import { logout } from "../../store/session";
 import './Navigation.css';
 
 function ProfileButton({ user }) {
+  const [showMenu, setShowMenu] = useState(false);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [showMenu, setShowMenu] = useState(false);
+  const theme = useTheme();
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -55,36 +58,53 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu} id='menuBars'>
-        <FontAwesomeIcon icon={faBars} />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <MenuRoundedIcon onClick={openMenu} id='menu-bars' />
+      <div className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li><img src={user.pfp} alt="User's Profile" id="pfp" /></li>
-            <li>{user.username}</li>
-            <li><button onClick={handleProfileRedirect} className='Buttons'>Profile</button></li>
-            <li><button onClick={handleCapstoneRedirect} className='Buttons'>Capstone</button></li>
-            <nav>
-              <button onClick={handleLogout}>Log Out</button>
-            </nav>
+            <div className='image-container'>
+              <img src={user.pfp} alt="User's Profile" />
+            </div>
+            {user.username}
+            <Button
+              onClick={handleProfileRedirect}
+              className='btn'
+              variant="outlined"
+            >Profile</Button>
+            <Button
+              onClick={handleCapstoneRedirect}
+              className='btn'
+              variant="outlined"
+            >Capstone</Button>
+            <Button
+              onClick={handleLogout}
+              variant="contained"
+            >Log Out</Button>
           </>
         ) : (
           <>
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
+              modalComponent={
+                <ThemeProvider theme={theme}>
+                  <LoginFormModal />
+                </ThemeProvider>}
             />
 
             <OpenModalButton
               buttonText="Sign Up"
               onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
+              className='btn'
+              modalComponent={
+                <ThemeProvider theme={theme}>
+                  <SignupFormModal />
+                </ThemeProvider>
+              }
             />
           </>
         )}
-      </ul>
+      </div>
     </>
   );
 }

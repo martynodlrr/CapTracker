@@ -1,13 +1,16 @@
+import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+import Button from '@mui/material/Button';
 import React, { useState } from "react";
+import ReactGa from 'react-ga';
 
 import { useModal } from "../../context/Modal";
 import { signUp } from "../../store/session";
 
 import "./SignupForm.css";
 
-function SignupFormModal() {
+function SignupFormModal({ theme }) {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [email, setEmail] = useState("");
@@ -27,6 +30,13 @@ function SignupFormModal() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		ReactGa.event({
+			category: 'User',
+			action: 'Signed up',
+		});
+
+
 		if (password === confirmPassword) {
 			const user = {
 				username,
@@ -51,83 +61,100 @@ function SignupFormModal() {
 				closeModal();
 			}
 		} else {
-			setConfirmPasswordError("Confirm Password field must be the same as the Password field");
+			setConfirmPasswordError("Passwords must be the same");
 		}
 	};
 
 	return (
-		<>
-			<h1>Sign Up</h1>
+		<div className='auth-form'>
+			<h1 className='auth-heading'>Sign Up</h1>
 			<form onSubmit={handleSubmit}>
-				<div className="error-display">{firstNameError}</div>
-				<label>
-					First Name:
-					<input
-						type="text"
-						value={firstName}
-						onChange={(e) => { setFirstName(e.target.value); setFirstNameError(''); }}
-						required
-					/>
-				</label>
 
-				<div className="error-display">{lastNameError}</div>
-				<label>
-					Last Name:
-					<input
-						type="text"
-						value={lastName}
-						onChange={(e) => { setLastName(e.target.value); setLastNameError(''); }}
-						required
-					/>
-				</label>
+				<div className='name-inputs'>
+					<div className='input-container'>
+						<div className={firstNameError ? 'error-display' : 'error-display-hidden'}>{firstNameError}</div>
+						<TextField
+							type="text"
+							label="First Name"
+							value={firstName}
+							onChange={(e) => { setFirstName(e.target.value); setFirstNameError(''); }}
+							required
+							variant="standard"
+						/>
+					</div>
 
-				<div className="error-display">{emailError}</div>
-				<label>
-					Email:
-					<input
-						type="text"
-						value={email}
-						onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
-						required
-					/>
-				</label>
+					<div className='input-container'>
+						<div className={lastNameError ? 'error-display' : 'error-display-hidden'}>{lastNameError}</div>
+						<TextField
+							type="text"
+							label="Last Name"
+							value={lastName}
+							onChange={(e) => { setLastName(e.target.value); setLastNameError(''); }}
+							required
+							variant="standard"
+						/>
+					</div>
+				</div>
 
-				<div className="error-display">{usernameError}</div>
-				<label>
-					Username:
-					<input
-						type="text"
-						value={username}
-						onChange={(e) => { setUsername(e.target.value); setUsernameError(''); }}
-						required
-					/>
-				</label>
+				<div className='email-username-inputs'>
+					<div className='input-container'>
+						<div className={emailError ? 'error-display' : 'error-display-hidden'}>{emailError}</div>
+						<TextField
+							type="text"
+							label="Email"
+							value={email}
+							onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
+							required
+							variant="standard"
+						/>
+					</div>
 
-				<div className="error-display">{passwordError}</div>
-				<label>
-					Password:
-					<input
-						type="password"
-						value={password}
-						onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
-						required
-					/>
-				</label>
+					<div className='input-container'>
+						<div className={usernameError ? 'error-display' : 'error-display-hidden'}>{usernameError}</div>
+						<TextField
+							type="text"
+							label="Username"
+							value={username}
+							onChange={(e) => { setUsername(e.target.value); setUsernameError(''); }}
+							required
+							variant='standard'
+						/>
+					</div>
+				</div>
 
-				<div className="error-display">{confirmPasswordError}</div>
-				<label>
-					Confirm Password:
-					<input
-						type="password"
-						value={confirmPassword}
-						onChange={(e) => { setConfirmPassword(e.target.value); setConfirmPasswordError(''); }}
-						required
-					/>
-				</label>
+				<div className='password-inputs'>
+					<div className='input-container'>
+						<div className={passwordError ? 'error-display' : 'error-display-hidden'}>{passwordError}</div>
+						<TextField
+							type="password"
+							label="Password"
+							value={password}
+							onChange={(e) => { setPassword(e.target.value); setPasswordError(''); }}
+							required
+							variant='standard'
+						/>
+					</div>
 
-				<button type="submit" id='submit-button'>Sign Up</button>
+					<div className='input-container'>
+						<div className={confirmPasswordError ? 'error-display' : 'error-display-hidden'}>{confirmPasswordError}</div>
+						<TextField
+							type="password"
+							label="Confirm Password"
+							value={confirmPassword}
+							onChange={(e) => { setConfirmPassword(e.target.value); setConfirmPasswordError(''); }}
+							required
+							variant='standard'
+						/>
+					</div>
+				</div>
+
+				<Button
+					type="submit"
+					variant="contained"
+					size='large'
+				>Sign Up</Button>
 			</form>
-		</>
+		</div>
 	);
 }
 

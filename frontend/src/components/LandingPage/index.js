@@ -1,5 +1,9 @@
+import { ThemeProvider } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Button from '@mui/material/Button';
+import ReactGA from 'react-ga';
 import React from 'react';
 
 import SignupFormModal from "../SignupFormModal";
@@ -10,8 +14,14 @@ import './index.css';
 function LandingPage() {
   const sessionUser = useSelector((state) => state.session.user);
   const history = useHistory();
+  const theme = useTheme();
 
   const handleGetStartedClick = () => {
+    ReactGA.event({
+      category: 'Homepage',
+      action: 'Get Started Clicked While Logged In',
+    })
+
     history.push('/capstones');
   };
 
@@ -54,9 +64,13 @@ function LandingPage() {
           <p>Step into a space where your projects get the attention and constructive feedback they deserve.</p>
           {!sessionUser ? <OpenModalButton
             buttonText="Get Started"
-            modalComponent={<SignupFormModal />}
+            modalComponent={
+              <ThemeProvider theme={theme}>
+                <SignupFormModal />
+              </ThemeProvider>
+            }
           /> :
-            <button onClick={() => handleGetStartedClick()}>Get started</button>}
+            <Button onClick={() => handleGetStartedClick()}>Get started</Button>}
         </div>
       </section>
     </div>

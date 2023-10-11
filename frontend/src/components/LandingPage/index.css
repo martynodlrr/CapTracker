@@ -9,11 +9,20 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  color: black;
+}
+
+div.intro.container:nth-of-type(2) {
+  color: black;
 }
 
 header {
-  background-color: #282c34;
-  color: #61dafb;
+  text-align: center;
+  padding: 50px 0;
+}
+
+.intro {
+  background-color: #542A10;
   text-align: center;
   padding: 50px 0;
 }
@@ -24,48 +33,17 @@ header {
 }
 
 .features {
-  background-color: #f0f0f0;
+  background-color: #DAD8A8;
 }
 
 .feature {
   margin-bottom: 20px;
 }
 
+.feature > * {
+  color: black;
+}
+
 .cta button {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #61dafb;
-  color: #282c34;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-footer {
-  background-color: #282c34;
-  color: #61dafb;
-  text-align: center;
-  padding: 20px 0;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-form > label {
-  margin: 0px 10px 8px;
-  cursor: pointer;
-}
-
-form > button {
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #61dafb;
-  color: #282c34;
-  cursor: pointer;
-  margin-bottom: 10px;
-  border-radius: 5px;
+  color: white;
 }

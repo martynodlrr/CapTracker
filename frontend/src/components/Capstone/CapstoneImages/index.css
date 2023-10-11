@@ -1,9 +1,19 @@
+.capstone-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.capstone-image {
+  cursor: pointer;
+}
+
 .capstones {
   position: relative;
   margin-bottom: 20px;
 }
 
-.capstones button {
+/* .capstones button {
   position: absolute;
   top: 50%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -13,7 +23,7 @@
   cursor: pointer;
   border-radius: 4px;
   z-index: 2;
-}
+} */
 
 .capstones button:hover {
   background-color: rgba(0, 0, 0, 0.7);
@@ -35,14 +45,12 @@
   transition: transform 0.3s;
   z-index: 1;
 }
+
 .capstone-img-render {
   max-width: 600px;
   max-height: 600px;
 }
+
 .capstone-img-render:hover {
   transform: scale(1.05);
-}
-
-#hidden {
-  display: none;
 }

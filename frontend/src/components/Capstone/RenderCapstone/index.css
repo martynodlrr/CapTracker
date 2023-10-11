@@ -1,33 +1,25 @@
-.capstones {
+.capstone {
+  display: flex;
   width: fit-content;
-  background-color: #f9f9f9;
+  background-color: #DAD8A8;
   padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  border-radius: 20px;
+  gap: 20px;
+  flex-direction: column;
 }
 
-.capstones h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
+.capstone > *, .capstone > * > *, .capstone > * > * > * {
+  color: #542A10;
 }
 
-.capstones p {
-  margin-bottom: 10px;
-  color: #333;
+.capstone-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
-.capstones a {
-  color: #0066cc;
-  text-decoration: none;
-  margin-bottom: 20px;
-  display: inline-block;
-}
-
-.capstones a:hover {
-  text-decoration: underline;
-}
-
-#description {
-  width: 600px;
-  word-wrap: break-word;
+.capstone-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

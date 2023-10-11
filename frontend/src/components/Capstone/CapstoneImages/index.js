@@ -1,9 +1,12 @@
+import { ArrowBack, ArrowForward } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
 import { useHistory } from 'react-router-dom';
 import React, { useState } from 'react';
+import ReactGA from 'react-ga';
 
 import './index.css'
 
-function CapstoneImages({ images, capstoneId }) {
+function CapstoneImages({ images, capstoneId, link }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const history = useHistory();
 
@@ -16,18 +19,50 @@ function CapstoneImages({ images, capstoneId }) {
   };
 
   const handleImageClick = () => {
+    ReactGA.event({
+      category: 'Capstone',
+      action: `Capstone Image Clicked for ${capstoneId}`,
+    });
+
     history.push(`/capstones/${capstoneId}`);
   };
 
   return (
-    <div className='capstones'>
+    <div className='capstone-images'>
       {images && images.length > 0 && (
-        <>
-          <button id={currentIndex === 0 ? 'hidden' : ''} onClick={prevImage}>←</button>
-          <div key={images[currentIndex].id} onClick={handleImageClick}>
-            <img className='capstone-img-render' src={images[currentIndex].imageUrl} alt={`Capstone Website Preview #${currentIndex + 1}`} />
+        <><IconButton>
+          <ArrowBack onClick={prevImage} />
+        </IconButton>
+          <div
+            key={images[currentIndex].id}
+            className={capstoneId ? 'capstone-image' : 'capstone-image-render'}
+            onClick={handleImageClick}
+          >
+            <a href='#root'>
+              {link ? (
+                <a
+                  target="_blank"
+                  href={link}
+                  title={link}
+                >
+                  <img
+                    className='capstone-img-render'
+                    src={images[currentIndex].imageUrl}
+                    alt={`Capstone Website Preview #${currentIndex + 1}`}
+                  />
+                </a>
+              ) : (
+                <img
+                  className='capstone-img-render'
+                  src={images[currentIndex].imageUrl}
+                  alt={`Capstone Website Preview #${currentIndex + 1}`}
+                />
+              )}
+            </a>
           </div>
-          <button id={currentIndex === images.length - 1 ? 'hidden' : ''} onClick={nextImage}>→</button>
+          <IconButton>
+            <ArrowForward onClick={nextImage} />
+          </IconButton>
         </>
       )}
     </div>

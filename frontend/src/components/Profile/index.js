@@ -1,6 +1,11 @@
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ReactGA from 'react-ga';
 
 import * as sessionActions from '../../store/session'
 import greetings from './greetings';
@@ -53,6 +58,11 @@ function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    ReactGA.event({
+      category: 'User',
+      action: 'Updated profile'
+    });
+
     const updatedUser = {
       firstName,
       lastName,
@@ -91,114 +101,244 @@ function Profile() {
 
   return (
     <div id='profile-group'>
-      <h1>{greeting}</h1>
+      <h1
+        className='heading'
+        style={{marginBottom: '50px'}}
+      >{greeting}</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data" id='profile-form'>
         <div className='file-input-container'>
           <span className="pfp-render">
-            <img src={previewSrc} alt={`${firstName} ${lastName} Profile Preview`} id='profile-picture' />
+            <div style={{
+              width: '200px',
+              height: '200px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <img
+                src={previewSrc}
+                alt={`${firstName} ${lastName} Profile Preview`}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover'
+                }}
+              />
+            </div>
           </span>
 
-          <button type="button" className="file-select-button" onClick={() => document.getElementById('pfp-input').click()}>Select File</button>
           <input
-            id="pfp-input"
-            className='profile-input-hidden'
-            type="file"
             accept="image/*"
+            id="pfp-input"
+            type="file"
+            style={{ display: 'none' }}
             onChange={handleFileChange}
           />
+          <label htmlFor="pfp-input">
+            <IconButton
+              color="secondary"
+              aria-label="upload picture"
+              component="span"
+            >
+              <PhotoCamera />
+            </IconButton>
+          </label>
         </div>
 
-        <div className="form-field">
-          <label htmlFor="firstName" className='profile-label'>First Name: </label>
-          <input
-            id="firstName"
-            className='profile-input'
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="first-name"
+              label="First Name"
+              type="text"
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+              required
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
+
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="last-name"
+              label="Last Name"
+              type="text"
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+              required
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
+
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="email"
+              label="Email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              required
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
+
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="username"
+              label="Username"
             type="text"
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-            placeholder="First Name"
-            required={true}
-          />
-        </div>
+            required
+              onChange={(e) => setUserName(e.target.value)}
+              value={userName}
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
 
-        <div className="form-field">
-          <label htmlFor="lastName" className='profile-label'>Last Name: </label>
-          <input
-            id="lastName"
-            className='profile-input'
-            type="text"
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
-            placeholder="Last Name"
-            required={true}
-          />
-        </div>
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="password"
+              label="Update Password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
 
-        <div className="form-field">
-          <label htmlFor="email" className='profile-label'>Email: </label>
-          <input
-            id="email"
-            className='profile-input'
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            placeholder="Email"
-            required={true}
-          />
-        </div>
+        <h3
+          className='heading'
+          style={{
+            margin: '0px'
+          }}
+        >Socials</h3>
 
-        <div className="form-field">
-          <label htmlFor="userName" className='profile-label'>Username: </label>
-          <input
-            id="userName"
-            className='profile-input'
-            type="text"
-            onChange={(e) => setUserName(e.target.value)}
-            value={userName}
-            placeholder="Username"
-            required={true}
-          />
-        </div>
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="github"
+              label="GitHub"
+              type="url"
+              onChange={(e) => setGithub(e.target.value)}
+              value={github}
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
 
-        <div className="form-field">
-          <label htmlFor="password" className='profile-label'>Password: </label>
-          <input
-            id="password"
-            className='profile-input'
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            placeholder="Password"
-          />
-        </div>
+          <div className="form-field">
+            <TextField
+              variant="filled"
+              id="linkedIn"
+              label="LinkedIn"
+              type="text"
+              onChange={(e) => setLinkedIn(e.target.value)}
+              value={linkedIn}
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
 
-        <h3 id='socials-title'>Socials</h3>
-
-        <div className="form-field">
-          <label htmlFor="github" className='profile-label'>GitHub: </label>
-          <input
-            id="github"
-            className='profile-input'
-            type="url"
-            onChange={(e) => setGithub(e.target.value)}
-            value={github}
-            placeholder="GitHub"
-          />
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="linkedIn" className='profile-label'>LinkedIn: </label>
-          <input
-            id="linkedIn"
-            className='profile-input'
-            type="text"
-            onChange={(e) => setLinkedIn(e.target.value)}
-            value={linkedIn}
-            placeholder="LinkedIn"
-          />
-        </div>
-
-        <button type="submit" className="form-submit" disabled={disabled}>Update Profile</button>
+        <Button
+          type="submit"
+          className="btn"
+          disabled={disabled}
+          variant='contained'
+        >Update Profile</Button>
       </form>
     </div>
   );

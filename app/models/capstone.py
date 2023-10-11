@@ -9,7 +9,7 @@ class Capstone(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
     url = db.Column(db.String(150))
-    description = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
     cloned_from = db.Column(db.String(75), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     created_at = db.Column(db.TIMESTAMP)

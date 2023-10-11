@@ -1,8 +1,13 @@
+import { TextField, Button, Container } from '@mui/material';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+import IconButton from '@mui/material/IconButton';
 import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import ReactGA from 'react-ga';
 
 import * as capstoneActions from '../../../store/capstone';
+import StyledTextareaAutosize from '../../TextareaInput/index.tsx';
 import ReviewRender from '../../Review/ReviewRender';
 
 import './index.css';
@@ -63,7 +68,13 @@ function CreateCapstone() {
   }, [title, url, description, clonedFrom, userCapstone]);
 
   const handleFileChange = (index) => (e) => {
+    ReactGA.event({
+      category: 'Capstone',
+      action: 'Capstone Image Uploaded'
+    });
+
     const file = e.target.files[0];
+
     setImages((prev) => {
       const updated = [...prev];
       updated[index] = file;
@@ -86,23 +97,62 @@ function CreateCapstone() {
     }
   };
 
-  const FileInput = ({ index }) => (
-    <div className="file-input-container" key={index}>
+  const FileInput = ({ index }) =>
+  (
+    <div
+      key={index}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column'
+      }}
+    >
       <span>
-        <img className="capstone-img-render" src={previewSrc[index]} alt={`Capstone Website Preview #${index}`} id={`profile-picture-${index}`} />
+        <img
+          src={previewSrc[index]}
+          alt={`Capstone Website Preview #${index}`}
+          id={`profile-picture-${index}`}
+          style={{
+            maxWidth: '300px',
+            maxHeight: '300px',
+            objectFit: 'cover',
+            borderRadius: '10px',
+          }}
+        />
       </span>
 
 
-      <button type="button" className="file-select-button" onClick={() => document.getElementById(`pfp-input-${index}`).click()}>
-        Select File
-      </button>
       <input
-        id={`pfp-input-${index}`}
-        className="profile-input-hidden"
-        type="file"
         accept="image/*"
+        id={`file-input-${index}`}
+        type="file"
+        style={{ display: 'none' }}
         onChange={handleFileChange(index)}
       />
+      <label htmlFor={`file-input-${index}`}>
+      <IconButton
+    aria-label="upload picture"
+    component="span"
+    sx={{
+        backgroundColor: 'white',
+        transition: 'background-color 0.3s',
+        '&:hover': {
+            backgroundColor: 'primary.main',
+        },
+        '& .MuiSvgIcon-root': {
+            transition: 'background-color 0.3s, color 0.3s',
+        },
+        '&:hover .MuiSvgIcon-root': {
+            backgroundColor: 'primary.main',
+            color: 'secondary.main',
+        }
+    }}
+>
+    <PhotoCamera color="primary" sx={{
+        backgroundColor: 'white'
+    }} />
+</IconButton>
+      </label>
     </div>
   );
 
@@ -178,78 +228,124 @@ function CreateCapstone() {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit} encType="multipart/form-data" id='capstone-form'>
-        <div className="form-field">
-          <label htmlFor="title" className='capstone-label'>Title of project: </label>
-          <input
-            id="title"
-            className='capstone-input'
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-            placeholder="Title"
-            required
-          />
-        </div>
+    <Container>
+      <h1 className='heading'>{create ? 'Create a new capstone' : 'Edit your capstone'}</h1>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <TextField
+          label="Title of project"
+          variant="filled"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          required
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            '& .MuiFilledInput-root': {
+              backgroundColor: 'white',
+              color: 'black',
+            },
+            '& .MuiFilledInput-input': {
+              color: 'black',
+            },
+            '& .MuiInputLabel-filled': {
+              color: 'black',
+            }
+          }}
+        />
 
-        <div className="form-field">
-          <label htmlFor="url" className='capstone-label'>Website URL: </label>
-          <input
-            id="url"
-            className='capstone-input'
-            type="url"
-            onChange={(e) => setUrl(e.target.value)}
-            value={url}
-            placeholder="Website URL"
-            required
-          />
-        </div>
+        <TextField
+          label="Website URL"
+          variant="filled"
+          onChange={(e) => setUrl(e.target.value)}
+          value={url}
+          required
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            '& .MuiFilledInput-root': {
+              backgroundColor: 'white',
+              color: 'black',
+            },
+            '& .MuiFilledInput-input': {
+              color: 'black',
+            },
+            '& .MuiInputLabel-filled': {
+              color: 'black',
+            }
+          }}
+        />
 
-        <div className="form-field">
-          <label htmlFor="description" className='capstone-label'>Description: </label>
-          <input
-            id="description"
-            className='capstone-input'
-            type="text"
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-            placeholder="Description"
-            required
-          />
-        </div>
+        <TextField
+          label="Site Cloned From"
+          variant="filled"
+          onChange={(e) => setClonedFrom(e.target.value)}
+          value={clonedFrom}
+          required
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            '& .MuiFilledInput-root': {
+              backgroundColor: 'white',
+              color: 'black',
+            },
+            '& .MuiFilledInput-input': {
+              color: 'black',
+            },
+            '& .MuiInputLabel-filled': {
+              color: 'black',
+            }
+          }}
+        />
 
-        <div className="form-field">
-          <label htmlFor="clonedFrom" className='capstone-label'>Site Cloned From: </label>
-          <input
-            id="clonedFrom"
-            className='capstone-input'
-            type="text"
-            onChange={(e) => setClonedFrom(e.target.value)}
-            value={clonedFrom}
-            placeholder="Site Cloned From"
-            required
-          />
-        </div>
+        <StyledTextareaAutosize
+          label="Description"
+          variant="filled"
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
+          maxLength={1000}
+          required
+        />
 
-        <h1>{errors.includes('At least one image is required to create a capstone.') ? 'At least one image must be uploaded' : null}</h1>
+        {errors.includes('At least one image is required to create a capstone.') && (
+          <p className='error-display'>
+            At least one image must be uploaded
+          </p>
+        )}
 
-        <div className="form-field">
-          <label htmlFor="images" className='capstone-label'>Upload Images: </label>
+        <h2 htmlFor="images" className='heading'>Upload Images: </h2>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '1rem'
+          }}>
           {[...Array(5)].map((_, index) => (
             previewSrc[index] ? <FileInput key={index} index={index} /> : null
           ))}
         </div>
 
-        <div className="form-field" id='button-types'>
-          <button type="submit" className="form-submit" disabled={disabled}>{create ? `Post capstone` : 'Update capstone'}</button>
-          {!create && <button onClick={(e) => handleDelete(e, userCapstone.id)} id='delete-button'>Delete</button>}
+        <div
+          className='btn'
+          style={{
+            display: 'flex',
+            gap: '1rem'
+          }}
+        >
+          <Button type="submit" variant="contained" color="primary" disabled={disabled}>
+            {create ? `Post capstone` : 'Update capstone'}
+          </Button>
+          {!create && (
+            <Button variant="contained" color="secondary" onClick={(e) => handleDelete(e, userCapstone.id)}>
+              Delete
+            </Button>
+          )}
         </div>
       </form>
 
       <h2>See what others are suggesting: </h2>
-      <ReviewRender reviews={userCapstone.reviews} ownerId={userCapstone.id} create={create} />
-    </>
+      <ReviewRender capstoneId={userCapstone.id} create={create} capstoneAlter={true} ownerId={userCapstone.author.id} />
+    </Container>
   );
 }
 

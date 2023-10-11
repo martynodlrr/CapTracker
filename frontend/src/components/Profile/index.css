@@ -1,50 +1,7 @@
-.profile-label {
-  display: block;
-  margin-top: 10px;
+.css-856zn1-MuiFormControl-root-MuiTextField-root {
+  border-radius: 10px;
 }
 
-.file-input-container {
-  display: flex;
-  align-items: center;
-}
-
-.file-select-button {
-  padding: 0px;
-  background-color: #007BFF;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-}
-
-.file-name {
-  margin-left: 10px;
-}
-
-.profile-input-hidden {
-  display: none;
-}
-
-#profile-form {
-  width: fit-content;
-}
-
-#socials-title {
-  margin-top: 10px;
-  margin-bottom: -5px;
-}
-
-#profile-group{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-form {
-  display: flex;
-  align-items: center;
-}
-
-.file-input-container img {
-  max-width: 300px;
+.css-856zn1-MuiFormControl-root-MuiTextField-root .MuiFilledInput-root {
+  border-radius: 10px;
 }

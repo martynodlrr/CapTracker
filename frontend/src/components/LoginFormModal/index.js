@@ -1,13 +1,16 @@
+import TextField from '@mui/material/TextField';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
+import Button from '@mui/material/Button';
 import React, { useState } from "react";
+import ReactGa from 'react-ga';
 
 import { useModal } from "../../context/Modal";
 import { login } from "../../store/session";
 
 import "./LoginForm.css";
 
-function LoginFormModal() {
+function LoginFormModal({ theme }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
@@ -17,6 +20,12 @@ function LoginFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    ReactGa.event({
+      category: 'User',
+      action: 'Logged in',
+    });
+
     const data = await dispatch(login(email, password));
     if (data) {
       for (const error of data) {
@@ -33,42 +42,61 @@ function LoginFormModal() {
 
   const signInDemo = async (e) => {
     e.preventDefault();
+
+    ReactGa.event({
+      category: 'User',
+      action: 'Logged in as demo user',
+    });
+
     await dispatch(login('demo@aa.io', 'password'));
     history.push('/capstones');
     closeModal();
   };
 
   return (
-    <>
-      <h1>Log In</h1>
+    <div className='auth-form'>
+      <h1 className='auth-heading'>Log In</h1>
       <form onSubmit={handleSubmit}>
-        <div id='errors-display' className={!Object.values(errors).length ? 'hidden' : ''}>
-          {errors.map((error, idx) => (
-            <li key={idx}>{error}</li>
-          ))}
+        <div className={errors.length ? 'error-display' : 'error-display-hidden'}>
+          {errors[0]}
         </div>
-        <label>
-          Email:
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        <button type="submit" className='Buttons'>Log In</button>
-        <button onClick={signInDemo} className='Buttons' id='demo'>Demo Login</button>
+        <TextField
+          type="text"
+          label="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          variant="standard"
+        />
+
+        <TextField
+          type="password"
+          label="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          variant="standard"
+        />
+
+        <div className='btn-container'>
+            <Button
+            type="submit"
+            className='btn'
+              disabled={email.length < 4 || password.length < 6}
+              variant="outlined"
+            >
+              Log In
+            </Button>
+
+            <Button
+              onClick={signInDemo}
+              variant="contained"
+            >
+              Demo Login
+            </Button>
+        </div>
       </form>
-    </>
+    </div>
   );
 }
 

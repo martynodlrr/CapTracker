@@ -1,3 +1,4 @@
+import Button from '@mui/material/Button';
 import React from 'react';
 
 import { useModal } from '../../context/Modal';
@@ -17,7 +18,11 @@ function OpenModalButton({
   };
 
   return (
-    <button onClick={onClick}>{buttonText}</button>
+    <Button
+      className='btn'
+      variant="outlined"
+      onClick={onClick}
+    >{buttonText}</Button>
   );
 }
 
