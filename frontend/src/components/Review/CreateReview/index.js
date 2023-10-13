@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 import { useState } from 'react';
 import ReactGA from 'react-ga';
 
-import StyledTextareaAutosize from '../../TextareaInput/index.tsx';
+import StyledTextareaAutosize from '../../TextareaInput/index.js';
 import * as reviewActions from '../../../store/review';
 
 import './index.css';

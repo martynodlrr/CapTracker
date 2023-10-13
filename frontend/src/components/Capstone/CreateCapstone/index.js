@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 
 import * as capstoneActions from '../../../store/capstone';
-import StyledTextareaAutosize from '../../TextareaInput/index.tsx';
+import StyledTextareaAutosize from '../../TextareaInput/index.js';
 import ReviewRender from '../../Review/ReviewRender';
 
 import './index.css';

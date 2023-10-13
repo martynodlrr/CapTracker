@@ -1,13 +1,7 @@
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
 
-interface StyledTextareaAutosizeProps {
-  'aria-label': string;
-  placeholder: string;
-}
-
-const StyledTextareaAutosize = styled(BaseTextareaAutosize)(
-  ({ theme }) => `
+const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => `
   min-width: 320px;
   max-height: 200px;
   line-height: 1.25;
@@ -25,12 +19,9 @@ const StyledTextareaAutosize = styled(BaseTextareaAutosize)(
   &:focus-visible {
     outline: 0;
   }
-  `,
-);
+`);
 
-export default function UnstyledTextareaIntroduction({
-  placeholder = "Description*",
-  ...props
-}: StyledTextareaAutosizeProps) {
+export default function UnstyledTextareaIntroduction(props) {
+  const placeholder = props.placeholder || "Description*";
   return <StyledTextareaAutosize placeholder={placeholder} {...props} />;
 }
