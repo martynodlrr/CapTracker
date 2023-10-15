@@ -63,7 +63,10 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
           modalComponent={
-            <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} theme={theme} />}
+            <ThemeProvider theme={theme}>
+              <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} />
+            </ThemeProvider>
+          }
         />
         }
         {user.id === ownerId && !capstoneAlter && <Button

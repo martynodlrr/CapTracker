@@ -5,3 +5,8 @@
   align-items: flex-start;
   padding: 0px 10%;
 }
+
+.review > p {
+  word-wrap: break-word;
+  max-width: 500px;
+}
