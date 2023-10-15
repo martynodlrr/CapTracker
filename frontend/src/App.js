@@ -14,7 +14,7 @@ import Navigation from "./components/Navigation";
 import { authenticate } from "./store/session";
 import Profile from "./components/Profile";
 
-const TRACKING_ID = "UA-288524155-3";
+const TRACKING_ID = "UA-288524155-4";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {

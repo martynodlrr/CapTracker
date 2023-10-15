@@ -22,5 +22,6 @@
 }
 
 #description {
+  word-wrap: break-word;
   max-width: 1000px;
 }
