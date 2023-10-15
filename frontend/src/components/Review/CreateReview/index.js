@@ -1,6 +1,6 @@
-import { Button, Container } from '@mui/material';
+import { useTheme } from '@emotion/react';
 import { useDispatch } from 'react-redux';
-import { useTheme } from '@mui/material';
+import { Button } from '@mui/material';
 import { useState } from 'react';
 import ReactGA from 'react-ga';
 
@@ -36,37 +36,39 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
 
     closeModal();
   };
-
+  
   return (
-    <Container
+    <form
+      onSubmit={handleSubmit}
+      encType="multipart/form-data"
+      id='capstone-form'
       style={{
         backgroundColor: theme.palette.secondary.main,
         borderRadius: '10px',
         padding: '20px 10px',
       }}>
-      <form onSubmit={handleSubmit} encType="multipart/form-data" id='capstone-form'>
-        <div className="form-field">
-          <StyledTextareaAutosize
-            label="Review"
-            variant="filled"
-            onChange={(e) => setReview(e.target.value)}
-            value={review}
-            required
-            maxLength={1000}
-            style={{
-              maxWidth: '1100px'
-            }}
-            placeholder='Write your review here'
-          />
-        </div>
+      <div className="form-field">
+        <StyledTextareaAutosize
+          label="Review"
+          variant="filled"
+          onChange={(e) => setReview(e.target.value)}
+          value={review}
+          required
+          theme={theme}
+          maxLength={1000}
+          style={{
+            maxWidth: '1100px'
+          }}
+          placeholder='Write your review here'
+        />
+      </div>
 
         <Button
           type="submit"
           variant='outlined'
           className='btn'
         >{create ? 'post' : 'update'}</Button>
-      </form>
-    </Container>
+    </form>
   );
 }
 

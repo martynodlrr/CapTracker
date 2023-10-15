@@ -1,7 +1,6 @@
+import { ThemeProvider, useTheme } from '@emotion/react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThemeProvider } from '@mui/material/styles';
 import { useState, useEffect, useRef } from 'react';
-import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 
 import * as reviewActions from '../../../store/review';
@@ -64,9 +63,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
           modalComponent={
-            <ThemeProvider theme={theme}>
-              <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} />
-            </ThemeProvider>}
+            <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} theme={theme} />}
         />
         }
         {user.id === ownerId && !capstoneAlter && <Button
@@ -98,7 +95,11 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
                   <OpenModalButton
                     buttonText="Edit"
                     onItemClick={closeMenu}
-                    modalComponent={<CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />}
+                    modalComponent={
+                      <ThemeProvider theme={theme}>
+                        <CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />
+                      </ThemeProvider>
+                    }
                   />
                   <Button
                     onClick={() => handleDelete(review.id)}
