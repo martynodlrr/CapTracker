@@ -40,15 +40,11 @@
 }
 
 .capstone-img-render {
-  width: 800px;
+  max-width: 600px;
+  max-height: 600px;
   border-radius: 8px;
   transition: transform 0.3s;
   z-index: 1;
-}
-
-.capstone-img-render {
-  max-width: 600px;
-  max-height: 600px;
 }
 
 .capstone-img-render:hover {
