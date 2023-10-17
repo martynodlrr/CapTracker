@@ -90,7 +90,6 @@ function CapstoneDetails() {
                           <EmailIcon />
                         </a>
                       )}
-                      { console.log(capstone.author.email) }
 
                       {capstone.author.GitHub && (
                         <a href={capstone.author.GitHub && !capstone.author.GitHub.startsWith('http') ? `http://${capstone.author.GitHub}` : capstone.author.GitHub} target="_blank" rel="noopener noreferrer">
