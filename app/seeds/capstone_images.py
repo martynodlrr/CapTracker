@@ -85,31 +85,31 @@ def seed_capstone_images():
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/b310ea72a69341f6a564f6607f39b1f6.png",
-                capstone_id=23,
+                capstone_id=10,
                 user_id=5,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/11a036365f784577ade1237e85fa6d3f.png",
-                capstone_id=23,
+                capstone_id=10,
                 user_id=5,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/70a3d185e8564cb08ec25235e7154c8b.png",
-                capstone_id=23,
+                capstone_id=10,
                 user_id=5,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/7494b1035cff434b9b6d02a4762d5619.png",
-                capstone_id=23,
+                capstone_id=10,
                 user_id=5,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/1ebc951da9a64290812963feac0b3c4d.png",
-                capstone_id=23,
+                capstone_id=10,
                 user_id=5,
                 created_at=datetime.utcnow()
             ),
@@ -211,31 +211,31 @@ def seed_capstone_images():
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/7fdefdfdfd8a46bb969fe1e312b15eaf.png",
-                capstone_id=10,
+                capstone_id=23,
                 user_id=10,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/135e3d896a4e401490aa797451c8a4f1.png",
-                capstone_id=10,
+                capstone_id=23,
                 user_id=10,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/42b370cce0f0432ba8f1e95bf09f3974.png",
-                capstone_id=10,
+                capstone_id=23,
                 user_id=10,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/bb175c0b670a4d20a2f81e6e309cf3a3.png",
-                capstone_id=10,
+                capstone_id=23,
                 user_id=10,
                 created_at=datetime.utcnow()
             ),
         CapstoneImage(
                 image_url="https://captracker.s3.amazonaws.com/4b4ec9f65bcb41fb9db4328adeb1c9a3.png",
-                capstone_id=10,
+                capstone_id=23,
                 user_id=10,
                 created_at=datetime.utcnow()
             ),
