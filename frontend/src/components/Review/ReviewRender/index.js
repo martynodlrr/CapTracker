@@ -41,11 +41,11 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   }, [showMenu]);
 
   if (create) {
-    return <p>Post your capstone to see reviews here!</p>
+    return <p className='heading'>Post your capstone to see reviews here!</p>
   }
 
   if (!Object.values(reviews).length) {
-    return <p>Capstone currently has no reviews</p>
+    return <p className='heading'>Capstone currently has no reviews</p>
   }
 
   const userHasReviewCheck = reviews => {

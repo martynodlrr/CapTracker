@@ -17,10 +17,11 @@ function CreateCapstone() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const placeholderImage = 'https://www.dcm.co.za/wp-content/uploads/2019/11/placeholder-image-icon-21.jpg';
+  const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png';
 
   const [title, setTitle] = useState('');
   const [url, setUrl] = useState('');
+  const [isValidUrl, setIsValidUrl] = useState(true);
   const [description, setDescription] = useState('');
   const [clonedFrom, setClonedFrom] = useState('');
   const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage));
@@ -61,7 +62,7 @@ function CreateCapstone() {
       setDisabled(
         title.length > 50 ||
         url.length > 150 ||
-        description.length > 200 ||
+        description.length > 1000 ||
         clonedFrom.length > 75
       );
     }
@@ -97,6 +98,17 @@ function CreateCapstone() {
     }
   };
 
+  const handleUrlChange = (e) => {
+    const inputValue = e.target.value;
+    setUrl(inputValue);
+
+    // Regular expression for URL validation
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+    const isValid = urlRegex.test(inputValue);
+
+    setIsValidUrl(isValid);
+  }
+
   const FileInput = ({ index }) =>
   (
     <div
@@ -130,28 +142,28 @@ function CreateCapstone() {
         onChange={handleFileChange(index)}
       />
       <label htmlFor={`file-input-${index}`}>
-      <IconButton
-    aria-label="upload picture"
-    component="span"
-    sx={{
-        backgroundColor: 'white',
-        transition: 'background-color 0.3s',
-        '&:hover': {
-            backgroundColor: 'primary.main',
-        },
-        '& .MuiSvgIcon-root': {
-            transition: 'background-color 0.3s, color 0.3s',
-        },
-        '&:hover .MuiSvgIcon-root': {
-            backgroundColor: 'primary.main',
-            color: 'secondary.main',
-        }
-    }}
->
-    <PhotoCamera color="primary" sx={{
-        backgroundColor: 'white'
-    }} />
-</IconButton>
+        <IconButton
+          aria-label="upload picture"
+          component="span"
+          sx={{
+            backgroundColor: 'white',
+            transition: 'background-color 0.3s',
+            '&:hover': {
+              backgroundColor: 'primary.main',
+            },
+            '& .MuiSvgIcon-root': {
+              transition: 'background-color 0.3s, color 0.3s',
+            },
+            '&:hover .MuiSvgIcon-root': {
+              backgroundColor: 'primary.main',
+              color: 'secondary.main',
+            }
+          }}
+        >
+          <PhotoCamera color="primary" sx={{
+            backgroundColor: 'white'
+          }} />
+        </IconButton>
       </label>
     </div>
   );
@@ -192,7 +204,7 @@ function CreateCapstone() {
       }
 
       const createdCapstone = await dispatch(capstoneActions.createCapstone(capstone));
-
+      
       if (!createdCapstone.errors) {
         await uploadImages(createdCapstone.id, images);
         history.push(`/capstones/${createdCapstone.id}`);
@@ -256,9 +268,11 @@ function CreateCapstone() {
         <TextField
           label="Website URL"
           variant="filled"
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={handleUrlChange}
           value={url}
           required
+          error={!isValidUrl}
+          helperText={!isValidUrl ? 'Invalid URL' : ''}
           sx={{
             backgroundColor: 'white',
             color: 'black',
@@ -271,7 +285,7 @@ function CreateCapstone() {
             },
             '& .MuiInputLabel-filled': {
               color: 'black',
-            }
+            },
           }}
         />
 
@@ -343,8 +357,8 @@ function CreateCapstone() {
         </div>
       </form>
 
-      <h2>See what others are suggesting: </h2>
-      <ReviewRender capstoneId={userCapstone.id} create={create} capstoneAlter={true} ownerId={userCapstone.author.id} />
+      <h2 className='heading'>See what others are suggesting: </h2>
+      <ReviewRender capstoneId={userCapstone?.id} create={create} capstoneAlter={true} ownerId={userCapstone?.author?.id} />
     </Container>
   );
 }

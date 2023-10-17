@@ -12,7 +12,7 @@ def seed_reviews():
         for i, reviewer in enumerate(reviewers[:25]):
             review = Review(
                 user_id=reviewer.id,
-                comment=f"Review {i+1} for capstone {capstone.id}",
+                comment=f"Review {i+1} for capstone {capstone.title}",
                 created_at=datetime.utcnow()
             )
             capstone.reviews.append(review)

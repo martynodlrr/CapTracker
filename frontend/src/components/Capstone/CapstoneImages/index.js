@@ -30,8 +30,12 @@ function CapstoneImages({ images, capstoneId, link }) {
   return (
     <div className='capstone-images'>
       {images && images.length > 0 && (
-        <><IconButton>
-          <ArrowBack onClick={prevImage} />
+        <><IconButton
+          style={currentIndex === 0 ? { visibility: 'hidden' } : { visibility: 'visible' }}
+        >
+          <ArrowBack
+            onClick={prevImage}
+          />
         </IconButton>
           <div
             key={images[currentIndex].id}
@@ -60,8 +64,12 @@ function CapstoneImages({ images, capstoneId, link }) {
               )}
             </a>
           </div>
-          <IconButton>
-            <ArrowForward onClick={nextImage} />
+          <IconButton
+            style={currentIndex === images.length - 1 ? { visibility: 'hidden' } : { visibility: 'visible' }}
+          >
+            <ArrowForward
+              onClick={nextImage}
+            />
           </IconButton>
         </>
       )}
