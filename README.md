@@ -1,10 +1,45 @@
-# CapTracker
+# CapTracker - Production README
 
-In CapTracker, I utilized all the knowledge and skills I gained during my time at App Academy. It led me to become proficient in Flask and React, highlighting the significance of comprehensive documentation for fostering a productive development environment. 
+## Brief Explanation
+CapTracker is a full-stack web application that I developed to leverage my newly acquired coding skills after completing the [App Academy bootcamp](https://www.appacademy.io/) . The inspiration for this project stemmed from an observed issue with the existing 'Progress Tracker' on the platform. Many users expressed dissatisfaction with it, so I set out to modernize and improve the concept.
 
-[Live Site](https://captracker-t69u.onrender.com/)
+The primary objective of CapTracker is to enhance the way users share their final projects, often referred to as Capstones. Unlike the existing system, CapTracker aims to foster a community where developers can openly share their work, receive constructive feedback, and collaborate without the pressure of star ratings or rankings that might discourage participation in the early development stages.
 
-## Installation
+## Live Site
+You can access the live version of CapTracker [here](https://captracker-t69u.onrender.com/).
+
+## Technologies Used
+- **Frontend:** 
+  - React
+  - Redux
+  - JavaScript
+  - CSS
+  - Material UI
+
+- **Backend:** 
+  - Flask (Python)
+  - SQLalchemy
+
+- **Database:** 
+  - SQLite3 (for development)
+  - PostgreSQL (for production)
+
+- **Cloud Hosting:** 
+  - AWS
+
+## Technical Features
+
+### Feature 1: Material UI Integration
+I integrated Material UI into CapTracker's frontend to provide a visually appealing and user-friendly interface. This integration streamlined UI development and significantly improved the user experience.
+
+### Feature 2: Redux State Management
+I implemented Redux to efficiently manage application data, ensuring a responsive user interface and providing future developers with a clear and organized state management solution.
+
+## Challenges Faced and Solutions
+- **Challenge:** Complex Data Management
+  - **Solution:** I opted for PostgreSQL as my database, which allowed me to structure and retrieve data efficiently, ensuring a seamless user experience and making future development more scalable.
+
+## Local Installation
 
 Follow the instructions below to set up and run this project locally on your machine.
 
