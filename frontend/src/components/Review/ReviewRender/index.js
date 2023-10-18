@@ -45,7 +45,9 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   }
 
   if (!Object.values(reviews).length) {
-    return <p className='heading'>Capstone currently has no reviews</p>
+    return <p
+      className='heading'
+    >Capstone currently has no reviews</p>
   }
 
   const userHasReviewCheck = reviews => {

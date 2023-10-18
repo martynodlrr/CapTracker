@@ -9,6 +9,7 @@ import CapstoneDetails from './components/Capstone/CapstoneDetails';
 import CreateCapstone from './components/Capstone/CreateCapstone';
 import RouteChangeTracker from "./components/RouteChangeTracker/";
 import AllCapstones from './components/Capstone/AllCapstones';
+import StackRender from "./components/StackAndTechnologies";
 import LandingPage from "./components/LandingPage";
 import Navigation from "./components/Navigation";
 import { authenticate } from "./store/session";
@@ -132,6 +133,7 @@ function App() {
           </Route>
         </Switch>
       }
+      <StackRender />
     </ThemeProvider>
   );
 }
