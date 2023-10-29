@@ -1,5 +1,4 @@
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import React from 'react';
 
 import imageSrc from '../../images/CapTrackerIcon.png';
@@ -7,8 +6,7 @@ import ProfileButton from './ProfileButton';
 
 import './Navigation.css';
 
-function Navigation({ isLoaded }) {
-	const sessionUser = useSelector((state) => state.session.user);
+function Navigation({ user }) {
 	const history = useHistory();
 
 	const handleIconClick = () => {
@@ -21,11 +19,9 @@ function Navigation({ isLoaded }) {
 				<img id='icon' src={imageSrc} alt='Page Icon' />
 				<p id='icon-label'>CapTracker</p>
 			</li>
-			{isLoaded && (
 				<li>
-					<ProfileButton user={sessionUser} />
+					<ProfileButton user={user} />
 				</li>
-			)}
 		</ul>
 	);
 }

@@ -6,7 +6,8 @@
 
 .footer {
   margin-top: auto;
-  background-color: #542A10;
+  background-color: rgb(37, 34, 34);
+  color: rgb(247, 247, 239);
   padding: 20px;
   display: flex;
   justify-content: space-between;

@@ -3,10 +3,10 @@ import thunk from 'redux-thunk';
 
 import capstones from './capstone';
 import reviews from './review';
-import session from './session';
+// import session from './session';
 
 const appReducer = combineReducers({
-  session,
+  // session,
   capstones,
   reviews,
 });

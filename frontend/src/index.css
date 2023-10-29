@@ -1,9 +1,6 @@
-html {
-  background-color: #000000;
-}
-
-p, h1, h2, h3, h4, h5, a {
-  color: #EEECBE;
+body {
+  background-color: rgb(247, 247, 239);
+  color: rgb(51, 51, 51);
 }
 
 ul {

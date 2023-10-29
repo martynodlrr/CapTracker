@@ -9,12 +9,11 @@ class CapstoneImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(200), nullable=False)
     capstone_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("capstones.id")), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
+    user_id = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=False)
 
     # relations
     capstone = db.relationship("Capstone", back_populates="capstone_images")
-    user = db.relationship("User", back_populates="user_capstone_images")
 
     def to_dict(self):
         return {

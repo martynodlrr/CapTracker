@@ -29,6 +29,20 @@ def capstones():
     return jsonify(capstones=data), 200
 
 
+@capstone_routes.route('/user/<int:userId>')
+def capstones_by_user_id(userId):
+    """
+    Query for capstones by user ID and return that capstone in a list
+    """
+    capstones = Capstone.query.filter(Capstone.user_id == userId).all()
+    
+    if not capstones:
+        return jsonify(message='User has no capstones'), 404
+
+    capstone_data = [capstone.to_dict() for capstone in capstones]
+    return jsonify(capstones=capstone_data)
+
+
 @capstone_routes.route('/<int:capstoneId>')
 def capstone_by_id(capstoneId):
     """
@@ -38,19 +52,6 @@ def capstone_by_id(capstoneId):
 
     if not capstone:
         return jsonify(message='Capstone could not be found'), 404
-
-    return jsonify(capstone=capstone.to_dict())
-
-
-@capstone_routes.route('/current')
-def capstones_by_user_id():
-    """
-    Query for capstones by user ID and return that capstone in a list
-    """
-    capstone = Capstone.query.filter_by(user_id=current_user.id).first()
-
-    if not capstone:
-        return jsonify(message='User has no capstone'), 404
 
     return jsonify(capstone=capstone.to_dict())
 

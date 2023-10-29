@@ -15,14 +15,14 @@ def reviews_by_capstone_id(capstoneId):
     """
     Query for all reviews of a capstone and returns them in a list dictionaries
     """
-    reviews = Review.query.options(joinedload(Review.reviewer)).filter_by(capstone_id=capstoneId).order_by(Review.created_at.desc()).all()
+    reviews = Review.query.filter_by(capstone_id=capstoneId).order_by(Review.created_at.desc()).all()
 
     if not reviews:
         return jsonify(message='Capstone has no reviews'), 404
 
     data = [
-        {**review.to_dict(), 'user': review.reviewer.to_dict()}
-        for review in reviews if review.reviewer
+        {**review.to_dict()}
+        for review in reviews
     ]
 
     return jsonify(reviews=data)

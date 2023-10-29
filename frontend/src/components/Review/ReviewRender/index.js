@@ -1,6 +1,7 @@
 import { ThemeProvider, useTheme } from '@emotion/react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useRef } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import Button from '@mui/material/Button';
 
 import * as reviewActions from '../../../store/review';
@@ -11,11 +12,11 @@ import CreateReview from '../CreateReview';
 import './index.css';
 
 function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
-  const user = useSelector(state => state.session.user);
   const reviews = useSelector(state => state.reviews);
   const [showMenu, setShowMenu] = useState(false);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
+  const { user } = useAuth0();
   const theme = useTheme();
   const ulRef = useRef();
   const closeMenu = () => {
@@ -23,8 +24,10 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   };
 
   useEffect(() => {
-    dispatch(reviewActions.getReviews(capstoneId));
-  }, [dispatch])
+    if (capstoneId) {
+      dispatch(reviewActions.getReviews(capstoneId));
+    }
+  }, [dispatch, capstoneId])
 
   useEffect(() => {
     if (!showMenu) return;
@@ -93,7 +96,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
         >
           {Object.values(reviews).reverse().map((review, index) => (
             <div key={index} className="review">
-              <p><strong>{review.author.userName}</strong>: {review.comment}</p>
+              <p><strong>{review.author.nickName}</strong>: {review.comment}</p>
               <p>{new Date(review.createdAt).toLocaleDateString()}</p>
               {review.author.id === user.id ? (
                 <>

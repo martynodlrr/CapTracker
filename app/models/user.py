@@ -3,6 +3,7 @@ from flask_login import UserMixin
 
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 
+
 class User(db.Model, UserMixin):
     __tablename__ = "users"
 
@@ -10,19 +11,14 @@ class User(db.Model, UserMixin):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(25), nullable=False)
-    last_name = db.Column(db.String(50), nullable=False)
-    username = db.Column(db.String(40), nullable=False, unique=True)
+    given_name = db.Column(db.String(25), nullable=False)
+    family_name = db.Column(db.String(50), nullable=False)
+    nick_name = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(75), nullable=False, unique=True)
     hashed_password = db.Column(db.String(125), nullable=False)
-    pfp = db.Column(db.String(200))
+    picture = db.Column(db.String(200))
     linkedin = db.Column(db.String(175))
     github = db.Column(db.String(100))
-
-    # relations
-    user_capstone_images = db.relationship("CapstoneImage", back_populates="user")
-    user_capstones = db.relationship("Capstone", back_populates="author")
-    user_reviews = db.relationship("Review", back_populates="reviewer")
 
     @property
     def password(self):
@@ -38,11 +34,11 @@ class User(db.Model, UserMixin):
     def to_dict(self):
         return {
             "id": self.id,
-            "firstName": self.first_name,
-            "lastName": self.last_name,
-            "userName": self.username,
+            "given_name": self.given_name,
+            "family_name": self.family_name,
+            "nickName": self.nick_name,
             "LinkedIn": self.linkedin,
             "GitHub": self.github,
             "email": self.email,
-            "pfp": self.pfp
+            "picture": self.picture,
         }

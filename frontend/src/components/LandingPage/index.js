@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import ReactGA from 'react-ga';
 import React from 'react';
@@ -11,8 +10,7 @@ import OpenModalButton from "../OpenModalButton";
 
 import './index.css';
 
-function LandingPage() {
-  const sessionUser = useSelector((state) => state.session.user);
+function LandingPage({ user}) {
   const history = useHistory();
   const theme = useTheme();
 
@@ -30,30 +28,30 @@ function LandingPage() {
       <header className="header">
         <div className="container">
           <h1>Welcome to CapTracker</h1>
-          <p>Where projects swiftly meet quality feedback.</p>
+          <h3>Where projects swiftly meet quality feedback.</h3>
         </div>
       </header>
 
       <section className="intro">
         <div className="container">
           <h2>Post. Share. Improve.</h2>
-          <p>Join a community built on insightful interactions, helping you refine your projects effectively and efficiently.</p>
+          <h3>Join a community built on insightful interactions, helping you refine your projects effectively and efficiently.</h3>
         </div>
       </section>
 
       <section className="features">
         <div className="container">
           <div className="feature">
-            <h3>Real-Time Feedback</h3>
-            <p>Don't wait around. Our vibrant community is on standby to provide timely feedback.</p>
+            <h2>Real-Time Feedback</h2>
+            <h3>Don't wait around. Our vibrant community is on standby to provide timely feedback.</h3>
           </div>
           <div className="feature">
-            <h3>Optimized User Experience</h3>
-            <p>With a focus on user experience, sharing and receiving feedback is seamless and intuitive.</p>
+            <h2>Optimized User Experience</h2>
+            <h3>With a focus on user experience, sharing and receiving feedback is seamless and intuitive.</h3>
           </div>
           <div className="feature">
-            <h3>Insights That Matter</h3>
-            <p>Go beyond superficial comments and get in-depth insights that can truly elevate your projects.</p>
+            <h2>Insights That Matter</h2>
+            <h3>Go beyond superficial comments and get in-depth insights that can truly elevate your projects.</h3>
           </div>
         </div>
       </section>
@@ -61,8 +59,8 @@ function LandingPage() {
       <section className="cta">
         <div className="container">
           <h2>Join CapTracker Today</h2>
-          <p>Step into a space where your projects get the attention and constructive feedback they deserve.</p>
-          {!sessionUser ? <OpenModalButton
+          <h3>Step into a space where your projects get the attention and constructive feedback they deserve.</h3>
+          {!user ? <OpenModalButton
             buttonText="Get Started"
             modalComponent={
               <ThemeProvider theme={theme}>

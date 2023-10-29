@@ -1,10 +1,11 @@
+import { Auth0Provider } from '@auth0/auth0-react';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 import React from "react";
 
 import { ModalProvider, Modal } from "./context/Modal";
-import * as sessionActions from "./store/session";
+// import * as sessionActions from "./store/session";
 import configureStore from "./store";
 import App from "./App";
 
@@ -14,7 +15,7 @@ const store = configureStore();
 
 if (process.env.NODE_ENV !== "production") {
 	window.store = store;
-	window.sessionActions = sessionActions;
+	// window.sessionActions = sessionActions;
 }
 
 // Wrap the application with the Modal provider and render the Modal component
@@ -22,6 +23,13 @@ if (process.env.NODE_ENV !== "production") {
 // HTML elements on top of the all the other HTML elements:
 function Root() {
 	return (
+		<Auth0Provider
+			domain={process.env.REACT_APP_AUTH0_DOMAIN}
+			clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  >
 		<ModalProvider>
 			<Provider store={store}>
 				<BrowserRouter>
@@ -30,6 +38,7 @@ function Root() {
 				</BrowserRouter>
 			</Provider>
 		</ModalProvider>
+  </Auth0Provider>
 	);
 }
 

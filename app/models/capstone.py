@@ -11,11 +11,10 @@ class Capstone(db.Model):
     url = db.Column(db.String(150))
     description = db.Column(db.String(1000), nullable=False)
     cloned_from = db.Column(db.String(75), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
+    user_id = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
     # relations
-    author = db.relationship("User", back_populates="user_capstones")
     capstone_images = db.relationship("CapstoneImage", back_populates="capstone")
     reviews = db.relationship("Review", back_populates="capstone")
 
@@ -23,7 +22,7 @@ class Capstone(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "author": self.author.to_dict(),
+            "author": self.user_id,
             "url": self.url,
             "description": self.description,
             "clonedFrom": self.cloned_from,

@@ -1,30 +1,25 @@
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { useParams, useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
+import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button';
 import ReactGA from 'react-ga';
 
-import * as sessionActions from '../../store/session'
 import greetings from './greetings';
 
 import './index.css';
 
 function Profile() {
-  const user = useSelector(state => state.session.user);
-  const { userId } = useParams();
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const { user, isLoading } = useAuth0();
 
-  const [previewSrc, setPreviewSrc] = useState(user?.pfp || null);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [userName, setUserName] = useState(user.userName);
-  const [linkedIn, setLinkedIn] = useState(user.LinkedIn || '');
-  const [github, setGithub] = useState(user.GitHub || '');
-  const [pfp, setPfp] = useState(user?.pfp || null);
+  const [previewSrc, setPreviewSrc] = useState(user.picture || null);
+  const [given_name, setgiven_name] = useState(user.given_name);
+  const [family_name, setfamily_name] = useState(user.family_name);
+  const [nick_name, setnick_name] = useState(user.nickname);
+  const [linkedIn, setLinkedIn] = useState(user.linkedIn || '');
+  const [github, setGithub] = useState(user.github || '');
+  const [picture, setpicture] = useState(user.picture || null);
   const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState(user.email);
   const [greeting, setGreeting] = useState('');
@@ -34,42 +29,32 @@ function Profile() {
     setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
   }, []);
 
-  useEffect(() => {
-    if (userId !== user.id) {
-      history.push(`/users/${user.id}`);
-    }
-  }, [userId, user.id, history]);
 
   useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setDisabled(
-      firstName.length < 2 ||
-      firstName.length > 25 ||
-      lastName.length < 2 ||
-      lastName.length > 50 ||
-      userName.length < 4 ||
-      userName.length > 40 ||
+      nick_name?.length < 4 ||
+      nick_name?.length > 40 ||
       email.length > 75 ||
       !emailRegex.test(email) ||
       (password.length > 0 && password.length < 6)
     );
-  }, [firstName, lastName, userName, email, password]);
+  }, [given_name, family_name, nick_name, email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     ReactGA.event({
-      category: 'User',
+      category: 'user',
       action: 'Updated profile'
     });
 
     const updatedUser = {
-      firstName,
-      lastName,
-      userName: user.userName === userName ? '' : userName,
-      email: user.email === email ? '' : email,
-      pfp: pfp === "https://i.pinimg.com/originals/09/f0/84/09f084cd8a8093ea5738a3ab75c210df.png" ? false : pfp,
-      userId: user.id,
+      given_name,
+      family_name,
+      nick_name,
+      email,
+      picture,
       linkedIn,
       github
     }
@@ -80,34 +65,42 @@ function Profile() {
       updatedUser.password = undefined;
     }
 
-    dispatch(sessionActions.update(updatedUser, user.id))
-      .catch((e) => {
-        console.error("Error updating user: ", e);
-      });
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setPfp(file);
+      setpicture(file);
       const src = URL.createObjectURL(file);
 
       if (previewSrc) URL.revokeObjectURL(previewSrc);
       setPreviewSrc(src);
     } else {
-      setPreviewSrc(user?.pfp || null);
+      setPreviewSrc(user.picture);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ margin: 'auto', background: 'rgb(247, 247, 239)', display: 'block', shapeRendering: 'auto' }} width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+          <path fill="none" stroke="#0a0a0a" strokeWidth="7" strokeDasharray="233.4959246826172 23.093003540039064" d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z" strokeLinecap="round" style={{ transform: 'scale(1)', transformOrigin: '50px 50px' }}>
+            <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.8518518518518516s" keyTimes="0;1" values="0;256.58892822265625"></animate>
+          </path>
+        </svg>
+      </div>
+    );
+  }
 
   return (
     <div id='profile-group'>
       <h1
         className='heading'
-        style={{marginBottom: '50px'}}
+        style={{ marginBottom: '50px' }}
       >{greeting}</h1>
       <form onSubmit={handleSubmit} encType="multipart/form-data" id='profile-form'>
         <div className='file-input-container'>
-          <span className="pfp-render">
+          <span className="picture-render">
             <div style={{
               width: '200px',
               height: '200px',
@@ -119,7 +112,7 @@ function Profile() {
             }}>
               <img
                 src={previewSrc}
-                alt={`${firstName} ${lastName} Profile Preview`}
+                alt={`${given_name} ${family_name} Profile Preview`}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -131,12 +124,12 @@ function Profile() {
 
           <input
             accept="image/*"
-            id="pfp-input"
+            id="picture-input"
             type="file"
             style={{ display: 'none' }}
             onChange={handleFileChange}
           />
-          <label htmlFor="pfp-input">
+          <label htmlFor="picture-input">
             <IconButton
               color="secondary"
               aria-label="upload picture"
@@ -147,134 +140,132 @@ function Profile() {
           </label>
         </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="first-name"
-              label="First Name"
-              type="text"
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-              required
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="first-name"
+            label="First Name"
+            type="text"
+            onChange={(e) => setgiven_name(e.target.value)}
+            value={given_name}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="last-name"
-              label="Last Name"
-              type="text"
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-              required
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="last-name"
+            label="Last Name"
+            type="text"
+            onChange={(e) => setfamily_name(e.target.value)}
+            value={family_name}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="email"
-              label="Email"
-              type="email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              required
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="email"
+            label="Email"
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            required
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="username"
-              label="Username"
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="nick_name"
+            label="Nick Name"
             type="text"
             required
-              onChange={(e) => setUserName(e.target.value)}
-              value={userName}
-              sx={{
+            onChange={(e) => setnick_name(e.target.value)}
+            value={nick_name}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="password"
-              label="Update Password"
-              type="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="password"
+            label="Update Password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
         <h3
           className='heading'
@@ -283,55 +274,55 @@ function Profile() {
           }}
         >Socials</h3>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="github"
-              label="GitHub"
-              type="url"
-              onChange={(e) => setGithub(e.target.value)}
-              value={github}
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="github"
+            label="GitHub"
+            type="url"
+            onChange={(e) => setGithub(e.target.value)}
+            value={github}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
-          <div className="form-field">
-            <TextField
-              variant="filled"
-              id="linkedIn"
-              label="LinkedIn"
-              type="text"
-              onChange={(e) => setLinkedIn(e.target.value)}
-              value={linkedIn}
-              sx={{
+        <div className="form-field">
+          <TextField
+            variant="filled"
+            id="linkedIn"
+            label="LinkedIn"
+            type="text"
+            onChange={(e) => setLinkedIn(e.target.value)}
+            value={linkedIn}
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '& .MuiFilledInput-root': {
                 backgroundColor: 'white',
                 color: 'black',
-                '& .MuiFilledInput-root': {
-                  backgroundColor: 'white',
-                  color: 'black',
-                },
-                '& .MuiFilledInput-input': {
-                  color: 'black',
-                },
-                '& .MuiInputLabel-filled': {
-                  color: 'black',
-                }
-              }}
-            />
-          </div>
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              }
+            }}
+          />
+        </div>
 
         <Button
           type="submit"

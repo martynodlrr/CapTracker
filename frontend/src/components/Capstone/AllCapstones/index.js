@@ -56,7 +56,7 @@ function AllCapstones() {
             <RenderCapstone capstone={capstone} />
           ))
         }
-        {!hasMore && <div className="no-more-capstones">No more capstones available.</div>}
+        {!hasMore && <div>No more capstones available.</div>}
       </div>
     </>
   );

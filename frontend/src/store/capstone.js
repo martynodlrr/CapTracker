@@ -62,11 +62,11 @@ export const fetchSingleCapstone = (capstoneId) => async (dispatch) => {
   return false;
 };
 
-export const fetchUserCapstone = () => async (dispatch) => {
-  const res = await fetch('/api/capstones/current');
+export const fetchUserCapstone = (userId) => async (dispatch) => {
+  const res = await fetch(`/api/capstones/user/${userId}`);
 
-  if (res.ok) {
-    const data = await res.json();
+if (res.ok) {
+  const data = await res.json();
 
     dispatch(updateUserCapstone({ ...data.capstone }));
     return data.capstone;

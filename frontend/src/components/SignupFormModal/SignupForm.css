@@ -2,7 +2,7 @@ form {
   gap: 10px;
 }
 
-.name-inputs, .email-username-inputs, .password-inputs {
+.name-inputs, .email-nick_name-inputs, .password-inputs {
   display: flex;
   gap: inherit;
 }

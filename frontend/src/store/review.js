@@ -30,7 +30,7 @@ const removeReview = (reviewId) => ({
 // Thunk
 export const getReviews = (capstoneId) => async (dispatch) => {
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`);
-
+console.log(res)
 	if (res.ok) {
     const data = await res.json();
 
@@ -39,7 +39,9 @@ export const getReviews = (capstoneId) => async (dispatch) => {
 		}
 
 		dispatch(setReviews(normalizeData(data.reviews)));
-	}
+  }
+
+  return false;
 };
 
 export const createReview = (comment, capstoneId) => async (dispatch) => {

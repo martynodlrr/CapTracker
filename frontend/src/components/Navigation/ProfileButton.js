@@ -3,21 +3,24 @@ import React, { useState, useEffect, useRef } from "react";
 import { ThemeProvider } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import Button from '@mui/material/Button';
 
 import OpenModalButton from "../OpenModalButton";
-import SignupFormModal from "../SignupFormModal";
-import LoginFormModal from "../LoginFormModal";
-import { useModal } from "../../context/Modal";
-import { logout } from "../../store/session";
+// import SignupFormModal from "../SignupFormModal";
+// import LoginFormModal from "../LoginFormModal";
+// import { useModal } from "../../context/Modal";
+// import { logout } from "../../store/session";
 
 import './Navigation.css';
 
 function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
-  const { closeModal } = useModal();
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const closeMenu = () => setShowMenu(false);
   const dispatch = useDispatch();
+  const { logout } = useAuth0();
   const history = useHistory();
   const theme = useTheme();
   const ulRef = useRef();
@@ -25,6 +28,22 @@ function ProfileButton({ user }) {
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
+  };
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    user.id ? dispatch(logout()) : logout({ logoutParams: { returnTo: window.location.origin } })
+
+    closeMenu();
+  };
+
+  const handleProfileRedirect = () => {
+    history.push(`/user`);
+  };
+
+  const handleCapstoneRedirect = () => {
+    history.push(`/capstone/edit`);
   };
 
   useEffect(() => {
@@ -39,33 +58,15 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    dispatch(logout());
-    closeMenu();
-  };
-
-  const handleProfileRedirect = () => {
-    history.push(`/users/${user.id}`);
-  };
-
-  const handleCapstoneRedirect = () => {
-    history.push(`/capstone/edit`);
-  };
-
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
-
   return (
     <>
       <MenuRoundedIcon onClick={openMenu} id='menu-bars' />
       <div className={ulClassName} ref={ulRef}>
-        {user ? (
+        {user?.id ? (
           <>
             <div className='image-container'>
-              <img src={user.pfp} alt="User's Profile" />
+              <img src={user.picture} alt="User's Profile" />
             </div>
-            {user.username}
             <Button
               onClick={handleProfileRedirect}
               className='btn'
@@ -88,19 +89,8 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={
                 <ThemeProvider theme={theme}>
-                  <LoginFormModal />
+                  {/* <LoginFormModal /> */}
                 </ThemeProvider>}
-            />
-
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              className='btn'
-              modalComponent={
-                <ThemeProvider theme={theme}>
-                  <SignupFormModal />
-                </ThemeProvider>
-              }
             />
           </>
         )}
