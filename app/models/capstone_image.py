@@ -9,7 +9,7 @@ class CapstoneImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image_url = db.Column(db.String(200), nullable=False)
     capstone_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("capstones.id")), nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.String(75), nullable=False)
     created_at = db.Column(db.TIMESTAMP, nullable=False)
 
     # relations
@@ -20,4 +20,5 @@ class CapstoneImage(db.Model):
             "id": self.id,
             "imageUrl": self.image_url,
             "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
+            "author": self.user_id
         }

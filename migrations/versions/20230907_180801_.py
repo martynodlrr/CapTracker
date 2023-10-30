@@ -46,12 +46,8 @@ def upgrade():
         sa.Column("url", sa.String(length=150), nullable=True),
         sa.Column("description", sa.String(length=1000), nullable=False),
         sa.Column("cloned_from", sa.String(length=75), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=True),
+        sa.Column("user_id", sa.String(length=75), nullable=True),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=True),
-        sa.ForeignKeyConstraint(
-            ["user_id"],
-            ["users.id"],
-        ),
         sa.PrimaryKeyConstraint("id"),
     )
     if environment == "production":
@@ -61,15 +57,11 @@ def upgrade():
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("image_url", sa.String(length=200), nullable=False),
         sa.Column("capstone_id", sa.Integer(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=False),
+        sa.Column("user_id", sa.String(length=75), nullable=True),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=False),
         sa.ForeignKeyConstraint(
             ["capstone_id"],
             ["capstones.id"],
-        ),
-        sa.ForeignKeyConstraint(
-            ["user_id"],
-            ["users.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
     )
@@ -78,17 +70,13 @@ def upgrade():
     op.create_table(
         "reviews",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("user_id", sa.Integer(), nullable=True),
+        sa.Column("author", sa.String(length=40), nullable=True),
         sa.Column("capstone_id", sa.Integer(), nullable=True),
         sa.Column("comment", sa.String(length=1000), nullable=False),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=True),
         sa.ForeignKeyConstraint(
             ["capstone_id"],
             ["capstones.id"],
-        ),
-        sa.ForeignKeyConstraint(
-            ["user_id"],
-            ["users.id"],
         ),
         sa.PrimaryKeyConstraint("id"),
     )

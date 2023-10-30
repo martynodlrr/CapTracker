@@ -7,8 +7,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from 'react';
 import ReactGA from 'react-ga';
 
-import * as capstoneActions from '../../../store/capstone';
 import StyledTextareaAutosize from '../../TextareaInput/index.js';
+import * as capstoneActions from '../../../store/capstone';
+import * as reviewActions from '../../../store/review';
 import ReviewRender from '../../Review/ReviewRender';
 
 import './index.css';
@@ -21,17 +22,18 @@ function CreateCapstone() {
 
   const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png';
 
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
-  const [isValidUrl, setIsValidUrl] = useState(true);
-  const [description, setDescription] = useState('');
-  const [clonedFrom, setClonedFrom] = useState('');
   const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage));
+  const [capstoneAlter, setCapstoneAlter] = useState(false);
   const [images, setImages] = useState(Array(5).fill(null));
-  const [create, setCreate] = useState(true);
-  const [errors, setErrors] = useState([]);
+  const [description, setDescription] = useState('');
+  const [isValidUrl, setIsValidUrl] = useState(true);
+  const [clonedFrom, setClonedFrom] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [create, setCreate] = useState(true);
+  const [errors, setErrors] = useState([]);
+  const [title, setTitle] = useState('');
+  const [url, setUrl] = useState('');
 
   useEffect(() => {
     dispatch(capstoneActions.fetchUserCapstone(user.id));
@@ -56,6 +58,7 @@ function CreateCapstone() {
 
       setCreate(Object.keys(userCapstone).length > 0 ? false : true);
       setLoading(false);
+      setCapstoneAlter(true);
     }
   }, [userCapstone]);
 
@@ -170,7 +173,8 @@ function CreateCapstone() {
     </div>
   );
 
-  const uploadImages = async (capstoneId, images, capstoneImages = []) => {
+  const uploadImages = async (capstoneId, images, capstoneImages, userId) => {
+    console.log(userId)
     await Promise.all(images.map((image, index) => {
       if (image) {
         const formData = new FormData();
@@ -178,9 +182,9 @@ function CreateCapstone() {
 
         if (capstoneImages[index]) {
           const imageId = capstoneImages[index].id;
-          return dispatch(capstoneActions.updateCapstoneImage(capstoneId, imageId, formData));
+          return dispatch(capstoneActions.updateCapstoneImage(capstoneId, imageId, formData, userId));
         } else {
-          return dispatch(capstoneActions.createCapstoneImage(capstoneId, formData));
+          return dispatch(capstoneActions.createCapstoneImage(capstoneId, formData, userId));
         }
       }
       return null;
@@ -197,6 +201,7 @@ function CreateCapstone() {
       description,
       images,
       clonedFrom,
+      userId: user.id,
     };
 
     if (create) {
@@ -208,7 +213,8 @@ function CreateCapstone() {
       const createdCapstone = await dispatch(capstoneActions.createCapstone(capstone));
 
       if (!createdCapstone.errors) {
-        await uploadImages(createdCapstone.id, images);
+        await uploadImages(createdCapstone.id, images, [], user.id);
+        await dispatch(reviewActions.getReviews(createdCapstone.id));
         history.push(`/capstones/${createdCapstone.id}`);
 
       } else {
@@ -220,8 +226,9 @@ function CreateCapstone() {
       const updateRes = await dispatch(capstoneActions.updateCapstone(capstone));
 
       if (!updateRes.errors) {
-        await uploadImages(capstone.id, images, userCapstone.capstoneImages);
-        const res = await dispatch(capstoneActions.fetchUserCapstone());
+        await uploadImages(capstone.id, images, userCapstone.capstoneImages, user.id);
+        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
+
         history.push(`/capstones/${res.id}`);
 
       } else {
@@ -368,7 +375,7 @@ function CreateCapstone() {
       </form>
 
       <h2 className='heading'>See what others are suggesting: </h2>
-      <ReviewRender capstoneId={userCapstone?.id} create={create} capstoneAlter={true} ownerId={userCapstone?.author?.id} />
+      <ReviewRender capstoneId={userCapstone?.id} create={create} capstoneAlter={capstoneAlter} ownerId={userCapstone?.author?.id} />
     </Container>
   );
 }

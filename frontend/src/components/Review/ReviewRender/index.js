@@ -47,14 +47,14 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
     return <p className='heading'>Post your capstone to see reviews here!</p>
   }
 
-  if (!Object.values(reviews).length) {
+  if (!Object.values(reviews).length && user.id != ownerId) {
     return <p
       className='heading'
     >Capstone currently has no reviews</p>
   }
 
   const userHasReviewCheck = reviews => {
-    return Object.values(reviews).some(review => user.id === review.author.id);
+    return Object.values(reviews).some(review => user.nickname === review.author);
   }
 
   const handleDelete = async reviewId => {
@@ -64,21 +64,20 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   return (
     <>
       <section className="review-section">
-        {user.id !== ownerId && !userHasReviewCheck(reviews) && <OpenModalButton
+        {(user.id != ownerId && !userHasReviewCheck(reviews) && !capstoneAlter) && <OpenModalButton
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
           modalComponent={
             <ThemeProvider theme={theme}>
-              <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} />
+              <CreateReview create={true} capstoneId={capstoneId} closeModal={closeModal} nickname={user.nickname} />
             </ThemeProvider>
-          }
-        />
-        }
+          } />}
         {user.id === ownerId && !capstoneAlter && <Button
           variant='contained'
           href='/capstone/edit'
-        >Update</Button>}
+        >Edit Capstone</Button>}
       </section>
+
       <div
         className="review-render"
         style={capstoneAlter ? { justifyContent: 'center' } : null}
@@ -94,21 +93,23 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
             flexWrap: 'wrap'
           }}
         >
+
           {Object.values(reviews).reverse().map((review, index) => (
             <div key={index} className="review">
-              <p><strong>{review.author.nickName}</strong>: {review.comment}</p>
+              <p><strong>{review.author}</strong>: {review.comment}</p>
               <p>{new Date(review.createdAt).toLocaleDateString()}</p>
-              {review.author.id === user.id ? (
+              {review.author === user.nickname ? (
                 <>
                   <OpenModalButton
                     buttonText="Edit"
                     onItemClick={closeMenu}
                     modalComponent={
                       <ThemeProvider theme={theme}>
-                        <CreateReview capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />
+                        <CreateReview nickname={user.nickname} capstoneId={capstoneId} closeModal={closeModal} reviewId={review.id} text={review.comment} />
                       </ThemeProvider>
                     }
                   />
+
                   <Button
                     onClick={() => handleDelete(review.id)}
                     className='btn'
@@ -116,6 +117,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
                   >Delete</Button>
                 </>
               ) : null}
+
             </div>
           ))}
         </section>

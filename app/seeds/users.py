@@ -243,7 +243,7 @@ def seed_users():
             email="martynodlrr@gmail.com",
             password="noOneKnowsThis",
             picture="https://captracker.s3.amazonaws.com/1d7d56d0457448ecb26a3bbcc6a7ec70.png",
-            linkedin="www.linkedin.com/in/martyn-o-connor-dlr-roberts-2aa00726b",
+            linkedin="https://www.linkedin.com/in/martynodlrr/",
             github="https://github.com/Martynodlrr",
         ),
         User(
@@ -253,7 +253,7 @@ def seed_users():
             email="demo@aa.io",
             password="password",
             picture="https://captracker.s3.amazonaws.com/1d7d56d0457448ecb26a3bbcc6a7ec70.png",
-            linkedin="www.linkedin.com/in/demo-lition-2aa00726b",
+            linkedin="https://www.linkedin.com/in/demo-profile-1a542193/",
             github="https://github.com/Demo",
         ),
     ]

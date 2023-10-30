@@ -1,4 +1,4 @@
-from flask_login import current_user, login_required
+from flask_login import login_required
 from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from datetime import datetime
@@ -29,18 +29,17 @@ def capstones():
     return jsonify(capstones=data), 200
 
 
-@capstone_routes.route('/user/<int:userId>')
+@capstone_routes.route('/user/<string:userId>')
 def capstones_by_user_id(userId):
     """
     Query for capstones by user ID and return that capstone in a list
     """
-    capstones = Capstone.query.filter(Capstone.user_id == userId).all()
-    
-    if not capstones:
-        return jsonify(message='User has no capstones'), 404
+    capstone = Capstone.query.filter(Capstone.user_id == userId).first()
 
-    capstone_data = [capstone.to_dict() for capstone in capstones]
-    return jsonify(capstones=capstone_data)
+    if not capstone:
+        return jsonify(message='User has no capstone'), 404
+
+    return jsonify(capstone=capstone.to_dict())
 
 
 @capstone_routes.route('/<int:capstoneId>')
@@ -57,7 +56,6 @@ def capstone_by_id(capstoneId):
 
 
 @capstone_routes.route('/', methods=['POST'])
-@login_required
 def create_capstone():
     """
     Create a capstone
@@ -67,11 +65,11 @@ def create_capstone():
 
     if form.validate():
         new_capstone = Capstone(
-            title=form.title.data,
             url=form.url.data,
+            title=form.title.data,
+            user_id=data['userId'],
             cloned_from=form.cloned_from.data,
             description=form.description.data,
-            user_id=current_user.id,
             created_at=datetime.utcnow()
         )
         db.session.add(new_capstone)
@@ -82,9 +80,8 @@ def create_capstone():
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-@capstone_routes.route('/<int:capstoneId>', methods=['POST'])
-@login_required
-def create_image_for_capstone(capstoneId):
+@capstone_routes.route('/<int:capstoneId>/user/<string:userId>', methods=['POST'])
+def create_image_for_capstone(capstoneId, userId):
     """
     Create an image for capstone by capstone id
     """
@@ -94,7 +91,7 @@ def create_image_for_capstone(capstoneId):
         return jsonify(error="No image file provided"), 400
 
     data = {
-        "image_file": image_file,
+        "image_file": image_file
     }
 
     form = CapstoneImageForm(csrf_token=request.cookies['csrf_token'], data=data)
@@ -108,9 +105,9 @@ def create_image_for_capstone(capstoneId):
         image_url = upload['url']
 
         new_capstone_image = CapstoneImage(
-            capstone_id=capstoneId,
             image_url=image_url,
-            user_id=current_user.id,
+            user_id=userId,
+            capstone_id=capstoneId,
             created_at=datetime.utcnow()
         )
 
@@ -123,15 +120,14 @@ def create_image_for_capstone(capstoneId):
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['PUT'])
-@login_required
 def update_capstone(capstoneId):
     """
     Updates a capstone by capstone id
     """
     capstone = Capstone.query.get(capstoneId)
 
-    if not capstone or current_user.id != capstone.user_id:
-        return jsonify(error='Unauthorized' if capstone else 'Capstone not found'), 403 if capstone else 404
+    if not capstone:
+        return jsonify(error='Capstone not found'), 404
 
     form = CapstoneForm(csrf_token=request.cookies['csrf_token'], data=request.get_json())
 
@@ -148,16 +144,15 @@ def update_capstone(capstoneId):
     return {'errors': validation_errors_to_error_messages(form.errors)}, 400
 
 
-@capstone_routes.route('/<int:capstoneId>/images/<int:imageId>', methods=['PUT'])
-@login_required
-def update_capstone_image(capstoneId, imageId):
+@capstone_routes.route('/<int:_capstoneId>/images/<int:imageId>', methods=['PUT'])
+def update_capstone_image(_capstoneId, imageId):
     """
     Updates a capstone image by capstone id and image id
     """
     capstone_image = CapstoneImage.query.get(imageId)
 
-    if not capstone_image or current_user.id != capstone_image.user_id:
-        return jsonify(error='Unauthorized'), 403
+    if not capstone_image:
+        return jsonify(error='Image Not Found'), 404
 
     image_file = request.files.get('image')
     form = CapstoneImageForm(csrf_token=request.cookies['csrf_token'], formdata=request.files)
@@ -178,15 +173,14 @@ def update_capstone_image(capstoneId, imageId):
 
 
 @capstone_routes.route('/<int:capstoneId>', methods=['DELETE'])
-@login_required
 def delete_capstone(capstoneId):
     """
     deletes a capstone by capstone id
     """
     capstone = Capstone.query.get(capstoneId)
 
-    if not capstone or current_user.id != capstone.user_id:
-        return jsonify(error='Unauthorized' if capstone else 'Capstone not found'), 403 if capstone else 404
+    if not capstone:
+        return jsonify(error='Capstone not found'), 404
 
     capstone_images = CapstoneImage.query.filter_by(capstone_id=capstoneId).all()
 

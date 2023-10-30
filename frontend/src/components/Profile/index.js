@@ -1,10 +1,10 @@
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
+// import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import React, { useEffect, useState } from 'react';
-import IconButton from '@mui/material/IconButton';
+// import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import { useAuth0 } from "@auth0/auth0-react";
-import Button from '@mui/material/Button';
-import ReactGA from 'react-ga';
+// import Button from '@mui/material/Button';
+// import ReactGA from 'react-ga';
 
 import greetings from './greetings';
 
@@ -13,72 +13,72 @@ import './index.css';
 function Profile() {
   const { user, isLoading } = useAuth0();
 
-  const [previewSrc, setPreviewSrc] = useState(user.picture || null);
+  const [previewSrc, setPreviewSrc] = useState(user.picture);
   const [given_name, setgiven_name] = useState(user.given_name);
   const [family_name, setfamily_name] = useState(user.family_name);
   const [nick_name, setnick_name] = useState(user.nickname);
-  const [linkedIn, setLinkedIn] = useState(user.linkedIn || '');
+  const [linkedIn, setLinkedIn] = useState(user.linkedin || '');
   const [github, setGithub] = useState(user.github || '');
-  const [picture, setpicture] = useState(user.picture || null);
-  const [disabled, setDisabled] = useState(false);
+  // const [picture, setpicture] = useState(user.picture);
+  // const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState(user.email);
   const [greeting, setGreeting] = useState('');
-  const [password, setPassword] = useState('');
+  // const [password, setPassword] = useState('');
 
   useEffect(() => {
     setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
   }, []);
 
 
-  useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setDisabled(
-      nick_name?.length < 4 ||
-      nick_name?.length > 40 ||
-      email.length > 75 ||
-      !emailRegex.test(email) ||
-      (password.length > 0 && password.length < 6)
-    );
-  }, [given_name, family_name, nick_name, email, password]);
+  // useEffect(() => {
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   setDisabled(
+  //     nick_name?.length < 4 ||
+  //     nick_name?.length > 40 ||
+  //     email.length > 75 ||
+  //     !emailRegex.test(email) ||
+  //     (password.length > 0 && password.length < 6)
+  //   );
+  // }, [given_name, family_name, nick_name, email, password]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    ReactGA.event({
-      category: 'user',
-      action: 'Updated profile'
-    });
+  //   ReactGA.event({
+  //     category: 'user',
+  //     action: 'Updated profile'
+  //   });
 
-    const updatedUser = {
-      given_name,
-      family_name,
-      nick_name,
-      email,
-      picture,
-      linkedIn,
-      github
-    }
+  //   const updatedUser = {
+  //     given_name,
+  //     family_name,
+  //     nick_name,
+  //     email,
+  //     picture,
+  //     linkedIn,
+  //     github
+  //   }
 
-    if (password.length > 5) {
-      updatedUser.password = password;
-    } else {
-      updatedUser.password = undefined;
-    }
+  //   if (password.length > 5) {
+  //     updatedUser.password = password;
+  //   } else {
+  //     updatedUser.password = undefined;
+  //   }
 
-  };
+  // };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setpicture(file);
-      const src = URL.createObjectURL(file);
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setpicture(file);
+  //     const src = URL.createObjectURL(file);
 
-      if (previewSrc) URL.revokeObjectURL(previewSrc);
-      setPreviewSrc(src);
-    } else {
-      setPreviewSrc(user.picture);
-    }
-  };
+  //     if (previewSrc) URL.revokeObjectURL(previewSrc);
+  //     setPreviewSrc(src);
+  //   } else {
+  //     setPreviewSrc(user.picture);
+  //   }
+  // };
 
   if (isLoading) {
     return (
@@ -98,7 +98,16 @@ function Profile() {
         className='heading'
         style={{ marginBottom: '50px' }}
       >{greeting}</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data" id='profile-form'>
+      {/* <form onSubmit={handleSubmit} encType="multipart/form-data" id='profile-form'> */}
+      <div
+        id='profile-form'
+        style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '10px',
+        paddingBottom: '50px'}}
+      >
         <div className='file-input-container'>
           <span className="picture-render">
             <div style={{
@@ -122,22 +131,22 @@ function Profile() {
             </div>
           </span>
 
-          <input
+          {/* <input
             accept="image/*"
             id="picture-input"
             type="file"
             style={{ display: 'none' }}
             onChange={handleFileChange}
-          />
-          <label htmlFor="picture-input">
+            />
+            <label htmlFor="picture-input">
             <IconButton
-              color="secondary"
-              aria-label="upload picture"
-              component="span"
+            color="secondary"
+            aria-label="upload picture"
+            component="span"
             >
-              <PhotoCamera />
+            <PhotoCamera />
             </IconButton>
-          </label>
+          </label> */}
         </div>
 
         <div className="form-field">
@@ -146,7 +155,8 @@ function Profile() {
             id="first-name"
             label="First Name"
             type="text"
-            onChange={(e) => setgiven_name(e.target.value)}
+            disabled={true}
+            // onChange={(e) => setgiven_name(e.target.value)}
             value={given_name}
             sx={{
               backgroundColor: 'white',
@@ -171,7 +181,8 @@ function Profile() {
             id="last-name"
             label="Last Name"
             type="text"
-            onChange={(e) => setfamily_name(e.target.value)}
+            disabled={true}
+            // onChange={(e) => setfamily_name(e.target.value)}
             value={family_name}
             sx={{
               backgroundColor: 'white',
@@ -196,7 +207,8 @@ function Profile() {
             id="email"
             label="Email"
             type="email"
-            onChange={(e) => setEmail(e.target.value)}
+            // onChange={(e) => setEmail(e.target.value)}
+            disabled={true}
             value={email}
             required
             sx={{
@@ -223,7 +235,8 @@ function Profile() {
             label="Nick Name"
             type="text"
             required
-            onChange={(e) => setnick_name(e.target.value)}
+            disabled={true}
+            // onChange={(e) => setnick_name(e.target.value)}
             value={nick_name}
             sx={{
               backgroundColor: 'white',
@@ -242,30 +255,30 @@ function Profile() {
           />
         </div>
 
-        <div className="form-field">
+        {/* <div className="form-field">
           <TextField
-            variant="filled"
-            id="password"
-            label="Update Password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            sx={{
+          variant="filled"
+          id="password"
+          label="Update Password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          sx={{
+            backgroundColor: 'white',
+            color: 'black',
+            '& .MuiFilledInput-root': {
               backgroundColor: 'white',
               color: 'black',
-              '& .MuiFilledInput-root': {
-                backgroundColor: 'white',
-                color: 'black',
-              },
-              '& .MuiFilledInput-input': {
-                color: 'black',
-              },
-              '& .MuiInputLabel-filled': {
-                color: 'black',
-              }
-            }}
+            },
+            '& .MuiFilledInput-input': {
+              color: 'black',
+            },
+            '& .MuiInputLabel-filled': {
+              color: 'black',
+            }
+          }}
           />
-        </div>
+        </div> */}
 
         <h3
           className='heading'
@@ -274,14 +287,15 @@ function Profile() {
           }}
         >Socials</h3>
 
-        <div className="form-field">
+        {github && <div className="form-field">
           <TextField
             variant="filled"
             id="github"
             label="GitHub"
             type="url"
-            onChange={(e) => setGithub(e.target.value)}
+            // onChange={(e) => setGithub(e.target.value)}
             value={github}
+            disabled={true}
             sx={{
               backgroundColor: 'white',
               color: 'black',
@@ -297,16 +311,17 @@ function Profile() {
               }
             }}
           />
-        </div>
+        </div>}
 
-        <div className="form-field">
+        {linkedIn && <div className="form-field">
           <TextField
             variant="filled"
             id="linkedIn"
             label="LinkedIn"
             type="text"
-            onChange={(e) => setLinkedIn(e.target.value)}
+            // onChange={(e) => setLinkedIn(e.target.value)}
             value={linkedIn}
+            disabled={true}
             sx={{
               backgroundColor: 'white',
               color: 'black',
@@ -322,15 +337,16 @@ function Profile() {
               }
             }}
           />
-        </div>
+        </div>}
 
-        <Button
+        {/* <Button
           type="submit"
           className="btn"
           disabled={disabled}
           variant='contained'
-        >Update Profile</Button>
-      </form>
+        >Update Profile</Button> */}
+      </div>
+      {/* </form> */}
     </div>
   );
 }

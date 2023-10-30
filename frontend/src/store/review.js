@@ -8,18 +8,18 @@ const REMOVE_REVIEW = "review/REMOVE_REVIEW";
 
 // Action creators
 const setReviews = (reviews) => ({
-	type: SET_REVIEWS,
-	payload: reviews,
+  type: SET_REVIEWS,
+  payload: reviews,
 });
 
 const addReview = (review) => ({
-	type: CREATE_REVIEW,
-	payload: review,
+  type: CREATE_REVIEW,
+  payload: review,
 });
 
 const updateReview = (review) => ({
-	type: UPDATE_REVIEW,
-	payload: review,
+  type: UPDATE_REVIEW,
+  payload: review,
 });
 
 const removeReview = (reviewId) => ({
@@ -30,28 +30,29 @@ const removeReview = (reviewId) => ({
 // Thunk
 export const getReviews = (capstoneId) => async (dispatch) => {
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`);
-console.log(res)
-	if (res.ok) {
+
+  if (res.ok) {
     const data = await res.json();
 
-		if (data.errors) {
-			return;
-		}
+    if (data.errors) {
+      return;
+    }
 
-		dispatch(setReviews(normalizeData(data.reviews)));
+    dispatch(setReviews(normalizeData(data.reviews)));
   }
 
   return false;
 };
 
-export const createReview = (comment, capstoneId) => async (dispatch) => {
+export const createReview = (comment, capstoneId, nick_name) => async (dispatch) => {
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      comment: comment.review
+      comment: comment.review,
+      author: nick_name
     }),
   });
 

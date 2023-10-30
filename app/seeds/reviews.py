@@ -8,10 +8,10 @@ def seed_reviews():
     capstones = Capstone.query.all()
 
     for capstone in capstones:
-        reviewers = [user for user in users if user.id != capstone.user_id]
+        reviewers = [user for user in users if f'$auth0|{user.id}' != capstone.user_id]
         for i, reviewer in enumerate(reviewers[:25]):
             review = Review(
-                user_id=reviewer.id,
+                author=reviewer.nick_name,
                 comment=f"Review {i+1} for capstone {capstone.title}",
                 created_at=datetime.utcnow()
             )

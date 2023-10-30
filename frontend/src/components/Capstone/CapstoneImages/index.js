@@ -24,7 +24,7 @@ function CapstoneImages({ images, capstoneId, link }) {
       action: `Capstone Image Clicked for ${capstoneId}`,
     });
 
-    history.push(`/capstones/${capstoneId}`);
+    history.push(`/capstones/${capstoneId}#root`);
   };
 
   return (
@@ -42,7 +42,7 @@ function CapstoneImages({ images, capstoneId, link }) {
             className={capstoneId ? 'capstone-image' : 'capstone-image-render'}
             onClick={handleImageClick}
           >
-            <a href='#root'>
+            <a>
               {link ? (
                 <a
                   target="_blank"

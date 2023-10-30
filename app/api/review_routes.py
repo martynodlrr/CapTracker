@@ -1,4 +1,4 @@
-from flask_login import current_user, login_required
+from flask_login import login_required
 from flask import Blueprint, jsonify, request
 from sqlalchemy.orm import joinedload
 from datetime import datetime
@@ -29,27 +29,25 @@ def reviews_by_capstone_id(capstoneId):
 
 
 @review_routes.route('/capstones/<int:capstoneId>', methods=['POST'])
-@login_required
 def create_review(capstoneId):
     """
     Create a review
     """
     capstone = Capstone.query.get(capstoneId)
 
-    if not capstone or current_user.id == capstone.user_id:
-        return jsonify(error='Cannot comment on your own capstone!' if capstone else 'Capstone not found'), 403 if capstone else 404
+    if not capstone:
+        return jsonify(error='Capstone not found'), 404
 
     data = request.get_json()
     form = ReviewForm(csrf_token=request.cookies['csrf_token'], data=data)
 
     if form.validate():
         new_review = Review(
-            comment=data['comment'],
-            user_id=current_user.id,
+            comment=form.comment.data,
+            author=data['author'],
             capstone_id=capstoneId,
             created_at=datetime.utcnow()
         )
-
         db.session.add(new_review)
         db.session.commit()
 
@@ -59,15 +57,14 @@ def create_review(capstoneId):
 
 
 @review_routes.route('/<int:reviewId>', methods=['PUT'])
-@login_required
 def update_review(reviewId):
     """
     Updates a review
     """
     review = Review.query.get(reviewId)
 
-    if not review or current_user.id != review.user_id:
-        return jsonify(error='Unauthorized' if review else 'Review not found'), 403 if review else 404
+    if not review:
+        return jsonify(error='Review not found'), 404
 
     form = ReviewForm(csrf_token=request.cookies['csrf_token'], data=request.get_json())
 
@@ -81,15 +78,14 @@ def update_review(reviewId):
 
 
 @review_routes.route('/<int:reviewId>', methods=['DELETE'])
-@login_required
 def delete_review(reviewId):
     """
     deletes a review
     """
     review = Review.query.get(reviewId)
 
-    if not review or current_user.id != review.user_id:
-        return jsonify(error='Unauthorized' if review else 'Review not found'), 403 if review else 404
+    if not review:
+        return jsonify(error='Review not found'), 404
 
     db.session.delete(review)
     db.session.commit()

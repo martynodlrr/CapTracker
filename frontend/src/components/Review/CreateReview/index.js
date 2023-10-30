@@ -9,11 +9,10 @@ import * as reviewActions from '../../../store/review';
 
 import './index.css';
 
-function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
+function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname }) {
+  const [review, setReview] = useState(!create ? text : '');
   const dispatch = useDispatch();
   const theme = useTheme();
-
-  const [review, setReview] = useState(!create ? text : '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +27,7 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
     };
 
     if (create) {
-      await dispatch(reviewActions.createReview(comment, capstoneId));
+      await dispatch(reviewActions.createReview(comment, capstoneId, nickname));
     } else {
       comment['id'] = reviewId
       await dispatch(reviewActions.postUpdateReview(comment))
@@ -36,7 +35,7 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
 
     closeModal();
   };
-  
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -63,11 +62,11 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text }) {
         />
       </div>
 
-        <Button
-          type="submit"
-          variant='outlined'
-          className='btn'
-        >{create ? 'post' : 'update'}</Button>
+      <Button
+        type="submit"
+        variant='outlined'
+        className='btn'
+      >{create ? 'post' : 'update'}</Button>
     </form>
   );
 }

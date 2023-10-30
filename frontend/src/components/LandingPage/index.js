@@ -22,7 +22,7 @@ function LandingPage({ user}) {
 
     history.push('/capstones');
   };
-
+  console.log(user)
   return (
     <div>
       <header className="header">
@@ -68,7 +68,7 @@ function LandingPage({ user}) {
               </ThemeProvider>
             }
           /> :
-            <Button onClick={() => handleGetStartedClick()}>Get started</Button>}
+            <Button onClick={handleGetStartedClick}>Get started</Button>}
         </div>
       </section>
     </div>

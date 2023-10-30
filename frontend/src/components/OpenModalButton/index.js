@@ -11,7 +11,7 @@ function OpenModalButton({
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
-  const onClick = () => {
+  const handleClick = () => {
     if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
     if (onButtonClick) onButtonClick();
@@ -21,7 +21,7 @@ function OpenModalButton({
     <Button
       className='btn'
       variant="outlined"
-      onClick={onClick}
+      onClick={handleClick}
     >{buttonText}</Button>
   );
 }

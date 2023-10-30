@@ -64,9 +64,8 @@ export const fetchSingleCapstone = (capstoneId) => async (dispatch) => {
 
 export const fetchUserCapstone = (userId) => async (dispatch) => {
   const res = await fetch(`/api/capstones/user/${userId}`);
-
-if (res.ok) {
-  const data = await res.json();
+  if (res.ok) {
+    const data = await res.json();
 
     dispatch(updateUserCapstone({ ...data.capstone }));
     return data.capstone;
@@ -87,6 +86,7 @@ export const createCapstone = (capstone) => async (dispatch) => {
       url: capstone.url,
       cloned_from: capstone.clonedFrom,
       description: capstone.description,
+      userId: capstone.userId
     }),
   });
 
@@ -101,10 +101,11 @@ export const createCapstone = (capstone) => async (dispatch) => {
   return data;
 };
 
-export const createCapstoneImage = (capstoneId, formData) => async (dispatch) => {
-  const res = await fetch(`/api/capstones/${capstoneId}`, {
+export const createCapstoneImage = (capstoneId, formData, userId) => async (dispatch) => {
+
+  const res = await fetch(`/api/capstones/${capstoneId}/user/${userId}`, {
     method: 'POST',
-    body: formData,
+    body: formData
   });
 
   const data = await res.json();

@@ -7,7 +7,7 @@ class Review(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    author = db.Column(db.String(40), nullable=False)
     capstone_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("capstones.id")))
     comment = db.Column(db.String(1000), nullable=False)
     created_at = db.Column(db.TIMESTAMP)
@@ -21,5 +21,5 @@ class Review(db.Model):
             "comment": self.comment,
             "capstone_id": self.capstone_id,
             "createdAt": self.created_at.isoformat().split('T')[0] if self.created_at else None,
-            "author": self.user_id
+            "author": self.author
         }

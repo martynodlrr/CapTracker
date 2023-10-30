@@ -11,7 +11,7 @@ class Capstone(db.Model):
     url = db.Column(db.String(150))
     description = db.Column(db.String(1000), nullable=False)
     cloned_from = db.Column(db.String(75), nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.String(75), nullable=False)
     created_at = db.Column(db.TIMESTAMP)
 
     # relations

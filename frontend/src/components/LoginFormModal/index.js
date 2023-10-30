@@ -102,7 +102,7 @@
 //             variant="contained"
 //           >
 //             Auth0 Log In
-//           </Button>;
+//           </Button>
 //         </div>
 //       </form>
 //     </div>

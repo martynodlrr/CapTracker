@@ -18,9 +18,9 @@ import './Navigation.css';
 function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const { logout, loginWithRedirect } = useAuth0();
   const closeMenu = () => setShowMenu(false);
   const dispatch = useDispatch();
-  const { logout } = useAuth0();
   const history = useHistory();
   const theme = useTheme();
   const ulRef = useRef();
@@ -84,14 +84,12 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={
-                <ThemeProvider theme={theme}>
-                  {/* <LoginFormModal /> */}
-                </ThemeProvider>}
-            />
+            <Button
+              onClick={loginWithRedirect}
+              variant="contained"
+            >
+            Log In
+            </Button>
           </>
         )}
       </div>

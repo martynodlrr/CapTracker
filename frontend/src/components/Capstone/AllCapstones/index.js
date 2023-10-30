@@ -53,7 +53,7 @@ function AllCapstones() {
           .filter(capstone => Object.keys(capstone).length > 0)
           .reverse()
           .map((capstone, index) => (
-            <RenderCapstone capstone={capstone} />
+            <RenderCapstone key={index} capstone={capstone} />
           ))
         }
         {!hasMore && <div>No more capstones available.</div>}
