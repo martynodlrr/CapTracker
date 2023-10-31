@@ -106,6 +106,8 @@ Follow the instructions below to set up and run this project locally on your mac
    Create a `.env` file in the `react-app` directory. Add the following line:
     ```
     REACT_APP_BASE_URL=http://localhost:5000
+    REACT_APP_AUTH0_DOMAIN=your_auth0_domain
+    REACT_APP_AUTH0_CLIENT_ID=your_auth0_client_id
     ```
 
 3. **Install Dependencies:**
