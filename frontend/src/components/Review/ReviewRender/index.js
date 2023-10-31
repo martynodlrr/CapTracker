@@ -47,12 +47,6 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
     return <p className='heading'>Post your capstone to see reviews here!</p>
   }
 
-  if (!Object.values(reviews).length && user.id != ownerId) {
-    return <p
-      className='heading'
-    >Capstone currently has no reviews</p>
-  }
-
   const userHasReviewCheck = reviews => {
     return Object.values(reviews).some(review => user.nickname === review.author);
   }
@@ -75,8 +69,14 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
         {user.id === ownerId && !capstoneAlter && <Button
           variant='contained'
           href='/capstone/edit'
-        >Edit Capstone</Button>}
+          >Edit Capstone</Button>}
       </section>
+
+      {(!Object.values(reviews).length) &&
+        <p
+          className='heading'
+        >Capstone currently has no reviews</p>
+      }
 
       <div
         className="review-render"

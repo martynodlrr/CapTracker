@@ -232,7 +232,7 @@ function Profile() {
           <TextField
             variant="filled"
             id="nick_name"
-            label="Nick Name"
+            label="User Name"
             type="text"
             required
             disabled={true}
@@ -280,12 +280,12 @@ function Profile() {
           />
         </div> */}
 
-        <h3
+        {(linkedIn || github) && <h3
           className='heading'
           style={{
             margin: '0px'
           }}
-        >Socials</h3>
+        >Socials</h3>}
 
         {github && <div className="form-field">
           <TextField

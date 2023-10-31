@@ -36,7 +36,7 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "given_name": self.given_name,
             "family_name": self.family_name,
-            "nickName": self.nick_name,
+            "nickname": self.nick_name,
             "LinkedIn": self.linkedin,
             "GitHub": self.github,
             "email": self.email,

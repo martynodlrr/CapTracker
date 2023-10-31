@@ -93,13 +93,13 @@ function CapstoneDetails() {
                 >
                   <img
                     src={author.picture}
-                    alt={`${author.nick_name}`}
+                    alt={`${author.nickname}`}
                   />
                 </div>
                 <h2
                   className='heading'
                 >
-                  {author.nick_name}
+                  {author.nickname}
                 </h2>
 
                 {author.github || author.linkedin || author.email ?

@@ -22,25 +22,28 @@ function CreateCapstone() {
 
   const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png';
 
+  const [description, setDescription] = useState(userCapstone?.description || '');
   const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage));
+  const [clonedFrom, setClonedFrom] = useState(userCapstone?.clonedFrom || '');
+  const [title, setTitle] = useState(userCapstone?.title || '');
   const [capstoneAlter, setCapstoneAlter] = useState(false);
   const [images, setImages] = useState(Array(5).fill(null));
-  const [description, setDescription] = useState('');
+  const [url, setUrl] = useState(userCapstone?.url || '');
   const [isValidUrl, setIsValidUrl] = useState(true);
-  const [clonedFrom, setClonedFrom] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [create, setCreate] = useState(true);
   const [errors, setErrors] = useState([]);
-  const [title, setTitle] = useState('');
-  const [url, setUrl] = useState('');
 
-  useEffect(() => {
-    dispatch(capstoneActions.fetchUserCapstone(user.id));
-  }, [dispatch, user]);
+  useEffect( async () => {
+    if ((!userCapstone || !Object.values(userCapstone).length) && loading) {
+      const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
 
-  useEffect(() => {
-    if (userCapstone) {
+      setLoading((res === false || Object.values(res).length) ? false : true);
+      setCreate(!res);
+      setCapstoneAlter(true);
+
+    } else if (Object.values(userCapstone).length) {
       setTitle(userCapstone.title);
       setUrl(userCapstone.url);
       setDescription(userCapstone.description);
@@ -56,11 +59,10 @@ function CreateCapstone() {
         ]);
       }
 
-      setCreate(Object.keys(userCapstone).length > 0 ? false : true);
-      setLoading(false);
       setCapstoneAlter(true);
+      setLoading(false);
     }
-  }, [userCapstone]);
+  }, [create, capstoneAlter, loading, userCapstone, dispatch]);
 
   useEffect(() => {
     if (userCapstone && title && url && description && clonedFrom && Object.keys(userCapstone).length) {
@@ -174,7 +176,6 @@ function CreateCapstone() {
   );
 
   const uploadImages = async (capstoneId, images, capstoneImages, userId) => {
-    console.log(userId)
     await Promise.all(images.map((image, index) => {
       if (image) {
         const formData = new FormData();

@@ -22,7 +22,7 @@ function LandingPage({ user}) {
 
     history.push('/capstones');
   };
-  console.log(user)
+
   return (
     <div>
       <header className="header">
