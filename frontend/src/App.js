@@ -31,22 +31,22 @@ function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        light: '#8A5630',
-        main: '#6D411C',
-        dark: '#542A10',
+        light: 'rgb(100, 100, 100)',
+        main: 'rgb(110, 110, 110)',
+        dark: 'rgb(120, 120, 120)',
       },
       secondary: {
-        light: '#F5F4D4',
-        main: '#EEECBE',
-        dark: '#DAD8A8',
+        light: 'rgb(237, 237, 229)',
+        main: 'rgb(247, 247, 239)',
+        dark: 'rgb(257, 257, 249)',
       },
       accent: {
-        light: '#C8C457',
-        main: '#B2AC2E',
-        dark: '#99901D',
+        light: 'rgb(100, 100, 100)',
+        main: 'rgb(110, 110, 110)',
+        dark: 'rgb(120, 120, 120)',
       },
       text: {
-        main: '#24090B',
+        main: 'rgb(37, 34, 34)',
       }
     },
     components: {
@@ -78,7 +78,7 @@ function App() {
         styleOverrides: {
           root: {
             '&:hover': {
-              backgroundColor: '#542A10',
+              backgroundColor: 'rgb(51, 51, 51)',
             }
           },
           label: {
@@ -86,21 +86,21 @@ function App() {
           }
         }
       },
-      MuiTextField: {
-        styleOverrides: {
-          root: {
-            '& .MuiInput-underline:before': {
-              borderBottomColor: '#B2AC2E',
-            },
-            '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-              borderBottomColor: '#B2AC2E',
-            },
-            '& .MuiInput-underline:after': {
-              borderBottomColor: '#B2AC2E',
-            }
-          }
-        }
-      }
+      // MuiTextField: {
+      //   styleOverrides: {
+      //     root: {
+      //       '& .MuiInput-underline:before': {
+      //         borderBottomColor: '#B2AC2E',
+      //       },
+      //       '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
+      //         borderBottomColor: '#B2AC2E',
+      //       },
+      //       '& .MuiInput-underline:after': {
+      //         borderBottomColor: '#B2AC2E',
+      //       }
+      //     }
+      //   }
+      // }
     }
   });
 

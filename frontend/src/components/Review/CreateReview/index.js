@@ -7,8 +7,6 @@ import ReactGA from 'react-ga';
 import StyledTextareaAutosize from '../../TextareaInput/index.js';
 import * as reviewActions from '../../../store/review';
 
-import './index.css';
-
 function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname }) {
   const [review, setReview] = useState(!create ? text : '');
   const dispatch = useDispatch();
@@ -40,7 +38,7 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname
     <form
       onSubmit={handleSubmit}
       encType="multipart/form-data"
-      id='capstone-form'
+      className='capstone-form'
       style={{
         backgroundColor: theme.palette.secondary.main,
         borderRadius: '10px',
@@ -56,7 +54,8 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname
           theme={theme}
           maxLength={1000}
           style={{
-            maxWidth: '1100px'
+            maxWidth: '1100px',
+            height: '125px'
           }}
           placeholder='Write your review here'
         />

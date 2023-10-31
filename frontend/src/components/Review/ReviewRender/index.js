@@ -19,6 +19,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   const { user } = useAuth0();
   const theme = useTheme();
   const ulRef = useRef();
+
   const closeMenu = () => {
     setShowMenu(false);
   };
@@ -44,7 +45,12 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   }, [showMenu]);
 
   if (create) {
-    return <p className='heading'>Post your capstone to see reviews here!</p>
+    return <p
+      className='heading'
+      style={{
+        marginBottom: '100px'
+      }}
+    >Post your capstone to see reviews here!</p>
   }
 
   const userHasReviewCheck = reviews => {
@@ -75,6 +81,9 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
       {(!Object.values(reviews).length) &&
         <p
           className='heading'
+          style={{
+            marginBottom: '100px'
+          }}
         >Capstone currently has no reviews</p>
       }
 
@@ -93,7 +102,6 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
             flexWrap: 'wrap'
           }}
         >
-
           {Object.values(reviews).reverse().map((review, index) => (
             <div key={index} className="review">
               <p><strong>{review.author}</strong>: {review.comment}</p>

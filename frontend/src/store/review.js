@@ -5,6 +5,7 @@ const SET_REVIEWS = "review/SET_REVIEWS";
 const CREATE_REVIEW = "review/CREATE_REVIEW";
 const UPDATE_REVIEW = "review/UPDATE_REVIEW";
 const REMOVE_REVIEW = "review/REMOVE_REVIEW";
+const CLEAR_REVIEW = "review/CLEAR_REVIEW";
 
 // Action creators
 const setReviews = (reviews) => ({
@@ -27,6 +28,10 @@ const removeReview = (reviewId) => ({
   payload: reviewId,
 });
 
+const resetReviews = () => ({
+  type: CLEAR_REVIEW
+});
+
 // Thunk
 export const getReviews = (capstoneId) => async (dispatch) => {
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`);
@@ -39,6 +44,8 @@ export const getReviews = (capstoneId) => async (dispatch) => {
     }
 
     dispatch(setReviews(normalizeData(data.reviews)));
+  } else {
+    dispatch(resetReviews())
   }
 
   return false;
@@ -58,11 +65,9 @@ export const createReview = (comment, capstoneId, nick_name) => async (dispatch)
 
   if (res.ok) {
     const data = await res.json();
-
     dispatch(addReview(data.review));
 
     return data.review;
-
   }
 };
 
@@ -129,6 +134,10 @@ export default function reducer(state = initialState, action) {
       const newState = { ...state };
       delete newState[action.payload];
       return newState;
+
+    case CLEAR_REVIEW:
+      const resetState = {};
+      return resetState;
 
     default:
       return state;

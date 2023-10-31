@@ -30,49 +30,55 @@ function CreateCapstone() {
   const [images, setImages] = useState(Array(5).fill(null));
   const [url, setUrl] = useState(userCapstone?.url || '');
   const [isValidUrl, setIsValidUrl] = useState(true);
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState((userCapstone && Object.values(userCapstone).length) ? false : true);
   const [loading, setLoading] = useState(true);
   const [create, setCreate] = useState(true);
   const [errors, setErrors] = useState([]);
 
-  useEffect( async () => {
-    if ((!userCapstone || !Object.values(userCapstone).length) && loading) {
-      const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
+  useEffect(() => {
+    async function fetchData() {
+      if ((!userCapstone || !Object.values(userCapstone).length) && loading) {
+        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
 
-      setLoading((res === false || Object.values(res).length) ? false : true);
-      setCreate(!res);
-      setCapstoneAlter(true);
+        setLoading((res === false || Object.values(res).length) ? false : true);
+        setCreate(!res);
+        setCapstoneAlter(true);
 
-    } else if (Object.values(userCapstone).length) {
-      setTitle(userCapstone.title);
-      setUrl(userCapstone.url);
-      setDescription(userCapstone.description);
-      setClonedFrom(userCapstone.clonedFrom);
+      } else if (Object.values(userCapstone).length) {
+        setTitle(userCapstone.title);
+        setUrl(userCapstone.url);
+        setDescription(userCapstone.description);
+        setClonedFrom(userCapstone.clonedFrom);
 
-      if (userCapstone.capstoneImages) {
-        const updatedPreviewSrc = userCapstone.capstoneImages.map(
-          (img) => img.imageUrl || placeholderImage
-        );
-        setPreviewSrc((prev) => [
-          ...updatedPreviewSrc,
-          ...prev.slice(updatedPreviewSrc.length),
-        ]);
+        if (userCapstone.capstoneImages) {
+          const updatedPreviewSrc = userCapstone.capstoneImages.map(
+            (img) => img.imageUrl || placeholderImage
+          );
+          setPreviewSrc((prev) => [
+            ...updatedPreviewSrc,
+            ...prev.slice(updatedPreviewSrc.length),
+          ]);
+        }
+
+        setCapstoneAlter(true);
+        setLoading(false);
       }
-
-      setCapstoneAlter(true);
-      setLoading(false);
     }
-  }, [create, capstoneAlter, loading, userCapstone, dispatch]);
+
+    fetchData();
+  }, [create, capstoneAlter, loading, userCapstone, user.id, dispatch]);
 
   useEffect(() => {
-    if (userCapstone && title && url && description && clonedFrom && Object.keys(userCapstone).length) {
-      setDisabled(
-        title.length > 50 ||
-        url.length > 150 ||
-        description.length > 1000 ||
-        clonedFrom.length > 75
-      );
-    }
+    setDisabled(
+      title?.length < 1 ||
+      title?.length > 50 ||
+      url?.length < 1 ||
+      url?.length > 150 ||
+      description?.length < 1 ||
+      description?.length > 1000 ||
+      clonedFrom?.length < 1 ||
+      clonedFrom?.length > 75
+    );
   }, [title, url, description, clonedFrom, userCapstone]);
 
   const handleFileChange = (index) => (e) => {
@@ -131,9 +137,11 @@ function CreateCapstone() {
           src={previewSrc[index]}
           alt={`Capstone Website Preview #${index}`}
           id={`profile-picture-${index}`}
+          className='imgRender'
           style={{
-            maxWidth: '300px',
-            maxHeight: '300px',
+            float: 'left',
+            width:  '300px',
+            height: '200px',
             objectFit: 'cover',
             borderRadius: '10px',
           }}
@@ -153,7 +161,7 @@ function CreateCapstone() {
           aria-label="upload picture"
           component="span"
           sx={{
-            backgroundColor: 'white',
+            backgroundColor: 'rgb(247, 247, 239)',
             transition: 'background-color 0.3s',
             '&:hover': {
               backgroundColor: 'primary.main',
@@ -168,7 +176,7 @@ function CreateCapstone() {
           }}
         >
           <PhotoCamera color="primary" sx={{
-            backgroundColor: 'white'
+            backgroundColor: 'rgb(247, 247, 239)'
           }} />
         </IconButton>
       </label>
@@ -260,83 +268,99 @@ function CreateCapstone() {
   return (
     <Container>
       <h1 className='heading'>{create ? 'Create a new capstone' : 'Edit your capstone'}</h1>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <TextField
-          label="Title of project"
-          variant="filled"
-          onChange={(e) => setTitle(e.target.value)}
-          value={title}
-          required
-          sx={{
-            backgroundColor: 'white',
-            color: 'black',
-            '& .MuiFilledInput-root': {
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className='capstone-form'
+      >
+
+        <div
+          id='top-form-container'
+        >
+          <div
+            id='top-form'
+          >
+            <TextField
+              label="Title of project"
+              variant="filled"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+              required
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+
+            <TextField
+              label="Site Cloned From"
+              variant="filled"
+              onChange={(e) => setClonedFrom(e.target.value)}
+              value={clonedFrom}
+              required
+              sx={{
+                backgroundColor: 'white',
+                color: 'black',
+                '& .MuiFilledInput-root': {
+                  backgroundColor: 'white',
+                  color: 'black',
+                },
+                '& .MuiFilledInput-input': {
+                  color: 'black',
+                },
+                '& .MuiInputLabel-filled': {
+                  color: 'black',
+                }
+              }}
+            />
+          </div>
+
+          <TextField
+            label="Website URL"
+            variant="filled"
+            onChange={handleUrlChange}
+            value={url}
+            required
+            error={!isValidUrl}
+            helperText={!isValidUrl ? 'Invalid URL' : ''}
+            sx={{
               backgroundColor: 'white',
               color: 'black',
-            },
-            '& .MuiFilledInput-input': {
-              color: 'black',
-            },
-            '& .MuiInputLabel-filled': {
-              color: 'black',
-            }
-          }}
-        />
+              '& .MuiFilledInput-root': {
+                backgroundColor: 'white',
+                color: 'black',
+              },
+              '& .MuiFilledInput-input': {
+                color: 'black',
+              },
+              '& .MuiInputLabel-filled': {
+                color: 'black',
+              },
+            }}
+          />
 
-        <TextField
-          label="Website URL"
-          variant="filled"
-          onChange={handleUrlChange}
-          value={url}
-          required
-          error={!isValidUrl}
-          helperText={!isValidUrl ? 'Invalid URL' : ''}
-          sx={{
-            backgroundColor: 'white',
-            color: 'black',
-            '& .MuiFilledInput-root': {
-              backgroundColor: 'white',
-              color: 'black',
-            },
-            '& .MuiFilledInput-input': {
-              color: 'black',
-            },
-            '& .MuiInputLabel-filled': {
-              color: 'black',
-            },
-          }}
-        />
-
-        <TextField
-          label="Site Cloned From"
-          variant="filled"
-          onChange={(e) => setClonedFrom(e.target.value)}
-          value={clonedFrom}
-          required
-          sx={{
-            backgroundColor: 'white',
-            color: 'black',
-            '& .MuiFilledInput-root': {
-              backgroundColor: 'white',
-              color: 'black',
-            },
-            '& .MuiFilledInput-input': {
-              color: 'black',
-            },
-            '& .MuiInputLabel-filled': {
-              color: 'black',
-            }
-          }}
-        />
-
-        <StyledTextareaAutosize
-          label="Description"
-          variant="filled"
-          onChange={(e) => setDescription(e.target.value)}
-          value={description}
-          maxLength={1000}
-          required
-        />
+          <StyledTextareaAutosize
+            label="Description"
+            variant="filled"
+            onChange={(e) => setDescription(e.target.value)}
+            value={description}
+            maxLength={1000}
+            required
+            style={{
+              height: '200px'
+            }}
+          />
+        </div>
 
         {errors.includes('At least one image is required to create a capstone.') && (
           <p className='error-display'>
@@ -364,11 +388,19 @@ function CreateCapstone() {
             gap: '1rem'
           }}
         >
-          <Button type="submit" variant="contained" color="primary" disabled={disabled}>
+          <Button
+            type="submit"
+            className='btn'
+            variant="outlined"
+            disabled={disabled}>
             {create ? `Post capstone` : 'Update capstone'}
           </Button>
           {!create && (
-            <Button variant="contained" color="secondary" onClick={(e) => handleDelete(e, userCapstone.id)}>
+            <Button
+              className='btn'
+              variant="contained"
+              onClick={(e) => handleDelete(e, userCapstone.id)}
+            >
               Delete
             </Button>
           )}

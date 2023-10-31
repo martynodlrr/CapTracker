@@ -3,23 +3,35 @@ import './index.css';
 
 const StackRender = () => {
     const techs = [
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg", alt: "React" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg", alt: "Redux" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", alt: "JavaScript" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original-wordmark.svg", alt: "CSS" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg", alt: "Material-UI" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg", alt: "Python" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original-wordmark.svg", alt: "SQLalchemy" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg", alt: "SQLite3 (for development)" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg", alt: "PostgreSQL (for production)" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", alt: "AWS" }
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg", alt: "React", href: "https://react.dev/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg", alt: "Redux", href: "https://redux.js.org/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", alt: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original-wordmark.svg", alt: "CSS", href: "https://developer.mozilla.org/en-US/docs/Web/CSS" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg", alt: "Material-UI", href: "https://mui.com/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg", alt: "Python", href: "https://www.python.org/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original-wordmark.svg", alt: "SQLalchemy", href: "https://www.sqlalchemy.org/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg", alt: "SQLite3 (for development)", href: "https://www.sqlite.org/index.html" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg", alt: "PostgreSQL (for production)", href: "https://www.postgresql.org/" },
+        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", alt: "AWS", href: "https://aws.amazon.com/" },
+        { src: "https://www.vectorlogo.zone/logos/auth0/auth0-ar21.svg", alt: "Auth0", href: "https://auth0.com/" }
     ];
 
     return (
         <Box component="footer" className="footer">
             <div className="tech-section">
                 {techs.map((tech, index) => (
-                    <img key={index} src={tech.src} alt={tech.alt} className="tech-icon" />
+                    <a
+                        key={index}
+                        href={tech.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <img
+                            className="tech-icon"
+                            src={tech.src}
+                            alt={tech.alt}
+                        />
+                    </a>
                 ))}
             </div>
             <div className="profile-section">
@@ -28,7 +40,13 @@ const StackRender = () => {
                     <a href="https://github.com/Martynodlrr" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/martynodlrr/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                 </div>
-                <img src="https://media.licdn.com/dms/image/D5603AQGPnwv4xdOy_w/profile-displayphoto-shrink_100_100/0/1695828000081?e=1701907200&v=beta&t=f9GwhnCMaOtypzydwv-ByzeXJnmZUgxLq9GIZixbT7A" alt="Your Picture" className="profile-pic" />
+                <a
+                    href='https://martynodlrr.site/'
+                    rel="noopener noreferrer"
+                    target='_blank'
+                >
+                <img src="https://media.licdn.com/dms/image/D5603AQGPnwv4xdOy_w/profile-displayphoto-shrink_100_100/0/1695828000081?e=1701907200&v=beta&t=f9GwhnCMaOtypzydwv-ByzeXJnmZUgxLq9GIZixbT7A" alt="Head snap of Martyn (pretty cool guy, if I say so myself)" className="profile-pic" />
+                </a>
             </div>
         </Box>
     );

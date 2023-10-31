@@ -1,49 +1,70 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  color: black;
-}
-
-div.intro.container:nth-of-type(2) {
-  color: black;
-}
-
-header {
+.header {
+  height: 40vh;
+  margin-top: -50px;
+  font-size: xx-large;
   text-align: center;
-  padding: 50px 0;
+  transition: opacity 1s ease;
+  opacity: 0;
 }
 
-.intro {
-  background-color: #542A10;
-  text-align: center;
-  padding: 50px 0;
+.header.active {
+  opacity: 100;
 }
 
-.intro, .features, .cta {
-  padding: 50px 0;
+.features,
+.header,
+.intro,
+.cta {
+  padding-top: 30vh;
+}
+
+/* .features {
+  margin-bottom: 20vh;
+} */
+
+.intro,
+.cta,
+.feature-1,
+.feature-2,
+.feature-3 {
+  font-size: xx-large;
   text-align: center;
+  transition: opacity .5s ease;
+  opacity: 0;
+}
+
+.feature-1,
+.feature-2,
+.feature-3 {
+  padding: 10vh 0;
 }
 
 .features {
-  background-color: #DAD8A8;
+  font-size: xx-large;
+  text-align: center;
 }
 
-.feature {
-  margin-bottom: 20px;
+.intro {
+  height: 40vh;
 }
 
-.feature > * {
-  color: black;
+.features {
+  height: fit-content;
 }
 
-.cta button {
-  color: white;
+.cta {
+  height: 40vh;
+  padding-bottom: 128px;
+}
+
+.intro.active,
+.feature-1.active,
+.feature-2.active,
+.feature-3.active,
+.cta.active {
+  opacity: 100;
+}
+
+.btn {
+  margin-top: 20px;
 }

@@ -20,7 +20,3 @@ form {
   justify-content: center;
   gap: 10px;
 }
-
-.btn-hover:hover {
-  background-color: #542A10;
-}

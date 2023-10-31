@@ -31,10 +31,14 @@ function CapstoneImages({ images, capstoneId, link }) {
     <div className='capstone-images'>
       {images && images.length > 0 && (
         <><IconButton
-          style={currentIndex === 0 ? { visibility: 'hidden' } : { visibility: 'visible' }}
+          style={
+            currentIndex === 0 ? { visibility: 'hidden' } : { visibility: 'visible' }
+          }
+          className='imgBtn'
         >
           <ArrowBack
             onClick={prevImage}
+            color='secondary'
           />
         </IconButton>
           <div
@@ -42,33 +46,35 @@ function CapstoneImages({ images, capstoneId, link }) {
             className={capstoneId ? 'capstone-image' : 'capstone-image-render'}
             onClick={handleImageClick}
           >
-            <a>
-              {link ? (
-                <a
-                  target="_blank"
-                  href={link}
-                  title={link}
-                >
-                  <img
-                    className='capstone-img-render'
-                    src={images[currentIndex].imageUrl}
-                    alt={`Capstone Website Preview #${currentIndex + 1}`}
-                  />
-                </a>
-              ) : (
+            {link ? (
+              <a
+                target="_blank"
+                href={link}
+                title={link}
+                rel="noopener noreferrer"
+              >
                 <img
                   className='capstone-img-render'
                   src={images[currentIndex].imageUrl}
                   alt={`Capstone Website Preview #${currentIndex + 1}`}
+                  style={link ? { filter: 'grayscale(0%)' } : {}}
                 />
-              )}
-            </a>
+              </a>
+            ) : (
+              <img
+                className='capstone-img-render'
+                src={images[currentIndex].imageUrl}
+                alt={`Capstone Website Preview #${currentIndex + 1}`}
+              />
+            )}
           </div>
           <IconButton
             style={currentIndex === images.length - 1 ? { visibility: 'hidden' } : { visibility: 'visible' }}
+            className='imgBtn'
           >
             <ArrowForward
               onClick={nextImage}
+              color='secondary'
             />
           </IconButton>
         </>

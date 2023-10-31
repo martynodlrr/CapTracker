@@ -16,7 +16,7 @@ function Profile() {
   const [previewSrc, setPreviewSrc] = useState(user.picture);
   const [given_name, setgiven_name] = useState(user.given_name);
   const [family_name, setfamily_name] = useState(user.family_name);
-  const [nick_name, setnick_name] = useState(user.nickname);
+  const [nick_name, setnick_name] = useState(user.nick_name || user.nickname);
   const [linkedIn, setLinkedIn] = useState(user.linkedin || '');
   const [github, setGithub] = useState(user.github || '');
   // const [picture, setpicture] = useState(user.picture);
@@ -122,6 +122,7 @@ function Profile() {
               <img
                 src={previewSrc}
                 alt={`${given_name} ${family_name} Profile Preview`}
+                className='imgRender'
                 style={{
                   width: '100%',
                   height: '100%',

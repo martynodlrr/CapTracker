@@ -2,9 +2,9 @@ import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAuto
 import { styled } from '@mui/system';
 
 const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => ({
-  'min-width': '320px',
-  'max-height': '200px',
-  'line-height': '1.25',
+  'minWidth': '320px',
+  'maxHeight': '200px',
+  'lineHeight': '1.25',
   padding: '12px',
   borderRadius: '12px',
   color: theme?.palette.text.main,
@@ -15,6 +15,7 @@ const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => ({
   },
   '&:focus-visible': {
     outline: '0',
+    color: theme.palette.text.main,
   },
 }));
 

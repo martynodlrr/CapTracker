@@ -1,7 +1,7 @@
 .capstone {
   display: flex;
   width: fit-content;
-  background-color: #DAD8A8;
+  background-color: rgb(37, 34, 34);
   padding: 20px;
   border-radius: 20px;
   gap: 20px;
@@ -9,7 +9,7 @@
 }
 
 .capstone > *, .capstone > * > *, .capstone > * > * > * {
-  color: #542A10;
+  color: rgb(247, 247, 239);
 }
 
 .capstone-heading {

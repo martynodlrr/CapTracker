@@ -5,3 +5,31 @@
 .css-wjhts4-MuiFormControl-root-MuiTextField-root {
   border-radius: 10px;
 }
+
+.imgRender {
+  filter: grayscale(0%);
+}
+
+.imgRender:hover {
+  transition: filter 0.8s ease
+}
+
+#top-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 15px;
+}
+
+#top-form {
+  display: flex;
+  gap: 10px;
+}
+
+.capstone-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}

@@ -1,13 +1,10 @@
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import React, { useState, useEffect, useRef } from "react";
-import { ThemeProvider } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch } from "react-redux";
 import Button from '@mui/material/Button';
 
-import OpenModalButton from "../OpenModalButton";
+// import OpenModalButton from "../OpenModalButton";
 // import SignupFormModal from "../SignupFormModal";
 // import LoginFormModal from "../LoginFormModal";
 // import { useModal } from "../../context/Modal";
@@ -20,9 +17,7 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const { logout, loginWithRedirect } = useAuth0();
   const closeMenu = () => setShowMenu(false);
-  const dispatch = useDispatch();
   const history = useHistory();
-  const theme = useTheme();
   const ulRef = useRef();
 
   const openMenu = () => {
@@ -32,8 +27,7 @@ function ProfileButton({ user }) {
 
   const handleLogout = (e) => {
     e.preventDefault();
-
-    user.id ? dispatch(logout()) : logout({ logoutParams: { returnTo: window.location.origin } })
+    logout({ logoutParams: { returnTo: window.location.origin } })
 
     closeMenu();
   };
@@ -60,25 +54,36 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <MenuRoundedIcon onClick={openMenu} id='menu-bars' />
+      <MenuRoundedIcon
+        onClick={openMenu}
+        id='menu-bars'
+        variant="contained"
+      />
       <div className={ulClassName} ref={ulRef}>
         {user?.id ? (
           <>
             <div className='image-container'>
-              <img src={user.picture} alt="User's Profile" />
+              <img
+                src={user.picture}
+                alt="User's Profile"
+                className='imgRender'
+              />
             </div>
             <Button
               onClick={handleProfileRedirect}
               className='btn'
               variant="outlined"
             >Profile</Button>
+
             <Button
               onClick={handleCapstoneRedirect}
               className='btn'
               variant="outlined"
             >Capstone</Button>
+
             <Button
               onClick={handleLogout}
+              className='btn'
               variant="contained"
             >Log Out</Button>
           </>
@@ -88,7 +93,7 @@ function ProfileButton({ user }) {
               onClick={loginWithRedirect}
               variant="contained"
             >
-            Log In
+              Log In
             </Button>
           </>
         )}
