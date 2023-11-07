@@ -34,10 +34,10 @@ function CapstoneImages({ images, capstoneId, link }) {
           style={
             currentIndex === 0 ? { visibility: 'hidden' } : { visibility: 'visible' }
           }
+          onClick={prevImage}
           className='imgBtn'
         >
           <ArrowBack
-            onClick={prevImage}
             color='secondary'
           />
         </IconButton>
@@ -71,9 +71,9 @@ function CapstoneImages({ images, capstoneId, link }) {
           <IconButton
             style={currentIndex === images.length - 1 ? { visibility: 'hidden' } : { visibility: 'visible' }}
             className='imgBtn'
+            onClick={nextImage}
           >
             <ArrowForward
-              onClick={nextImage}
               color='secondary'
             />
           </IconButton>

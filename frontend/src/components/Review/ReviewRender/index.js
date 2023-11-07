@@ -25,7 +25,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   };
 
   useEffect(() => {
-    if (capstoneId) {
+    if (!create &&capstoneId) {
       dispatch(reviewActions.getReviews(capstoneId));
     }
   }, [dispatch, capstoneId])

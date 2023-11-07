@@ -4,12 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import Button from '@mui/material/Button';
 
-// import OpenModalButton from "../OpenModalButton";
-// import SignupFormModal from "../SignupFormModal";
-// import LoginFormModal from "../LoginFormModal";
-// import { useModal } from "../../context/Modal";
-// import { logout } from "../../store/session";
-
 import './Navigation.css';
 
 function ProfileButton({ user }) {

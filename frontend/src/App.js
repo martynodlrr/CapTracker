@@ -1,8 +1,6 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
-// import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import ReactGA from 'react-ga';
 
@@ -13,20 +11,13 @@ import AllCapstones from './components/Capstone/AllCapstones';
 import StackRender from "./components/StackAndTechnologies";
 import LandingPage from "./components/LandingPage";
 import Navigation from "./components/Navigation";
-// import { authenticate } from "./store/session";
 import Profile from "./components/Profile";
 
 const TRACKING_ID = "UA-288524155-4";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
-  // const dispatch = useDispatch();
-  // const [isLoaded, setIsLoaded] = useState(false);
   const { user, isLoading } = useAuth0();
-
-  // useEffect(() => {
-  //   dispatch(authenticate()).then(() => setIsLoaded(true));
-  // }, [dispatch]);
 
   const theme = createTheme({
     palette: {
@@ -85,22 +76,7 @@ function App() {
             fontWeight: 'bold',
           }
         }
-      },
-      // MuiTextField: {
-      //   styleOverrides: {
-      //     root: {
-      //       '& .MuiInput-underline:before': {
-      //         borderBottomColor: '#B2AC2E',
-      //       },
-      //       '& .MuiInput-underline:hover:not(.Mui-disabled):before': {
-      //         borderBottomColor: '#B2AC2E',
-      //       },
-      //       '& .MuiInput-underline:after': {
-      //         borderBottomColor: '#B2AC2E',
-      //       }
-      //     }
-      //   }
-      // }
+      }
     }
   });
 

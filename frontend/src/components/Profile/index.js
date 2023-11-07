@@ -29,7 +29,6 @@ function Profile() {
     setGreeting(greetings[Math.floor(Math.random() * greetings.length)]);
   }, []);
 
-
   // useEffect(() => {
   //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   //   setDisabled(

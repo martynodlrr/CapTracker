@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import * as capstoneActions from '../../../store/capstone';
 import RenderCapstone from '../RenderCapstone/index';
@@ -12,11 +13,12 @@ function AllCapstones() {
   const [isLoading, setIsLoading] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const { user } = useAuth0();
 
   useEffect(() => {
     dispatch(capstoneActions.fetchCapstones(1));
-    dispatch(capstoneActions.fetchUserCapstone());
-  }, [dispatch]);
+    dispatch(capstoneActions.fetchUserCapstone(user.id));
+  }, [user, dispatch]);
 
   const handleScroll = useCallback(async () => {
     // window.scrollY is how much has scrolled
