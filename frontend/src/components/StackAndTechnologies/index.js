@@ -45,7 +45,7 @@ const StackRender = () => {
                     rel="noopener noreferrer"
                     target='_blank'
                 >
-                <img src="https://media.licdn.com/dms/image/D5603AQGPnwv4xdOy_w/profile-displayphoto-shrink_100_100/0/1695828000081?e=1701907200&v=beta&t=f9GwhnCMaOtypzydwv-ByzeXJnmZUgxLq9GIZixbT7A" alt="Head snap of Martyn (pretty cool guy, if I say so myself)" className="profile-pic" />
+                <img src='https://avatars.githubusercontent.com/u/123061539?v=4' alt="Head snap of Martyn (pretty cool guy, if I say so myself)" className="profile-pic" />
                 </a>
             </div>
         </Box>
