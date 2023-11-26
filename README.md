@@ -9,22 +9,22 @@ The primary objective of CapTracker is to enhance the way users share their fina
 You can access the live version of CapTracker [here](https://captracker-t69u.onrender.com/).
 
 ## Technologies Used
-- **Frontend:** 
+- **Frontend:**
   - React
   - Redux
   - JavaScript
   - CSS
   - Material UI
 
-- **Backend:** 
+- **Backend:**
   - Flask (Python)
   - SQLalchemy
 
-- **Database:** 
+- **Database:**
   - SQLite3 (for development)
   - PostgreSQL (for production)
 
-- **Cloud Hosting:** 
+- **Cloud Hosting:**
   - AWS
 
 - **Auth:** 
@@ -52,16 +52,23 @@ Follow the instructions below to set up and run this project locally on your mac
     ```bash
     git clone https://github.com/Martynodlrr/CapTracker.git && cd CapTracker/
     ```
-    
+
 ### Backend Setup
 
 1. **Set Up Virtual Environment with Pipenv:**
-    ```bash
-    pipenv install
-    ```
+
+      If you don't have it already install pip and pipenv with these bash commands:
+      ```bash
+      sudo apt-get install python3-pip && pip install pipenv
+      ```
+
+      If you already have these installed, procced with the next set of bash commands:
+      ```bash
+      pipenv install
+      ```
 
 3. **Environment Configuration:**
-   
+
    Create a `.env` file in the root directory. Add the following variables:
     ```
     SECRET_KEY=your_secret_key
@@ -83,7 +90,7 @@ Follow the instructions below to set up and run this project locally on your mac
     ```
 
 5. **Seed Database:**
-   
+
     To get the seed data, run:
     ```bash
     pipenv run flask seed all
