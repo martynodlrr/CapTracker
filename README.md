@@ -27,6 +27,9 @@ You can access the live version of CapTracker [here](https://captracker-t69u.onr
 - **Cloud Hosting:**
   - AWS
 
+- **Auth:** 
+  - Auth0
+
 ## Technical Features
 
 ### Feature 1: Material UI Integration
