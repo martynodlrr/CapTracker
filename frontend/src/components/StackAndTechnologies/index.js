@@ -12,7 +12,7 @@ const StackRender = () => {
         { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original-wordmark.svg", alt: "SQLalchemy", href: "https://www.sqlalchemy.org/" },
         { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg", alt: "SQLite3 (for development)", href: "https://www.sqlite.org/index.html" },
         { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg", alt: "PostgreSQL (for production)", href: "https://www.postgresql.org/" },
-        { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg", alt: "AWS", href: "https://aws.amazon.com/" },
+        { src: "https://image.similarpng.com/very-thumbnail/2020/06/Amazon-web-services-logo-PNG.png", alt: "AWS", href: "https://aws.amazon.com/" },
         { src: "https://www.vectorlogo.zone/logos/auth0/auth0-ar21.svg", alt: "Auth0", href: "https://auth0.com/" }
     ];
 
