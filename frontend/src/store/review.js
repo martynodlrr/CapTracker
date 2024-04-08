@@ -1,5 +1,3 @@
-import normalizeData from './helperFunc.js';
-
 // Action types
 const SET_REVIEWS = "review/SET_REVIEWS";
 const CREATE_REVIEW = "review/CREATE_REVIEW";
@@ -43,7 +41,7 @@ export const getReviews = (capstoneId) => async (dispatch) => {
       return;
     }
 
-    dispatch(setReviews(normalizeData(data.reviews)));
+    dispatch(setReviews(data.reviews));
   } else {
     dispatch(resetReviews())
   }

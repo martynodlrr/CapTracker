@@ -5,6 +5,7 @@ from datetime import datetime
 
 from app.api.auth_routes import validation_errors_to_error_messages
 from app.models import Review, Capstone, db
+from .normalize_helper import normalize_data
 from app.forms import ReviewForm
 
 review_routes = Blueprint('reviews', __name__)
@@ -20,10 +21,7 @@ def reviews_by_capstone_id(capstoneId):
     if not reviews:
         return jsonify(message='Capstone has no reviews'), 404
 
-    data = [
-        {**review.to_dict()}
-        for review in reviews
-    ]
+    data = normalize_data([review.to_dict() for review in reviews])
 
     return jsonify(reviews=data)
 

@@ -11,7 +11,7 @@ function AllCapstones() {
   const dispatch = useDispatch();
   const capstones = useSelector((state) => state.capstones.allCapstones);
   const [isLoading, setIsLoading] = useState(false);
-  const [_, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { user } = useAuth0();
 
@@ -21,18 +21,14 @@ function AllCapstones() {
   }, [user, dispatch]);
 
   const handleScroll = useCallback(async () => {
-    // window.scrollY is how much has scrolled
-    // window.innerHeight is how much of the page is showing
-    // document.body.offsetHeight is how much of the page is available
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
-
     if (nearBottom && hasMore && !isLoading) {
-      setIsLoading(true); // set loading state
+      setIsLoading(true);
       setPageNumber((prevNumber) => {
         const newNumber = prevNumber + 1;
         dispatch(capstoneActions.fetchCapstones(newNumber)).then((newCapstones) => {
           setIsLoading(false);
-          if (!newCapstones || newCapstones.length < 10) {
+          if (!newCapstones || Object.keys(newCapstones).length < 10) {
             setHasMore(false);
           }
         }).catch(() => {
@@ -41,7 +37,7 @@ function AllCapstones() {
         return newNumber;
       });
     }
-  }, [hasMore, dispatch, isLoading]);
+  }, [hasMore, isLoading, dispatch]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -55,7 +51,7 @@ function AllCapstones() {
           .reverse()
           .map((capstone, index) => (
             Object.keys(capstone).length > 0 ? (
-              <RenderCapstone key={index} capstone={capstone} />
+              <RenderCapstone key={capstone.id || index} capstone={capstone} />
             ) : null
           ))
         }

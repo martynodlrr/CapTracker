@@ -7,6 +7,7 @@ from app.api.auth_routes import validation_errors_to_error_messages
 from app.api.aws import (upload_file_to_s3, get_unique_filename)
 from app.forms import CapstoneForm, CapstoneImageForm
 from app.models import Capstone, CapstoneImage, db
+from .normalize_helper import normalize_data
 
 capstone_routes = Blueprint('capstones', __name__)
 
@@ -25,7 +26,7 @@ def capstones():
     if not capstones and number != 1:
         return jsonify(error="No more capstones"), 404
 
-    data = [capstone.to_dict() for capstone in capstones]
+    data = normalize_data([capstone.to_dict() for capstone in capstones])
     return jsonify(capstones=data), 200
 
 

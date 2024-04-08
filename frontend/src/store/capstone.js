@@ -1,5 +1,3 @@
-import normalizeData from './helperFunc.js';
-
 // Action types
 const SET_CAPSTONES = 'capstone/SET_CAPSTONES';
 const SET_CAPSTONE = 'capstone/SET_CAPSTONE';
@@ -39,7 +37,7 @@ export const fetchCapstones = (start) => async (dispatch) => {
 
   if (res.ok) {
     const data = await res.json();
-    dispatch(setCapstones(normalizeData(data.capstones)));
+    dispatch(setCapstones(data.capstones));
 
     return data.capstones;
   }
