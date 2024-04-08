@@ -14,7 +14,7 @@ capstone_routes = Blueprint('capstones', __name__)
 @capstone_routes.route('/', methods=['GET'])
 def capstones():
     """
-    Query for 10 capstones at a time and returns them in a list of capstone dictionaries ordered by newest to oldest
+    Query for 10 capstones at a time and returns them in a list of capstone dictionaries
     """
     number = int(request.args.get('number', 1))
     limit = 10

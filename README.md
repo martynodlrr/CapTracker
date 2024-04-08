@@ -103,14 +103,14 @@ Follow the instructions below to set up and run this project locally on your mac
 
 ### Frontend Setup
 
-1. **Navigate to the Frontend Directory (react-app/):**
+1. **Navigate to the Frontend Directory (frontend/):**
     ```bash
-    cd react-app
+    cd frontend
     ```
 
 2. **Environment Configuration:**
 
-   Create a `.env` file in the `react-app` directory. Add the following line:
+   Create a `.env` file in the `frontend` directory. Add the following line:
     ```
     REACT_APP_BASE_URL=http://localhost:5000
     REACT_APP_AUTH0_DOMAIN=your_auth0_domain

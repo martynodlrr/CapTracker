@@ -6,7 +6,7 @@ import React from "react";
 
 import { ModalProvider, Modal } from "./context/Modal";
 import configureStore from "./store";
-import App from "./App";
+import App from "./app";
 
 import "./index.css";
 

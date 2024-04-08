@@ -64,7 +64,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   return (
     <>
       <section className="review-section">
-        {(user.id != ownerId && !userHasReviewCheck(reviews) && !capstoneAlter) && <OpenModalButton
+        {(user.id !== ownerId && !userHasReviewCheck(reviews) && !capstoneAlter) && <OpenModalButton
           buttonText="Leave constructive criticism"
           onItemClick={closeMenu}
           modalComponent={
