@@ -27,7 +27,7 @@ You can access the live version of CapTracker [here](https://captracker-t69u.onr
 - **Cloud Hosting:**
   - AWS
 
-- **Auth:** 
+- **Auth:**
   - Auth0
 
 ## Technical Features
@@ -80,6 +80,11 @@ Follow the instructions below to set up and run this project locally on your mac
     ```
 
     > Note: Replace placeholders (`your_secret_key`, `your_schema`, etc.) with appropriate values.
+
+3. **Set Up Virtual Environment with Pipenv:**
+    ```bash
+    pipenv install
+    ```
 
 4. **Database Migration:**
 
