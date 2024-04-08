@@ -11,7 +11,7 @@ function AllCapstones() {
   const dispatch = useDispatch();
   const capstones = useSelector((state) => state.capstones.allCapstones);
   const [isLoading, setIsLoading] = useState(false);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [_, setPageNumber] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { user } = useAuth0();
 
@@ -23,7 +23,7 @@ function AllCapstones() {
   const handleScroll = useCallback(async () => {
     // window.scrollY is how much has scrolled
     // window.innerHeight is how much of the page is showing
-    // document.body.offsetHeight is how much of the page is availible
+    // document.body.offsetHeight is how much of the page is available
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
 
     if (nearBottom && hasMore && !isLoading) {
@@ -52,10 +52,11 @@ function AllCapstones() {
     <>
       <div className="capstones-container">
         {capstones && Object.values(capstones)
-          .filter(capstone => Object.keys(capstone).length > 0)
           .reverse()
           .map((capstone, index) => (
-            <RenderCapstone key={index} capstone={capstone} />
+            Object.keys(capstone).length > 0 ? (
+              <RenderCapstone key={index} capstone={capstone} />
+            ) : null
           ))
         }
         {!hasMore && <div>No more capstones available.</div>}

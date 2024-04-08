@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import React from 'react';
 
-import imageSrc from '../../images/CapTrackerIcon.png';
+import imageSrc from '../../static/CapTrackerIcon.png';
 import ProfileButton from './ProfileButton';
 
 import './Navigation.css';
