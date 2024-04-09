@@ -42,7 +42,7 @@ I implemented Redux to efficiently manage application data, ensuring a responsiv
 - **Challenge:** Complex Data Management
   - **Solution:** I opted for PostgreSQL as my database, which allowed me to structure and retrieve data efficiently, ensuring a seamless user experience and making future development more scalable.
 
-## Local Installation
+## Installation
 
 Follow the instructions below to set up and run this project locally on your machine.
 
