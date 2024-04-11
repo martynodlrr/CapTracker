@@ -1,53 +1,53 @@
 // Action types
-const SET_REVIEWS = "review/SET_REVIEWS";
-const CREATE_REVIEW = "review/CREATE_REVIEW";
-const UPDATE_REVIEW = "review/UPDATE_REVIEW";
-const REMOVE_REVIEW = "review/REMOVE_REVIEW";
-const CLEAR_REVIEW = "review/CLEAR_REVIEW";
+const SET_REVIEWS = "review/SET_REVIEWS"
+const CREATE_REVIEW = "review/CREATE_REVIEW"
+const UPDATE_REVIEW = "review/UPDATE_REVIEW"
+const REMOVE_REVIEW = "review/REMOVE_REVIEW"
+const CLEAR_REVIEW = "review/CLEAR_REVIEW"
 
 // Action creators
 const setReviews = (reviews) => ({
   type: SET_REVIEWS,
   payload: reviews,
-});
+})
 
 const addReview = (review) => ({
   type: CREATE_REVIEW,
   payload: review,
-});
+})
 
 const updateReview = (review) => ({
   type: UPDATE_REVIEW,
   payload: review,
-});
+})
 
 const removeReview = (reviewId) => ({
   type: REMOVE_REVIEW,
   payload: reviewId,
-});
+})
 
 const resetReviews = () => ({
   type: CLEAR_REVIEW
-});
+})
 
 // Thunk
 export const getReviews = (capstoneId) => async (dispatch) => {
-  const res = await fetch(`/api/reviews/capstones/${capstoneId}`);
+  const res = await fetch(`/api/reviews/capstones/${capstoneId}`)
 
   if (res.ok) {
-    const data = await res.json();
+    const data = await res.json()
 
     if (data.errors) {
-      return;
+      return
     }
 
-    dispatch(setReviews(data.reviews));
+    dispatch(setReviews(data.reviews))
   } else {
     dispatch(resetReviews())
   }
 
-  return false;
-};
+  return false
+}
 
 export const createReview = (comment, capstoneId, nick_name) => async (dispatch) => {
   const res = await fetch(`/api/reviews/capstones/${capstoneId}`, {
@@ -59,15 +59,15 @@ export const createReview = (comment, capstoneId, nick_name) => async (dispatch)
       comment: comment.review,
       author: nick_name
     }),
-  });
+  })
 
   if (res.ok) {
-    const data = await res.json();
-    dispatch(addReview(data.review));
+    const data = await res.json()
+    dispatch(addReview(data.review))
 
-    return data.review;
+    return data.review
   }
-};
+}
 
 export const postUpdateReview = (comment) => async (dispatch) => {
 
@@ -79,34 +79,34 @@ export const postUpdateReview = (comment) => async (dispatch) => {
     body: JSON.stringify({
       comment: comment.review
     }),
-  });
-  const data = await res.json();
+  })
+  const data = await res.json()
 
   if (res.ok) {
-    dispatch(updateReview(data.review));
+    dispatch(updateReview(data.review))
 
-    return data.review;
+    return data.review
   }
 
   if (data.errors) {
-    return data.errors;
+    return data.errors
   }
-};
+}
 
 export const deleteReview = (reviewId) => async (dispatch) => {
   const res = await fetch(`/api/reviews/${reviewId}`, {
     method: "DELETE"
-  });
+  })
 
   if (res.ok) {
-    dispatch(removeReview(reviewId));
+    dispatch(removeReview(reviewId))
 
-    return null;
+    return null
   }
-};
+}
 
 // Initial state
-const initialState = {};
+const initialState = {}
 
 // Reducer
 export default function reducer(state = initialState, action) {
@@ -114,30 +114,30 @@ export default function reducer(state = initialState, action) {
     case SET_REVIEWS:
       return {
         ...action.payload,
-      };
+      }
 
     case CREATE_REVIEW:
       return {
         ...state,
         [action.payload.id]: action.payload,
-      };
+      }
 
     case UPDATE_REVIEW:
       return {
         ...state,
         [action.payload.id]: action.payload,
-      };
+      }
 
     case REMOVE_REVIEW:
-      const newState = { ...state };
-      delete newState[action.payload];
-      return newState;
+      const newState = { ...state }
+      delete newState[action.payload]
+      return newState
 
     case CLEAR_REVIEW:
-      const resetState = {};
-      return resetState;
+      const resetState = {}
+      return resetState
 
     default:
-      return state;
+      return state
   }
 }

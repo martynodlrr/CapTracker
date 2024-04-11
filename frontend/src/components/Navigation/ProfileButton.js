@@ -1,50 +1,50 @@
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
-import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import Button from '@mui/material/Button';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
+import React, { useState, useEffect, useRef } from "react"
+import { useHistory } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react"
+import Button from '@mui/material/Button'
 
-import './Navigation.css';
+import './Navigation.css'
 
 function ProfileButton({ user }) {
-  const [showMenu, setShowMenu] = useState(false);
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const { logout, loginWithRedirect } = useAuth0();
-  const closeMenu = () => setShowMenu(false);
-  const history = useHistory();
-  const ulRef = useRef();
+  const [showMenu, setShowMenu] = useState(false)
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden")
+  const { logout, loginWithRedirect } = useAuth0()
+  const closeMenu = () => setShowMenu(false)
+  const history = useHistory()
+  const ulRef = useRef()
 
   const openMenu = () => {
-    if (showMenu) return;
-    setShowMenu(true);
-  };
+    if (showMenu) return
+    setShowMenu(true)
+  }
 
   const handleLogout = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     logout({ logoutParams: { returnTo: window.location.origin } })
 
-    closeMenu();
-  };
+    closeMenu()
+  }
 
   const handleProfileRedirect = () => {
-    history.push(`/user`);
-  };
+    history.push(`/user`)
+  }
 
   const handleCapstoneRedirect = () => {
-    history.push(`/capstone/edit`);
-  };
+    history.push(`/capstone/edit`)
+  }
 
   useEffect(() => {
-    if (!showMenu) return;
+    if (!showMenu) return
 
     const closeMenu = (e) => {
-      setShowMenu(false);
-    };
+      setShowMenu(false)
+    }
 
-    document.addEventListener("click", closeMenu);
+    document.addEventListener("click", closeMenu)
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
+    return () => document.removeEventListener("click", closeMenu)
+  }, [showMenu])
 
   return (
     <>
@@ -93,7 +93,7 @@ function ProfileButton({ user }) {
         )}
       </div>
     </>
-  );
+  )
 }
 
-export default ProfileButton;
+export default ProfileButton

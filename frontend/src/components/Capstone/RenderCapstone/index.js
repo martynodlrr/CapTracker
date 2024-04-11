@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import CapstoneImages from '../CapstoneImages';
+import CapstoneImages from '../CapstoneImages'
 
-import './index.css';
+import './index.css'
 
 function RenderCapstone({ capstone }) {
   return (
@@ -23,7 +23,7 @@ function RenderCapstone({ capstone }) {
 
       <p id='description'>{capstone.description}</p>
     </div>
-  );
+  )
 }
 
-export default RenderCapstone;
+export default RenderCapstone

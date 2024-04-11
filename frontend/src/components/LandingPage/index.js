@@ -1,15 +1,15 @@
-import { useHistory } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import Button from '@mui/material/Button';
-import ReactGA from 'react-ga';
-import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react"
+import Button from '@mui/material/Button'
+import ReactGA from 'react-ga'
+import React, { useEffect, useState } from 'react'
 
-import './index.css';
+import './index.css'
 
 function LandingPage({ user }) {
-  const history = useHistory();
-  const { loginWithRedirect } = useAuth0();
-  const [currentSection, setCurrentSection] = useState('');
+  const history = useHistory()
+  const { loginWithRedirect } = useAuth0()
+  const [currentSection, setCurrentSection] = useState('')
 
   const handleGetStartedClick = () => {
     ReactGA.event({
@@ -17,54 +17,54 @@ function LandingPage({ user }) {
       action: 'Get Started Clicked While Logged In',
     })
 
-    history.push('/capstones');
-  };
+    history.push('/capstones')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const sections = ['header', 'intro', 'feature-1', 'feature-2', 'feature-3', 'cta'];
+      const scrollPosition = window.scrollY
+      const sections = ['header', 'intro', 'feature-1', 'feature-2', 'feature-3', 'cta']
 
       if (scrollPosition === 0) {
-        setCurrentSection('header');
-        return;
+        setCurrentSection('header')
+        return
       }
 
       for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        const sectionElement = document.querySelector(`.${section}`);
+        const section = sections[i]
+        const sectionElement = document.querySelector(`.${section}`)
         if (sectionElement) {
-          const sectionTop = sectionElement.offsetTop;
-          const sectionBottom = sectionTop + sectionElement.clientHeight;
+          const sectionTop = sectionElement.offsetTop
+          const sectionBottom = sectionTop + sectionElement.clientHeight
 
           if (['header', 'intro'].includes(section)) {
             if (scrollPosition >= sectionTop - 400 && scrollPosition <= sectionBottom - 400) {
               // If user is in the current section, set it as active
-              setCurrentSection(section);
+              setCurrentSection(section)
             }
           } else if ( section !== 'cta' ) {
             if (scrollPosition >= sectionTop - 800 && scrollPosition <= sectionBottom + 400) {
               // If user is in the current section, set it as active
-              setCurrentSection(section);
+              setCurrentSection(section)
             }
           } else {
             if (scrollPosition >= sectionTop - 400 && scrollPosition <= sectionBottom + 800) {
               // If user is in the current section, set it as active
-              setCurrentSection(section);
+              setCurrentSection(section)
             }
           }
         }
       }
     }
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll)
 
-    handleScroll();
+    handleScroll()
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <div>
@@ -116,7 +116,7 @@ function LandingPage({ user }) {
         </div>
       </section>
     </div>
-  );
+  )
 }
 
-export default LandingPage;
+export default LandingPage

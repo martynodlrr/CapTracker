@@ -1,17 +1,17 @@
-import { useHistory } from 'react-router-dom';
-import React from 'react';
+import { useHistory } from 'react-router-dom'
+import React from 'react'
 
-import imageSrc from '../../static/CapTrackerIcon.png';
-import ProfileButton from './ProfileButton';
+import imageSrc from '../../static/CapTrackerIcon.png'
+import ProfileButton from './ProfileButton'
 
-import './Navigation.css';
+import './Navigation.css'
 
 function Navigation({ user }) {
-	const history = useHistory();
+	const history = useHistory()
 
 	const handleIconClick = () => {
-		history.push('/capstones');
-	};
+		history.push('/capstones')
+	}
 
 	return (
 		<ul id='nav-container'>
@@ -23,7 +23,7 @@ function Navigation({ user }) {
 					<ProfileButton user={user} />
 				</li>
 		</ul>
-	);
+	)
 }
 
-export default Navigation;
+export default Navigation

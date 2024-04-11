@@ -25,6 +25,6 @@ const greetings = [
   "Good morrow, kind soul!",
   "Hello, brave knight!",
   "Greetings, fellow traveler!",
-];
+]
 
-export default greetings;
+export default greetings

@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
-import './index.css';
+import Box from '@mui/material/Box'
+import './index.css'
 
 const StackRender = () => {
     const techs = [
@@ -14,7 +14,7 @@ const StackRender = () => {
         { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg", alt: "PostgreSQL (for production)", href: "https://www.postgresql.org/" },
         { src: "https://image.similarpng.com/very-thumbnail/2020/06/Amazon-web-services-logo-PNG.png", alt: "AWS", href: "https://aws.amazon.com/" },
         { src: "https://www.vectorlogo.zone/logos/auth0/auth0-ar21.svg", alt: "Auth0", href: "https://auth0.com/" }
-    ];
+    ]
 
     return (
         <Box component="footer" className="footer">
@@ -49,7 +49,7 @@ const StackRender = () => {
                 </a>
             </div>
         </Box>
-    );
-};
+    )
+}
 
-export default StackRender;
+export default StackRender

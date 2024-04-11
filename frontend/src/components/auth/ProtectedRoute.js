@@ -1,6 +1,6 @@
-import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import React from 'react';
+import { Route, Redirect } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import React from 'react'
 
 const ProtectedRoute = props => {
   const user = useSelector(state => state.session.user)
@@ -9,7 +9,7 @@ const ProtectedRoute = props => {
       {(user)? props.children  : <Redirect to='/login' />}
     </Route>
   )
-};
+}
 
 
-export default ProtectedRoute;
+export default ProtectedRoute

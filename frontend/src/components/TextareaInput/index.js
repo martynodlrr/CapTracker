@@ -1,5 +1,5 @@
-import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-import { styled } from '@mui/system';
+import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize'
+import { styled } from '@mui/system'
 
 const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => ({
   'minWidth': '320px',
@@ -17,9 +17,9 @@ const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => ({
     outline: '0',
     color: theme.palette.text.main,
   },
-}));
+}))
 
 export default function UnstyledTextareaIntroduction(props) {
-  const placeholder = props.placeholder || 'Description*';
-  return <StyledTextareaAutosize placeholder={placeholder} {...props} />;
+  const placeholder = props.placeholder || 'Description*'
+  return <StyledTextareaAutosize placeholder={placeholder} {...props} />
 }

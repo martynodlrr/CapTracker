@@ -1,48 +1,48 @@
-import { ThemeProvider, useTheme } from '@emotion/react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect, useRef } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import Button from '@mui/material/Button';
+import { ThemeProvider, useTheme } from '@emotion/react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState, useEffect, useRef } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
+import Button from '@mui/material/Button'
 
-import * as reviewActions from '../../../store/review';
-import OpenModalButton from '../../OpenModalButton';
-import { useModal } from "../../../context/Modal";
-import CreateReview from '../CreateReview';
+import * as reviewActions from '../../../store/review'
+import OpenModalButton from '../../OpenModalButton'
+import { useModal } from "../../../context/Modal"
+import CreateReview from '../CreateReview'
 
-import './index.css';
+import './index.css'
 
 function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
-  const reviews = useSelector(state => state.reviews);
-  const [showMenu, setShowMenu] = useState(false);
-  const { closeModal } = useModal();
-  const dispatch = useDispatch();
-  const { user } = useAuth0();
-  const theme = useTheme();
-  const ulRef = useRef();
+  const reviews = useSelector(state => state.reviews)
+  const [showMenu, setShowMenu] = useState(false)
+  const { closeModal } = useModal()
+  const dispatch = useDispatch()
+  const { user } = useAuth0()
+  const theme = useTheme()
+  const ulRef = useRef()
 
   const closeMenu = () => {
-    setShowMenu(false);
-  };
+    setShowMenu(false)
+  }
 
   useEffect(() => {
     if (!create &&capstoneId) {
-      dispatch(reviewActions.getReviews(capstoneId));
+      dispatch(reviewActions.getReviews(capstoneId))
     }
   }, [dispatch, capstoneId])
 
   useEffect(() => {
-    if (!showMenu) return;
+    if (!showMenu) return
 
     const closeMenu = (e) => {
       if (!ulRef.current.contains(e.target)) {
-        setShowMenu(false);
+        setShowMenu(false)
       }
-    };
+    }
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener('click', closeMenu)
 
-    return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu]);
+    return () => document.removeEventListener('click', closeMenu)
+  }, [showMenu])
 
   if (create) {
     return <p
@@ -54,7 +54,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
   }
 
   const userHasReviewCheck = reviews => {
-    return Object.values(reviews).some(review => user.nickname === review.author);
+    return Object.values(reviews).some(review => user.nickname === review.author)
   }
 
   const handleDelete = async reviewId => {
@@ -131,7 +131,7 @@ function ReviewRender({ create, capstoneId, ownerId, capstoneAlter }) {
         </section>
       </div>
     </>
-  );
+  )
 }
 
-export default ReviewRender;
+export default ReviewRender

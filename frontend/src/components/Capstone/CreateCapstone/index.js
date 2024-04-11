@@ -1,72 +1,72 @@
-import { TextField, Button, Container } from '@mui/material';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { useSelector, useDispatch } from 'react-redux';
-import IconButton from '@mui/material/IconButton';
-import { useHistory } from 'react-router-dom';
-import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from 'react';
-import ReactGA from 'react-ga';
+import { TextField, Button, Container } from '@mui/material'
+import PhotoCamera from '@mui/icons-material/PhotoCamera'
+import { useSelector, useDispatch } from 'react-redux'
+import IconButton from '@mui/material/IconButton'
+import { useHistory } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react"
+import { useEffect, useState } from 'react'
+import ReactGA from 'react-ga'
 
-import StyledTextareaAutosize from '../../TextareaInput/index.js';
-import * as capstoneActions from '../../../store/capstone';
-import * as reviewActions from '../../../store/review';
-import ReviewRender from '../../Review/ReviewRender';
+import StyledTextareaAutosize from '../../TextareaInput/index.js'
+import * as capstoneActions from '../../../store/capstone'
+import * as reviewActions from '../../../store/review'
+import ReviewRender from '../../Review/ReviewRender'
 
-import './index.css';
+import './index.css'
 
 function CreateCapstone() {
-  const userCapstone = useSelector((state) => state.capstones.userCapstone);
-  const dispatch = useDispatch();
-  const { user } = useAuth0();
-  const history = useHistory();
+  const userCapstone = useSelector((state) => state.capstones.userCapstone)
+  const dispatch = useDispatch()
+  const { user } = useAuth0()
+  const history = useHistory()
 
-  const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png';
+  const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png'
 
-  const [description, setDescription] = useState(userCapstone?.description || '');
-  const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage));
-  const [clonedFrom, setClonedFrom] = useState(userCapstone?.clonedFrom || '');
-  const [title, setTitle] = useState(userCapstone?.title || '');
-  const [capstoneAlter, setCapstoneAlter] = useState(false);
-  const [images, setImages] = useState(Array(5).fill(null));
-  const [url, setUrl] = useState(userCapstone?.url || '');
-  const [isValidUrl, setIsValidUrl] = useState(true);
-  const [disabled, setDisabled] = useState((userCapstone && Object.values(userCapstone).length) ? false : true);
-  const [loading, setLoading] = useState(true);
-  const [create, setCreate] = useState(true);
-  const [errors, setErrors] = useState([]);
+  const [description, setDescription] = useState(userCapstone?.description || '')
+  const [previewSrc, setPreviewSrc] = useState(Array(5).fill(placeholderImage))
+  const [clonedFrom, setClonedFrom] = useState(userCapstone?.clonedFrom || '')
+  const [title, setTitle] = useState(userCapstone?.title || '')
+  const [capstoneAlter, setCapstoneAlter] = useState(false)
+  const [images, setImages] = useState(Array(5).fill(null))
+  const [url, setUrl] = useState(userCapstone?.url || '')
+  const [isValidUrl, setIsValidUrl] = useState(true)
+  const [disabled, setDisabled] = useState((userCapstone && Object.values(userCapstone).length) ? false : true)
+  const [loading, setLoading] = useState(true)
+  const [create, setCreate] = useState(true)
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     async function fetchData() {
       if ((!userCapstone || !Object.values(userCapstone).length) && loading) {
-        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
+        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id))
 
-        setLoading((res === false || Object.values(res).length) ? false : true);
-        setCreate(!res);
-        setCapstoneAlter(true);
+        setLoading((res === false || Object.values(res).length) ? false : true)
+        setCreate(!res)
+        setCapstoneAlter(true)
 
       } else if (Object.values(userCapstone).length) {
-        setTitle(userCapstone.title);
-        setUrl(userCapstone.url);
-        setDescription(userCapstone.description);
-        setClonedFrom(userCapstone.clonedFrom);
+        setTitle(userCapstone.title)
+        setUrl(userCapstone.url)
+        setDescription(userCapstone.description)
+        setClonedFrom(userCapstone.clonedFrom)
 
         if (userCapstone.capstoneImages) {
           const updatedPreviewSrc = userCapstone.capstoneImages.map(
             (img) => img.imageUrl || placeholderImage
-          );
+          )
           setPreviewSrc((prev) => [
             ...updatedPreviewSrc,
             ...prev.slice(updatedPreviewSrc.length),
-          ]);
+          ])
         }
 
-        setCapstoneAlter(true);
-        setLoading(false);
+        setCapstoneAlter(true)
+        setLoading(false)
       }
     }
 
-    fetchData();
-  }, [create, capstoneAlter, loading, userCapstone, user.id, dispatch]);
+    fetchData()
+  }, [create, capstoneAlter, loading, userCapstone, user.id, dispatch])
 
   useEffect(() => {
     setDisabled(
@@ -78,48 +78,48 @@ function CreateCapstone() {
       description?.length > 1000 ||
       clonedFrom?.length < 1 ||
       clonedFrom?.length > 75
-    );
-  }, [title, url, description, clonedFrom, userCapstone]);
+    )
+  }, [title, url, description, clonedFrom, userCapstone])
 
   const handleFileChange = (index) => (e) => {
     ReactGA.event({
       category: 'Capstone',
       action: 'Capstone Image Uploaded'
-    });
+    })
 
-    const file = e.target.files[0];
+    const file = e.target.files[0]
 
     setImages((prev) => {
-      const updated = [...prev];
-      updated[index] = file;
-      return updated;
-    });
+      const updated = [...prev]
+      updated[index] = file
+      return updated
+    })
 
     if (file) {
-      const src = URL.createObjectURL(file);
+      const src = URL.createObjectURL(file)
       setPreviewSrc((prev) => {
-        const updated = [...prev];
-        updated[index] = src;
-        return updated;
-      });
+        const updated = [...prev]
+        updated[index] = src
+        return updated
+      })
     } else {
       setPreviewSrc((prev) => {
-        const updated = [...prev];
-        updated[index] = userCapstone?.capstoneImages[index]?.imageUrl || placeholderImage;
-        return updated;
-      });
+        const updated = [...prev]
+        updated[index] = userCapstone?.capstoneImages[index]?.imageUrl || placeholderImage
+        return updated
+      })
     }
-  };
+  }
 
   const handleUrlChange = (e) => {
-    const inputValue = e.target.value;
-    setUrl(inputValue);
+    const inputValue = e.target.value
+    setUrl(inputValue)
 
     // Regular expression for URL validation
-    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
-    const isValid = urlRegex.test(inputValue);
+    const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i
+    const isValid = urlRegex.test(inputValue)
 
-    setIsValidUrl(isValid);
+    setIsValidUrl(isValid)
   }
 
   const FileInput = ({ index }) =>
@@ -181,29 +181,29 @@ function CreateCapstone() {
         </IconButton>
       </label>
     </div>
-  );
+  )
 
   const uploadImages = async (capstoneId, images, capstoneImages, userId) => {
     await Promise.all(images.map((image, index) => {
       if (image) {
-        const formData = new FormData();
-        formData.append('image', image);
+        const formData = new FormData()
+        formData.append('image', image)
 
         if (capstoneImages[index]) {
-          const imageId = capstoneImages[index].id;
-          return dispatch(capstoneActions.updateCapstoneImage(capstoneId, imageId, formData, userId));
+          const imageId = capstoneImages[index].id
+          return dispatch(capstoneActions.updateCapstoneImage(capstoneId, imageId, formData, userId))
         } else {
-          return dispatch(capstoneActions.createCapstoneImage(capstoneId, formData, userId));
+          return dispatch(capstoneActions.createCapstoneImage(capstoneId, formData, userId))
         }
       }
-      return null;
-    }));
-  };
+      return null
+    }))
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const hasAtLeastOneImage = images.some(image => image !== null);
+    const hasAtLeastOneImage = images.some(image => image !== null)
     const capstone = {
       title,
       url,
@@ -211,58 +211,58 @@ function CreateCapstone() {
       images,
       clonedFrom,
       userId: user.id,
-    };
+    }
 
     if (create) {
       if (!hasAtLeastOneImage) {
-        setErrors(["At least one image is required to create a capstone."]);
-        return;
+        setErrors(["At least one image is required to create a capstone."])
+        return
       }
 
-      const createdCapstone = await dispatch(capstoneActions.createCapstone(capstone));
+      const createdCapstone = await dispatch(capstoneActions.createCapstone(capstone))
 
       if (!createdCapstone.errors) {
-        await uploadImages(createdCapstone.id, images, [], user.id);
-        await dispatch(reviewActions.getReviews(createdCapstone.id));
-        history.push(`/capstones/${createdCapstone.id}`);
+        await uploadImages(createdCapstone.id, images, [], user.id)
+        await dispatch(reviewActions.getReviews(createdCapstone.id))
+        history.push(`/capstones/${createdCapstone.id}`)
 
       } else {
-        setErrors(createdCapstone.errors);
+        setErrors(createdCapstone.errors)
       }
     } else {
-      capstone.id = userCapstone.id;
+      capstone.id = userCapstone.id
 
-      const updateRes = await dispatch(capstoneActions.updateCapstone(capstone));
+      const updateRes = await dispatch(capstoneActions.updateCapstone(capstone))
 
       if (!updateRes.errors) {
-        await uploadImages(capstone.id, images, userCapstone.capstoneImages, user.id);
-        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id));
+        await uploadImages(capstone.id, images, userCapstone.capstoneImages, user.id)
+        const res = await dispatch(capstoneActions.fetchUserCapstone(user.id))
 
-        history.push(`/capstones/${res.id}`);
+        history.push(`/capstones/${res.id}`)
 
       } else {
-        setErrors(updateRes.errors);
+        setErrors(updateRes.errors)
       }
     }
-  };
+  }
 
   const handleDelete = async (e, capstoneId) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    history.push('/capstones');
-    await dispatch(capstoneActions.deleteCapstone(capstoneId));
-  };
+    history.push('/capstones')
+    await dispatch(capstoneActions.deleteCapstone(capstoneId))
+  }
 
   if (loading) {
     return (
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ margin: 'auto', background: 'rgb(247, 247, 239)', display: 'block', shapeRendering: 'auto' }} width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
           <path fill="none" stroke="#0a0a0a" strokeWidth="7" strokeDasharray="233.4959246826172 23.093003540039064" d="M24.3 30C11.4 30 5 43.3 5 50s6.4 20 19.3 20c19.3 0 32.1-40 51.4-40 C88.6 30 95 43.3 95 50s-6.4 20-19.3 20C56.4 70 43.6 30 24.3 30z" strokeLinecap="round" style={{ transform: 'scale(1)', transformOrigin: '50px 50px' }}>
-            <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.8518518518518516s" keyTimes="0;1" values="0;256.58892822265625"></animate>
+            <animate attributeName="stroke-dashoffset" repeatCount="indefinite" dur="1.8518518518518516s" keyTimes="01" values="0256.58892822265625"></animate>
           </path>
         </svg>
       </div>
-    );
+    )
   }
 
   return (
@@ -410,7 +410,7 @@ function CreateCapstone() {
       <h2 className='heading'>See what others are suggesting: </h2>
       <ReviewRender capstoneId={userCapstone?.id} create={create} capstoneAlter={capstoneAlter} ownerId={userCapstone?.author?.id} />
     </Container>
-  );
+  )
 }
 
-export default CreateCapstone;
+export default CreateCapstone

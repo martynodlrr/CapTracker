@@ -1,9 +1,9 @@
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles'
+import Button from '@mui/material/Button'
 
 const VisuallyHiddenInput = styled('input')({
   display: 'none',
-});
+})
 
 export default function InputFileUpload({ label, startIcon, onChange }) {
   return (
@@ -11,5 +11,5 @@ export default function InputFileUpload({ label, startIcon, onChange }) {
       {label}
       <VisuallyHiddenInput type="file" onChange={onChange} />
     </Button>
-  );
+  )
 }

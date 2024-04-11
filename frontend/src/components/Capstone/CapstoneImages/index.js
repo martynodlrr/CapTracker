@@ -1,31 +1,31 @@
-import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
-import { useHistory } from 'react-router-dom';
-import React, { useState } from 'react';
-import ReactGA from 'react-ga';
+import { ArrowBack, ArrowForward } from '@mui/icons-material'
+import IconButton from '@mui/material/IconButton'
+import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
+import ReactGA from 'react-ga'
 
 import './index.css'
 
 function CapstoneImages({ images, capstoneId, link }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const history = useHistory();
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const history = useHistory()
 
   const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+  }
 
   const prevImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
+  }
 
   const handleImageClick = () => {
     ReactGA.event({
       category: 'Capstone',
       action: `Capstone Image Clicked for ${capstoneId}`,
-    });
+    })
 
-    history.push(`/capstones/${capstoneId}#root`);
-  };
+    history.push(`/capstones/${capstoneId}#root`)
+  }
 
   return (
     <div className='capstone-images'>
@@ -80,7 +80,7 @@ function CapstoneImages({ images, capstoneId, link }) {
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default CapstoneImages;
+export default CapstoneImages

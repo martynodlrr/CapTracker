@@ -1,38 +1,38 @@
-import { useTheme } from '@emotion/react';
-import { useDispatch } from 'react-redux';
-import { Button } from '@mui/material';
-import { useState } from 'react';
-import ReactGA from 'react-ga';
+import { useTheme } from '@emotion/react'
+import { useDispatch } from 'react-redux'
+import { Button } from '@mui/material'
+import { useState } from 'react'
+import ReactGA from 'react-ga'
 
-import StyledTextareaAutosize from '../../TextareaInput/index.js';
-import * as reviewActions from '../../../store/review';
+import StyledTextareaAutosize from '../../TextareaInput/index.js'
+import * as reviewActions from '../../../store/review'
 
 function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname }) {
-  const [review, setReview] = useState(!create ? text : '');
-  const dispatch = useDispatch();
-  const theme = useTheme();
+  const [review, setReview] = useState(!create ? text : '')
+  const dispatch = useDispatch()
+  const theme = useTheme()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     ReactGA.event({
       category: 'Review',
       action: 'Submitted a review',
-    });
+    })
 
     const comment = {
       review,
-    };
+    }
 
     if (create) {
-      await dispatch(reviewActions.createReview(comment, capstoneId, nickname));
+      await dispatch(reviewActions.createReview(comment, capstoneId, nickname))
     } else {
       comment['id'] = reviewId
       await dispatch(reviewActions.postUpdateReview(comment))
     }
 
-    closeModal();
-  };
+    closeModal()
+  }
 
   return (
     <form
@@ -67,7 +67,7 @@ function CreateReview({ create, capstoneId, closeModal, reviewId, text, nickname
         className='btn'
       >{create ? 'post' : 'update'}</Button>
     </form>
-  );
+  )
 }
 
-export default CreateReview;
+export default CreateReview
