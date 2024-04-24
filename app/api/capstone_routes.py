@@ -35,7 +35,7 @@ def capstones_by_user_id(userId):
     """
     Query for capstones by user ID and return that capstone in a list
     """
-    capstone = Capstone.query.filter(Capstone.user_id == userId).first()
+    capstone = Capstone.query.filter(Capstone.user_id == userId).exists()
 
     if not capstone:
         return jsonify(message='User has no capstone'), 404

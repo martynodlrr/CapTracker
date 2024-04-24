@@ -22,6 +22,7 @@ function AllCapstones() {
 
   const handleScroll = useCallback(async () => {
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000
+    
     if (nearBottom && hasMore && !isLoading) {
       setIsLoading(true)
       setPageNumber((prevNumber) => {
