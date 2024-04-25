@@ -12,7 +12,7 @@ class Capstone(db.Model):
     description = db.Column(db.String(1000), nullable=False)
     cloned_from = db.Column(db.String(75), nullable=False)
     user_id = db.Column(db.String(75), nullable=False, index=True)
-    created_at = db.Column(db.TIMESTAMP)
+    created_at = db.Column(db.TIMESTAMP, index=True)
 
     # relations
     capstone_images = db.relationship("CapstoneImage", back_populates="capstone")
