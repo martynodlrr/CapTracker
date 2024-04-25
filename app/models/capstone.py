@@ -6,9 +6,13 @@ class Capstone(db.Model):
 
     if environment == "production":
         __table_args__ = (
-        {'schema': SCHEMA},
-        Index('capstone_user_id_idx', 'user_id')
-    )
+            {'schema': SCHEMA},
+            Index('capstone_user_id_idx', 'user_id'),
+        )
+    else:
+        __table_args__ = (
+            Index('capstone_user_id_idx', 'user_id'),
+        )
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
