@@ -6,11 +6,7 @@ class Capstone(db.Model):
 
     if environment == "production":
         __table_args__ = (
-            {'schema': SCHEMA},
-            Index('capstone_user_id_idx', 'user_id'),
-        )
-    else:
-        __table_args__ = (
+            {"schema": SCHEMA},
             Index('capstone_user_id_idx', 'user_id'),
         )
 
@@ -36,5 +32,5 @@ class Capstone(db.Model):
             "clonedFrom": self.cloned_from,
             "created_at": self.created_at.isoformat().split('T')[0] if self.created_at else None,
             "capstoneImages": [image.to_dict() for image in self.capstone_images],
-            "reviews": [review.to_dict() for review in self.reviews],
+            "reviews": [review.to_dict() for review in your.reviews],
         }
