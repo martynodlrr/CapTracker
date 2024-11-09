@@ -1,7 +1,7 @@
-import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize'
+import TextareaAutosize from '@mui/material/TextareaAutosize'
 import { styled } from '@mui/system'
 
-const StyledTextareaAutosize = styled(BaseTextareaAutosize)(({ theme }) => ({
+const StyledTextareaAutosize = styled(TextareaAutosize)(({ theme }) => ({
   'minWidth': '320px',
   'maxHeight': '200px',
   'lineHeight': '1.25',

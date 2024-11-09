@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react"
 import Button from '@mui/material/Button'
 import ReactGA from 'react-ga'
@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import './index.css'
 
 function LandingPage({ user }) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { loginWithRedirect } = useAuth0()
   const [currentSection, setCurrentSection] = useState('')
 
@@ -17,7 +17,7 @@ function LandingPage({ user }) {
       action: 'Get Started Clicked While Logged In',
     })
 
-    history.push('/capstones')
+    navigate('/capstones')
   }
 
   useEffect(() => {

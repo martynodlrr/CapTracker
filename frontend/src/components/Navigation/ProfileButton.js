@@ -1,6 +1,6 @@
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import React, { useState, useEffect, useRef } from "react"
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react"
 import Button from '@mui/material/Button'
 
@@ -11,7 +11,7 @@ function ProfileButton({ user }) {
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden")
   const { logout, loginWithRedirect } = useAuth0()
   const closeMenu = () => setShowMenu(false)
-  const history = useHistory()
+  const navigate = useNavigate()
   const ulRef = useRef()
 
   const openMenu = () => {
@@ -27,11 +27,11 @@ function ProfileButton({ user }) {
   }
 
   const handleProfileRedirect = () => {
-    history.push(`/user`)
+    navigate(`/user`)
   }
 
   const handleCapstoneRedirect = () => {
-    history.push(`/capstone/edit`)
+    navigate(`/capstone/edit`)
   }
 
   useEffect(() => {

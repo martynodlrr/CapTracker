@@ -2,7 +2,7 @@ import { TextField, Button, Container } from '@mui/material'
 import PhotoCamera from '@mui/icons-material/PhotoCamera'
 import { useSelector, useDispatch } from 'react-redux'
 import IconButton from '@mui/material/IconButton'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react"
 import { useEffect, useState } from 'react'
 import ReactGA from 'react-ga'
@@ -18,7 +18,7 @@ function CreateCapstone() {
   const userCapstone = useSelector((state) => state.capstones.userCapstone)
   const dispatch = useDispatch()
   const { user } = useAuth0()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const placeholderImage = 'https://captracker.s3.amazonaws.com/c1ecf04b53b14ef598c50640fa8e5510.png'
 
@@ -224,7 +224,7 @@ function CreateCapstone() {
       if (!createdCapstone.errors) {
         await uploadImages(createdCapstone.id, images, [], user.id)
         await dispatch(reviewActions.getReviews(createdCapstone.id))
-        history.push(`/capstones/${createdCapstone.id}`)
+        navigate(`/capstones/${createdCapstone.id}`)
 
       } else {
         setErrors(createdCapstone.errors)
@@ -238,7 +238,7 @@ function CreateCapstone() {
         await uploadImages(capstone.id, images, userCapstone.capstoneImages, user.id)
         const res = await dispatch(capstoneActions.fetchUserCapstone(user.id))
 
-        history.push(`/capstones/${res.id}`)
+        navigate(`/capstones/${res.id}`)
 
       } else {
         setErrors(updateRes.errors)
@@ -249,7 +249,7 @@ function CreateCapstone() {
   const handleDelete = async (e, capstoneId) => {
     e.preventDefault()
 
-    history.push('/capstones')
+    navigate('/capstones')
     await dispatch(capstoneActions.deleteCapstone(capstoneId))
   }
 

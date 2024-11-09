@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import React from 'react'
 
 import imageSrc from '../../static/CapTrackerIcon.png'
@@ -7,10 +7,10 @@ import ProfileButton from './ProfileButton'
 import './Navigation.css'
 
 function Navigation({ user }) {
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const handleIconClick = () => {
-		history.push('/capstones')
+		navigate('/capstones')
 	}
 
 	return (
