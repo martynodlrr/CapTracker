@@ -1,23 +1,23 @@
-import { Route, Switch, Redirect } from "react-router-dom"
-import { ThemeProvider } from '@mui/material/styles'
-import { useAuth0 } from "@auth0/auth0-react"
-import ReactGA from 'react-ga'
+import { Route, Routes, Navigate } from "react-router-dom";
+import { ThemeProvider } from '@mui/material/styles';
+import { useAuth0 } from "@auth0/auth0-react";
+import ReactGA from 'react-ga';
 
-import CapstoneDetails from './components/Capstone/CapstoneDetails'
-import CreateCapstone from './components/Capstone/CreateCapstone'
-import RouteChangeTracker from "./components/RouteChangeTracker"
-import AllCapstones from './components/Capstone/AllCapstones'
-import StackRender from "./components/StackAndTechnologies"
-import LandingPage from "./components/LandingPage"
-import Navigation from "./components/Navigation"
-import Profile from "./components/Profile"
-import theme from "./MUThemeObj"
+import CapstoneDetails from './components/Capstone/CapstoneDetails';
+import CreateCapstone from './components/Capstone/CreateCapstone';
+import RouteChangeTracker from "./components/RouteChangeTracker";
+import AllCapstones from './components/Capstone/AllCapstones';
+import StackRender from "./components/StackAndTechnologies";
+import LandingPage from "./components/LandingPage";
+import Navigation from "./components/Navigation";
+import Profile from "./components/Profile";
+import theme from "./MUThemeObj";
 
-const TRACKING_ID = "UA-288524155-4"
-ReactGA.initialize(TRACKING_ID)
+const TRACKING_ID = "UA-288524155-4";
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
-  const { user, isLoading } = useAuth0()
+  const { user, isLoading } = useAuth0();
 
   if (isLoading) {
     return (
@@ -28,40 +28,28 @@ function App() {
           </path>
         </svg>
       </div>
-    )
+    );
   }
 
   return (
     <ThemeProvider theme={theme}>
       <Navigation user={user} />
       <RouteChangeTracker />
-        <Switch>
-          <Route exact path="/">
-            <LandingPage user={user} />
-          </Route>
-          { user &&
-            <>
-              <Route exact path="/capstone/edit">
-                <CreateCapstone />
-              </Route>
-              <Route exact path="/capstones">
-                <AllCapstones />
-              </Route>
-              <Route exact path="/capstones/:capstoneId">
-                <CapstoneDetails />
-              </Route>
-              <Route exact path="/user">
-                <Profile />
-              </Route>
-            </>
-          }
-          <Route path="*">
-            <Redirect to={ user ? "/capstones" : "/"} />
-          </Route>
-        </Switch>
+      <Routes>
+        <Route path="/" element={<LandingPage user={user} />} />
+        {user && (
+          <>
+            <Route path="/capstone/edit" element={<CreateCapstone />} />
+            <Route path="/capstones" element={<AllCapstones />} />
+            <Route path="/capstones/:capstoneId" element={<CapstoneDetails />} />
+            <Route path="/user" element={<Profile />} />
+          </>
+        )}
+        <Route path="*" element={<Navigate to={user ? "/capstones" : "/"} />} />
+      </Routes>
       <StackRender />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,6 +1,6 @@
 import { ArrowBack, ArrowForward } from '@mui/icons-material'
 import IconButton from '@mui/material/IconButton'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import ReactGA from 'react-ga'
 
@@ -8,7 +8,7 @@ import './index.css'
 
 function CapstoneImages({ images, capstoneId, link }) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
@@ -24,7 +24,7 @@ function CapstoneImages({ images, capstoneId, link }) {
       action: `Capstone Image Clicked for ${capstoneId}`,
     })
 
-    history.push(`/capstones/${capstoneId}#root`)
+    navigate(`/capstones/${capstoneId}#root`)
   }
 
   return (

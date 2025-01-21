@@ -46,8 +46,8 @@ def upgrade():
         sa.Column("url", sa.String(length=150), nullable=True),
         sa.Column("description", sa.String(length=1000), nullable=False),
         sa.Column("cloned_from", sa.String(length=75), nullable=False),
-        sa.Column("user_id", sa.String(length=75), nullable=True),
-        sa.Column("created_at", sa.TIMESTAMP(), nullable=True),
+        sa.Column("user_id", sa.String(length=75), nullable=True, index=True),
+        sa.Column("created_at", sa.TIMESTAMP(), nullable=True, index=True),
         sa.PrimaryKeyConstraint("id"),
     )
     if environment == "production":

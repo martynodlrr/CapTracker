@@ -1,15 +1,16 @@
-import { withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import ReactGA from 'react-ga'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const RouteChangeTracker = ({ history }) => {
+  const location = useLocation()
 
-    history.listen((location, action) => {
-        ReactGA.set({ page: location.pathname })
-        ReactGA.pageview(location.pathname)
-    })
+  useEffect(() => {
+    ReactGA.set({ page: location.pathname })
+    ReactGA.pageview(location.pathname)
+  }, [location])
 
     return <div></div>
 }
 
-export default withRouter(RouteChangeTracker)
+export default RouteChangeTracker
